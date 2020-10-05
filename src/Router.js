@@ -8,8 +8,9 @@ import { loading, login, logout } from "./store/actions/";
 
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
+import EditorPage from './pages/editor'
 
-import { MainLayout } from "./layout"
+import { MainLayout, noPaddingLayout } from "./layout"
 import ErrorBoundary from "./components/error-boundary";
 
 
@@ -35,7 +36,11 @@ const Router = ({ AUTHORIZED, USER_PROFILE }) => {
           component={withLayout(MainLayout)(LoginPage)}
           path={APP_PATHS.LOGIN}
         />
-
+        <Route
+          exact
+          component={withLayout(noPaddingLayout)(EditorPage)}
+          path={APP_PATHS.EDITOR}
+        />
       </Switch>
     </BrowserRouter>
   );

@@ -18,13 +18,17 @@ const useStyles = makeStyles((theme) => ({
     },
     textAlign: "center",
   },
+  footer: {
+    height: '5vh',
+    backgroundColor: "red"
+  }
 }));
 
 const Footer = () => {
   const classes = useStyles();
 
   return (
-    <footer>
+    <footer className={classes.footer}>
       <Container>
         <Box className={classes.section}>
           2020/2021 FYP
