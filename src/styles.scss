@@ -1,0 +1,21 @@
+* {
+  font-family: 'Kumbh Sans', sans-serif !important;
+}
+
+html {
+  min-height: 100%;
+  background: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1;
+  min-height: 100%;
+  overflow: auto !important; // ENABLE SCROLL WHEN THE DRAWER IS OPEN
+  padding-right: 0 !important; // FIX MATERIAL MENU SHOWEN
+  -webkit-overflow-scrolling: touch;
+  &.overflow-hidden {
+    overflow: hidden !important;
+  }
+}
