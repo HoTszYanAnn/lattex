@@ -14,20 +14,17 @@ import {
   makeStyles, 
   createMuiTheme,
 } from '@material-ui/core';
-//import 'fontsource-inika';
-//import './index.css'
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(12),
+    marginTop: theme.spacing(10),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   form: {
     width: '100%', 
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(2),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -40,7 +37,7 @@ const Login = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h3" style={{fontFamily: "Inika"}}>
+        <Typography component="h1" variant="h1">
           Lättex
         </Typography>
         <form className={classes.form} noValidate>

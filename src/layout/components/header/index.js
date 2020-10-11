@@ -16,7 +16,7 @@ import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   header: {
-    height: '5vh'
+    height: '7vh',
   }
 }));
 
@@ -27,7 +27,7 @@ const Header = ({ AUTHORIZED, USER_PROFILE }) => {
     <>
       <AppBar position="static" className={classes.header}> 
         <Toolbar>
-            <Typography>Lattex</Typography>
+            <Typography variant="h5">Lättex</Typography>
         </Toolbar>
       </AppBar>
     </>
