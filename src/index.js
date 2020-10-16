@@ -16,7 +16,10 @@ const theme = createMuiTheme({
     primary: {
       main: '#FCB941',
     }
-  }
+  },
+  typography: {
+    fontFamily: 'Inika',
+  },
 });
 
 ReactDOM.render(
