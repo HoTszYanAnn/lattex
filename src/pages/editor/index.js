@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const Editor = ({ width }) => {
   const [showCompiler, setShowCompiler] = useState(!['xs', 'sm', 'md'].includes(width))
   const classes = useStyles()
-  console.log(width)
+  
   const changeShowCompiler = () => {
     setShowCompiler(!showCompiler)
   }
