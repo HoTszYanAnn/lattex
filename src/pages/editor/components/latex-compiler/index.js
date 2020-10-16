@@ -1,28 +1,18 @@
-import React from 'react'
-import Frame from 'react-frame-component';
-import 'latex.js/dist/css/article.css'
-import 'latex.js/dist/css/base.css'
-import 'latex.js/dist/css/book.css'
-import 'latex.js/dist/css/katex.css'
-
-const { parse, HtmlGenerator } = require('latex.js')
+import React, { useState } from 'react'
+import { Box } from '@material-ui/core'
 
 
-const abc = () => {
-
-  let latex = "Hi, this is a line of text. aaaaaa \\[ x^n + y^n = z^n \\]"
-
-  let generator = new HtmlGenerator({ hyphenate: false })
-
-  let doc = parse(latex, { generator: generator }).htmlDocument()
-  
+const LatexCompiler = ({ doc }) => {
   return (
     <>
-      <iframe
-        srcDoc={'<!DOCTYPE html>' + doc.documentElement.outerHTML}
-      />
+      <Box style={{ width: '100%', height: '100%', backgroundColor: 'white' }}>
+        <iframe
+          srcDoc={'<!DOCTYPE html>' + doc?.documentElement.outerHTML}
+          style={{ width: '100%', height: '100%', border: 'none', overflow: 'scroll' }}
+        />
+      </Box>
     </>
   )
 }
 
-export default abc
+export default LatexCompiler
