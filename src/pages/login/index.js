@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  Button,
-  CssBaseline,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Grid,
   TextField,
+  Link,
+  Checkbox,
+  Button,
   FormControlLabel,
-  Checkbox, 
-  Link, 
-  Grid, 
-  Box, 
-  LockOutlinedIcon,
   Typography, 
   Container,
   makeStyles, 
-  createMuiTheme,
 } from '@material-ui/core';
+import { RegForm, RequestForm } from './components';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,21 +30,32 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(2, 20, 2),
   },
 }));
 
 const Login = () => {
-  const classes = useStyles();
+const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const handleForgot = () => {
+
+  };
+  const handleReg = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
+    <div>
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h1">
           Lättex
         </Typography>
         <form className={classes.form} noValidate>
-          <TextField
+        <TextField
             variant="outlined"
             margin="normal"
             required
@@ -51,8 +65,8 @@ const Login = () => {
             name="email"
             autoComplete="email"
             autoFocus
-          />
-          <TextField
+        />
+        <TextField
             variant="outlined"
             margin="normal"
             required
@@ -62,39 +76,46 @@ const Login = () => {
             type="password"
             id="password"
             autoComplete="current-password"
-          />
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
+        />
+        <Grid container>
+          <Grid item xs>
+              <Link variant="body2" onClick={handleForgot}>
+                  Forgot password?
               </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                Register
-              </Link>
-            </Grid>
           </Grid>
-          <FormControlLabel
+          <Grid item>
+              <Link variant="body2" onClick={handleReg}>
+                  Register
+              </Link>
+          </Grid>
+        </Grid>
+        <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
-          <div fullWidth
-               align="center"
-          >
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Login
-            </Button>
-          </div>
-        </form>
+        />
+        <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+        >
+            Login
+        </Button>
+      </form>
       </div>
     </Container>
+    <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+    >
+    <DialogContent>
+      <RegForm/>
+    </DialogContent>
+      
+    </Dialog>
+  </div>  
   );
 }
 
-export default Login
+export default Login;

@@ -36,7 +36,7 @@ const Editor = ({ width }) => {
   }
 
   return (
-    <>
+      <>
       <Box className={classes.toolbar}>
         <ToolBar showCompiler={showCompiler} changeShowCompiler={changeShowCompiler} />
       </Box>
