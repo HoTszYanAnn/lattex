@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { UIEditor, LatexCompiler, ToolBar } from './components'
-import { parse, HtmlGenerator } from 'latex.js'
 import {
   Box,
   Button,
@@ -24,29 +23,25 @@ const useStyles = makeStyles((theme) => ({
   compiler: {
     height: '85vh',
     backgroundColor: 'grey',
-    padding: '1.5rem 3rem',
-  }
+  },
 }));
 
 const Editor = ({ width }) => {
   const classes = useStyles()
-  
+
   const [showCompiler, setShowCompiler] = useState(!['xs', 'sm', 'md'].includes(width))
   const [doc, setDoc] = useState()
+  const [key, setKey] = useState('45645646546')
   const [latexCode, setLatexCode] = useState("")
-
-  let generator = new HtmlGenerator({ hyphenate: false })
-  
-  const handleClick = () => {
-    fetch('/latex.tex')
-    .then((r) => r.text())
-    .then(text  => {
-      setDoc(parse(text, { generator: generator }).htmlDocument())
-    })
-  }
 
   const changeShowCompiler = () => {
     setShowCompiler(!showCompiler)
+  }
+
+  const handleClick = () => {
+    //push to github
+    //refresh 
+    setKey(key+'a')
   }
 
   return (
@@ -54,13 +49,13 @@ const Editor = ({ width }) => {
 
       <Box className={classes.toolbar}>
         <ToolBar showCompiler={showCompiler} changeShowCompiler={changeShowCompiler} />
-        <Button onClick={handleClick}>test</Button>
+        <Button onClick={handleClick}>compile</Button>
       </Box>
       {showCompiler ?
         ['xs', 'sm', 'md'].includes(width) ?
           <Grid container>
             <Grid item xs={12} className={classes.compiler}>
-              <LatexCompiler doc={doc}/>
+              <LatexCompiler doc={doc} key={key}/>
             </Grid>
           </Grid>
           :
@@ -69,7 +64,7 @@ const Editor = ({ width }) => {
               <UIEditor />
             </Grid>
             <Grid item xs={6} className={classes.compiler}>
-              <LatexCompiler doc={doc}/>
+              <LatexCompiler doc={doc} key={key}/>
             </Grid>
           </Grid>
         :
