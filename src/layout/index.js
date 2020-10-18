@@ -8,7 +8,6 @@ import { Footer, Header, InternalHeader } from "./components";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(0),
-    // marginTop: theme.spacing(20),
     marginBottom: theme.spacing(0),
     height: "90vh",
   },

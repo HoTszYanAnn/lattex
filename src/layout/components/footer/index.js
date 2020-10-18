@@ -1,26 +1,19 @@
 import React from 'react'
 import {
   Box,
-  Container,
   Link as MuiLink,
   Typography,
   makeStyles,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
   section: {
-    "&:not(:last-child)": {
-      marginBottom: theme.spacing(2),
-    },
+    paddingTop: '0.3rem',
     textAlign: "center",
   },
   footer: {
     height: '3vh',
-    backgroundColor: "red"
+    backgroundColor: '#ffe7bd'
   }
 }));
 
@@ -29,11 +22,9 @@ const Footer = () => {
 
   return (
     <footer className={classes.footer}>
-      <Container>
-        <Box className={classes.section}>
-          2020/2021 FYP
-        </Box>
-      </Container>
+      <Box className={classes.section}>
+        2020/2021 CUHK CSE FYP MHW2003
+      </Box>
     </footer>
   )
 }
