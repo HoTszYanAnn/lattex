@@ -1,100 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Redirect } from "react-router-dom";
 import {
   Button,
   CssBaseline,
-  TextField,
-  FormControlLabel,
-  Checkbox, 
-  Link, 
-  Grid, 
-  Box, 
-  LockOutlinedIcon,
   Typography, 
   Container,
   makeStyles, 
-  createMuiTheme,
 } from '@material-ui/core';
+import GitHubIcon from '@material-ui/icons/GitHub'; 
+import TYPES from '../../store/actions/types';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(10),
+    marginTop: theme.spacing(15),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
-  form: {
-    width: '100%', 
-    marginTop: theme.spacing(2),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
+  button: {
+    marginTop: theme.spacing(10),
+    backgroundColor: '#000000',
+    color: 'white',
   },
 }));
 
 const Login = () => {
   const classes = useStyles();
+  const [token, setToken] = useState();
+
+  const scopes = ['user', 'repo'];
+  const scope = scopes.join(',');
+  const client_id = process.env.REACT_APP_CLIENT_ID;
+  const redirect_uri = process.env.REACT_APP_REDIRECT_URI;
+
+  const url = window.location.href;
+  const hasCode = url.includes("?code=");
+  if (hasCode) {
+    const newUrl = url.split("?code=");
+    fetch(`http://localhost:9999/authenticate/${newUrl[1]}`)
+      .then(res => res.json())
+      .then(({token}) => setToken(token))
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h1">
           Lättex
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                Register
-              </Link>
-            </Grid>
-          </Grid>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <div fullWidth
-               align="center"
-          >
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Login
-            </Button>
-          </div>
-        </form>
+        </Typography>  
+        <Button 
+          variant="contained"
+          className={classes.button}
+          href={`https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope}`}
+          startIcon={<GitHubIcon />}
+        >
+          Login with Github
+        </Button>   
       </div>
     </Container>
   );
 }
+
 
 export default Login
