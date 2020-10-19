@@ -31,15 +31,25 @@ const Login = () => {
   const scopes = ['user', 'repo'];
   const scope = scopes.join(',');
   const client_id = process.env.REACT_APP_CLIENT_ID;
+  const client_secret = process.env.REACT_APP_CLIENT_ID;
   const redirect_uri = process.env.REACT_APP_REDIRECT_URI;
+  const proxy_url = process.env.REACT_APP_PROXY_URL;
 
   const url = window.location.href;
   const hasCode = url.includes("?code=");
   if (hasCode) {
     const newUrl = url.split("?code=");
-    fetch(`http://localhost:9999/authenticate/${newUrl[1]}`)
+    fetch(proxy_url, {
+      method: "POST",
+      body: JSON.stringify({
+        client_id: client_id,
+        redirect_uri: redirect_uri,
+        client_secret: client_secret,
+        code: newUrl[1],
+      }),
+    })
       .then(res => res.json())
-      .then(({token}) => setToken(token))
+      .then(res => console.log(res))
   }
 
   return (
@@ -61,6 +71,5 @@ const Login = () => {
     </Container>
   );
 }
-
 
 export default Login
