@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
   footer: {
     height: '3vh',
-    backgroundColor: '#f12711'
+    backgroundColor: '#ffe7bd'
   }
 }));
 
