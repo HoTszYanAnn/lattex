@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { Redirect } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Redirect, withRouter } from "react-router-dom";
 import {
   Button,
   CssBaseline,
-  Typography, 
+  Typography,
   Container,
-  makeStyles, 
+  makeStyles,
 } from '@material-ui/core';
-import GitHubIcon from '@material-ui/icons/GitHub'; 
-import TYPES from '../../store/actions/types';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import { connect } from "react-redux";
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login = ({ history, dispatch, location }) => {
   const classes = useStyles();
   const [token, setToken] = useState();
 
@@ -33,34 +35,25 @@ const Login = () => {
   const client_id = process.env.REACT_APP_CLIENT_ID;
   const redirect_uri = process.env.REACT_APP_REDIRECT_URI;
 
-  const url = window.location.href;
-  const hasCode = url.includes("?code=");
-  if (hasCode) {
-    const newUrl = url.split("?code=");
-    fetch(`http://localhost:9999/authenticate/${newUrl[1]}`)
-      .then(res => res.json())
-      .then(({token}) => setToken(token))
-  }
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h1">
           Lättex
-        </Typography>  
-        <Button 
+        </Typography>
+        <Button
           variant="contained"
           className={classes.button}
           href={`https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope}`}
           startIcon={<GitHubIcon />}
         >
           Login with Github
-        </Button>   
+        </Button>
       </div>
     </Container>
   );
 }
 
 
-export default Login
+export default withRouter(connect(({}) => ({}))(Login))

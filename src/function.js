@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { store as notifStore } from "react-notifications-component";
 
 export const deepdifference = (object, base) => {
 	function changes(object, base) {
@@ -20,3 +21,17 @@ export const difference = (object, base) => {
   }
   return temp
 }
+
+export const onGqlError = (error) => {
+	notifStore.addNotification({
+		message: error.message || "伺服器錯誤",
+		type: "danger",
+		insert: "top",
+		container: "top-center",
+		animationIn: ["animated", "fadeIn"],
+		animationOut: ["animated", "fadeOut"],
+		dismiss: {
+			duration: 5000,
+		},
+	});
+};

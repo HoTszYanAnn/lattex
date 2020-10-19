@@ -1,0 +1,13 @@
+type Query {
+  me: User
+}
+
+type User {
+  avatarUrl: URL
+  name: String!
+}
+
+type Mutation {
+  me: User
+  authenticate(code: String!): String!
+}

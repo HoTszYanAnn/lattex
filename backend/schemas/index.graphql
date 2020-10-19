@@ -1,0 +1,14 @@
+# import *, Query.*, Mutation.* from './graphql-scalars.graphql'
+# import *, Query.*, Mutation.* from './user.graphql'
+
+interface IQueryResult {
+  code: Int!
+  success: Boolean!
+  message: String!
+}
+
+type QueryResult implements IQueryResult {
+  code: Int!
+  success: Boolean!
+  message: String!
+}
