@@ -6,6 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
 import configureStore, { history } from "./store/";
+import { ApolloProvider } from "@apollo/react-hooks";
+import { client } from "./apollo";
 
 import "./styles.scss";
 
@@ -26,9 +28,11 @@ ReactDOM.render(
   <React.StrictMode>
     <MuiThemeProvider theme={theme}>
       <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <Layout />
-        </ConnectedRouter>
+        <ApolloProvider client={client}>
+          <ConnectedRouter history={history}>
+            <Layout />
+          </ConnectedRouter>
+        </ApolloProvider>
       </Provider>
     </MuiThemeProvider>
   </React.StrictMode>,

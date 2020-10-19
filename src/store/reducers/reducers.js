@@ -17,7 +17,7 @@ export const LOADER = (state = [], action) => {
 };
 
 export const TOKEN = (
-  state = localStorage.getItem("fmt-user-token"),
+  state = localStorage.getItem("lattex-token"),
   action
 ) => {
   if (action.type === TYPES.SET_TOKEN) return action.payload;

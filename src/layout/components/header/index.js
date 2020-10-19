@@ -5,14 +5,20 @@ import {
   Toolbar,
   Typography,
   IconButton,
+  Box,
+  Avatar,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { APP_PATHS } from "../../../config";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withApollo } from "react-apollo";
+import { logout } from "../../../store/actions/";
+import LoginButton from './components/login-button'
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -20,14 +26,71 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = ({ AUTHORIZED, USER_PROFILE }) => {
+const HeaderMenu = ({ USER_PROFILE, client, dispatch }) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const onLogoutClick = async () => {
+    localStorage.removeItem("lattex-token");
+    await client.stop();
+    await client.clearStore();
+    dispatch(logout());
+  };
+
+  return (
+    <>
+      <Button onClick={handleMenu}>
+        <Box display="flex" style={{ gap: '10px' }} alignItems="center" >
+          <Avatar src={USER_PROFILE.avatarUrl} />
+          <Typography>{USER_PROFILE.name}</Typography>
+        </Box>
+      </Button>
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={open}
+        onClose={handleClose}
+      >
+        <MenuItem button onClick={onLogoutClick}>
+          <Typography color="inherit">
+            logout
+          </Typography>
+        </MenuItem>
+      </Menu>
+    </>
+  )
+}
+
+const Header = ({ AUTHORIZED, USER_PROFILE, client, dispatch }) => {
   const classes = useStyles();
 
   return (
     <>
-      <AppBar position="static" className={classes.header}> 
+      <AppBar position="static" className={classes.header}>
         <Toolbar>
-            <Typography variant="h5">Lättex</Typography>
+          <Typography variant="h5">Lättex</Typography>
+          <Box flexGrow={1} />
+          {AUTHORIZED
+            ? <HeaderMenu USER_PROFILE={USER_PROFILE} client={client} dispatch={dispatch}/>
+            : <LoginButton />
+          }
         </Toolbar>
       </AppBar>
     </>
@@ -37,4 +100,4 @@ const Header = ({ AUTHORIZED, USER_PROFILE }) => {
 export default connect(({ AUTHORIZED, USER_PROFILE }) => ({
   AUTHORIZED,
   USER_PROFILE,
-}))(withRouter(Header));
+}))(withApollo(withRouter(Header)));
