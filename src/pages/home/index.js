@@ -1,9 +1,10 @@
 import React from "react"
 
 const Home = () => {
+
   return (
     <>
-    Home (list of doc)
+    Home (non-login user)
     </>
   )
 }
