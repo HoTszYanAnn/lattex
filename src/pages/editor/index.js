@@ -15,7 +15,7 @@ import { toLatexCode } from './function'
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
-    height: '5vh',
+    height: '40px',
     backgroundColor: '#ffe8c9'
   },
   editor: {

@@ -22,7 +22,7 @@ import LoginButton from './components/login-button'
 
 const useStyles = makeStyles((theme) => ({
   header: {
-    height: '7vh',
+    height: '56px',
   }
 }));
 
@@ -47,11 +47,11 @@ const HeaderMenu = ({ USER_PROFILE, client, dispatch }) => {
 
   return (
     <>
-      <Button onClick={handleMenu}>
-        <Box display="flex" style={{ gap: '10px' }} alignItems="center" >
-          <Avatar src={USER_PROFILE.avatarUrl} />
-          <Typography>{USER_PROFILE.name}</Typography>
-        </Box>
+      <Button size="small" 
+        onClick={handleMenu} 
+        startIcon={<Avatar src={USER_PROFILE.avatarUrl} />}
+        >
+          {USER_PROFILE.name}
       </Button>
       <Menu
         id="menu-appbar"

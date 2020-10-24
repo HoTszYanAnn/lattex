@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   footer: {
-    height: '3vh',
+    height: '25px',
     backgroundColor: '#ffe7bd'
   }
 }));
