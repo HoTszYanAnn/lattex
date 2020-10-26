@@ -1,6 +1,6 @@
 import React from "react"
 import {Typography, makeStyles} from '@material-ui/core'
-import lattex from './lätTex.png';
+import lattex from './lattex.png';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
