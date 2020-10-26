@@ -2,7 +2,6 @@ import _ from "lodash";
 
 export const STEMS = {
   HOME: "/",
-  LOGIN: "/login",
 
   EDITOR: "/editor",
   PROJECT_LIST: "project",
@@ -13,7 +12,6 @@ export const STEMS = {
 
 export const APP_ROUTES = {
   HOME: `${STEMS.HOME}`,
-  LOGIN: `${STEMS.LOGIN}`,
 
   EDITOR: `${STEMS.EDITOR}`,
   PROJECT_LIST: `${STEMS.PROJECT_LIST}`,

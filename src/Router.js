@@ -8,7 +8,6 @@ import { APP_PATHS } from "./config";
 import HomePage from './pages/home'
 import ProjectListPage from './pages/project-list'
 
-import LoginPage from './pages/login'
 import EditorPage from './pages/editor'
 
 import { MainLayout, noPaddingLayout } from "./layout"
@@ -52,11 +51,6 @@ const Router = ({ AUTHORIZED, USER_PROFILE }) => {
           exact
           component={ AUTHORIZED ? withLayout(MainLayout)(ProjectListPage) : withLayout(MainLayout)(HomePage)}
           path={APP_PATHS.HOME}
-        />
-        <Route
-          exact
-          component={withLayout(MainLayout)(LoginPage)}
-          path={APP_PATHS.LOGIN}
         />
 
         <PrivateRoute 
