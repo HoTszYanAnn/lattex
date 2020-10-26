@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <div className={classes.paper}>
       <img src={lattex} />
-      <Typography variant="h3">An LaTeX Document Processor</Typography>
+      <Typography variant="h3">An Online LaTeX Document Processor</Typography>
     </div>
   )
 }

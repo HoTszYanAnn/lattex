@@ -85,7 +85,7 @@ const Header = ({ AUTHORIZED, USER_PROFILE, client, dispatch }) => {
     <>
       <AppBar position="static" className={classes.header}>
         <Toolbar>
-          <Typography variant="h5">Lättex</Typography>
+          <Typography variant="h5">LätTex</Typography>
           <Box flexGrow={1} />
           {AUTHORIZED
             ? <HeaderMenu USER_PROFILE={USER_PROFILE} client={client} dispatch={dispatch}/>
