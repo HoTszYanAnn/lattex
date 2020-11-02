@@ -12,8 +12,8 @@ import {
 import CachedIcon from '@material-ui/icons/Cached';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import SettingButton from './components/setting'
-
+import SettingButton from './components/setting';
+import AddButton from './components/add-box'
 import LatexCodeButton from './components/latex-code'
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +34,7 @@ const ToolBar = ({ latexCode, showCompiler, changeShowCompiler, pushAndCompile, 
           packedLatexCode={packedLatexCode} 
           setPackedLatexCode={setPackedLatexCode}
         />
+        <AddButton/>
         <Box flexGrow={1} />
         <LatexCodeButton code={latexCode} />
         <Tooltip title='Show Compiler?' aria-label='Show Compiler?' placement="top">
