@@ -6,7 +6,3 @@ type User {
   avatarUrl: URL
   name: String!
 }
-
-type Mutation {
-  authenticate(code: String!): String!
-}

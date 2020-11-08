@@ -1,7 +1,6 @@
 const _ = require("lodash");
 const { pipeResolvers, combineResolvers } = require("graphql-resolvers");
-const { authenticated } = require("../utils");
-const { getSelfInfo, getAuthToken } = require("./user-impl");
+const { getSelfInfo } = require("./user-impl");
 const { executeGitGraphql } = require("../executeGitGraphql");
 
 exports.Query = {
@@ -13,8 +12,4 @@ exports.Query = {
       name: rawData.viewer.login,
     })
   ),
-}
-
-exports.Mutation = {
-  authenticate: getAuthToken,
 }

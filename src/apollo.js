@@ -6,7 +6,7 @@ import { setContext } from "apollo-link-context";
 // https://www.apollographql.com/docs/react/networking/authentication/
 
 const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_GRAPHQL_URL,
+  uri: process.env.REACT_APP_SERVER_URL + 'graphql',
 });
 
 const authLink = setContext((_, { headers }) => {

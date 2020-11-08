@@ -45,21 +45,21 @@ const withLayout = (Layout) => (Component) => (props) => (
 const Router = ({ AUTHORIZED, USER_PROFILE }) => {
   return (
     <BrowserRouter>
-    {console.log(AUTHORIZED)}
+      {console.log(AUTHORIZED)}
       <Switch>
         <Route
           exact
-          component={ AUTHORIZED ? withLayout(MainLayout)(ProjectListPage) : withLayout(MainLayout)(HomePage)}
+          component={AUTHORIZED ? withLayout(MainLayout)(ProjectListPage) : withLayout(MainLayout)(HomePage)}
           path={APP_PATHS.HOME}
         />
 
-        <PrivateRoute 
+        <PrivateRoute
           exact
           condition={AUTHORIZED}
           component={withLayout(MainLayout)(ProjectListPage)}
           path={APP_PATHS.PROJECT_LIST}
         />
-        <PrivateRoute 
+        <PrivateRoute
           exact
           condition={AUTHORIZED}
           component={withLayout(noPaddingLayout)(EditorPage)}
@@ -72,17 +72,15 @@ const Router = ({ AUTHORIZED, USER_PROFILE }) => {
 
 const Routing = ({ dispatch, AUTHORIZED, TOKEN, USER_PROFILE, history, location }) => {
   const [readyToRender, setReadyToRender] = useState(false);
-  
+
   const onTokenGqlCompleted = (data) => {
-    const { authenticate } = data;
-    console.log(authenticate)
-    if (authenticate) {
-      localStorage.setItem("lattex-token", authenticate)
-      dispatch(setToken(authenticate));
+    if (data) {
+      localStorage.setItem("lattex-token", data)
+      dispatch(setToken(data));
       gqlGetProfile();
     } else {
       dispatch(logout());
-	    setReadyToRender(true);
+      setReadyToRender(true);
     }
   };
 
@@ -103,23 +101,28 @@ const Routing = ({ dispatch, AUTHORIZED, TOKEN, USER_PROFILE, history, location 
     onCompleted: onProfileGqlCompleted,
     onError: (error) => {
       onGqlError(error);
-	    setReadyToRender(true);
+      setReadyToRender(true);
     },
   });
 
-  const [gqlGetToken, { loading: gqlTokenLoading }] = useMutation(GET_TOKEN_GQL, {
-    onCompleted: onTokenGqlCompleted,
-    onError: (error) => {
-      onGqlError(error);
-    },
-  });
+  const gqlGetToken = (code) => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}authenticate?code=${code}`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          console.log(result)
+          onTokenGqlCompleted(result?.access_token)
+        },
+        (error) => {
+          dispatch(logout());
+          setReadyToRender(true);
+        }
+      )
+  }
+
 
   useEffect(() => {
-    dispatch(loading(gqlTokenLoading || gqlTokenLoading, "root-loader"));
-  }, [gqlTokenLoading]);
-  
-  useEffect(() => {
-    dispatch(loading(gqlProfileLoading || gqlTokenLoading, "root-loader"));
+    dispatch(loading(gqlProfileLoading, "root-loader"));
   }, [gqlProfileLoading]);
 
   useEffect(() => {
@@ -128,14 +131,10 @@ const Routing = ({ dispatch, AUTHORIZED, TOKEN, USER_PROFILE, history, location 
     } else {
       const code = queryString.parse(location.search).code
       if (code) {
-        gqlGetToken({
-          variables: {
-            code
-         }
-        });
-      }else{
+        gqlGetToken(code);
+      } else {
         dispatch(logout());
-        setReadyToRender(true);  
+        setReadyToRender(true);
       }
     }
   }, []);
