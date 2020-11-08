@@ -1,0 +1,103 @@
+type Query {
+  documents: [Document!]
+  document(name: String!): Document!
+}
+
+type Mutation {
+  addDocument(input: DocumentCreateInput!): Document!
+}
+
+input DocumentCreateInput {
+  name: String!
+  description: String
+  visibility: RepositoryVisibility!
+}
+
+enum RepositoryVisibility {
+  PUBLIC
+  PRIVATE
+}
+
+type Document {
+  # basic info
+  id: ID!
+  name: String!
+  description: String
+  createdAt: DateTime!
+  pushedAt: DateTime!
+  isPrivate: Boolean
+  url: URL!
+
+  latex: LaTeXDoc
+
+  updateDocument(input: DocumentUpdateInput!): Document
+  updateLaTeX(input: LaTeXDocUpdateInput!): LaTeXDoc!
+}
+
+input DocumentUpdateInput {
+  name: String!
+  description: String
+}
+
+type LaTeXDoc {
+
+  # latex_code convert to object
+  documentType: String!
+  haveContentPage: Boolean!
+  haveTitle: Boolean!
+  titles: Titles!
+  content: [Section!]
+  image: [File!]
+
+  # complete latex code
+  latex_code: String!
+
+  # function to update latex document
+}
+
+type Titles {
+  title: String!
+  author: String
+  date: DateTime
+  always_today: Boolean!
+}
+
+type Section {
+  section: [Section!]
+  content: String!
+}
+
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
+input LaTeXDocUpdateInput {
+  filename: String!
+
+  documentType: String!
+  haveContentPage: Boolean!
+  haveTitle: Boolean!
+  titles: TitlesInput!
+  content: [SectionInput!]
+  image: [FileInput!]
+}
+
+input TitlesInput {
+  title: String!
+  author: String
+  date: DateTime
+  always_today: Boolean!
+}
+
+input SectionInput {
+  section: [SectionInput!]
+  content: String!
+}
+
+input FileInput {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}

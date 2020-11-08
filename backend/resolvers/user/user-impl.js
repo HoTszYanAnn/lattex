@@ -1,7 +1,8 @@
 const { git } = require("../../config");
 
-exports.getSelfInfo = async (parent, input, { gitUser }) => {
-  const query = `
+exports.getSelfInfo = (parent) => ({
+  ...parent,
+  query: `
     query{
       viewer{
         avatarUrl
@@ -9,19 +10,7 @@ exports.getSelfInfo = async (parent, input, { gitUser }) => {
       }
     }
   `
-  try {
-    const rawData = (await gitUser.post('', {
-      query
-    })).data.data.viewer;
-    console.log(rawData)
-    return {
-      avatarUrl: rawData.avatarUrl,
-      name: rawData.login,
-    }
-  } catch (e) {
-    throw new Error(e)
-  }
-};
+});
 
 exports.getAuthToken = async (parent, { code }, context) => {
   const axios = require("axios");

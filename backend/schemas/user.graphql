@@ -8,6 +8,5 @@ type User {
 }
 
 type Mutation {
-  me: User
   authenticate(code: String!): String!
 }

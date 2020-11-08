@@ -1,5 +1,6 @@
 # import *, Query.*, Mutation.* from './graphql-scalars.graphql'
 # import *, Query.*, Mutation.* from './user.graphql'
+# import *, Query.*, Mutation.* from './lattex.graphql'
 
 interface IQueryResult {
   code: Int!
