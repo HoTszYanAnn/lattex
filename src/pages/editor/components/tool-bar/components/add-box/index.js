@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
     ExpandMore,
     ExpandLess,
-    //AddBoxIcon,
 } from '@material-ui/icons';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import {
@@ -23,7 +22,7 @@ const AddBox = ({}) => {
 
     return (
         <>
-        <Tooltip title="Add" placement="top">
+        <Tooltip title="Add" placement="bottom">
         <List>
             <ListItem button onClick={handleClick}>
                 <ListItemIcon>

@@ -19,7 +19,8 @@ import LatexCodeButton from './components/latex-code'
 const useStyles = makeStyles((theme) => ({
   toolBox: {
     display: 'flex',
-    height: '100%'
+    height: '100%',
+    alignItems: 'center',
   },
 }));
 
@@ -34,7 +35,9 @@ const ToolBar = ({ latexCode, showCompiler, changeShowCompiler, pushAndCompile, 
           packedLatexCode={packedLatexCode} 
           setPackedLatexCode={setPackedLatexCode}
         />
-        <AddButton/>
+        <Box alignSelf='flex-start'>
+          <AddButton/>
+        </Box>
         <Box flexGrow={1} />
         <LatexCodeButton code={latexCode} />
         <Tooltip title='Show Compiler?' aria-label='Show Compiler?' placement="top">
