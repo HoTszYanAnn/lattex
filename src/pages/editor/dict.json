@@ -1,0 +1,8 @@
+{
+    "section": {
+        "name":  "Unnumbered Section",
+        "size": "12pt",
+        "weight": "bold",
+        "code": "\\section*{}"
+    }
+}

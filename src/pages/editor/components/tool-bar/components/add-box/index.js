@@ -23,7 +23,7 @@ const AddBox = ({}) => {
     return (
         <>
         <Tooltip title="Add" placement="bottom">
-        <List>
+        <List disablePadding>
             <ListItem button onClick={handleClick}>
                 <ListItemIcon>
                     <AddBoxIcon />
