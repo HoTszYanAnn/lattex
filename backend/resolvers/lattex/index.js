@@ -5,12 +5,19 @@ const {
   getDocuments,
   getDocument,
   addDocument,
+  parseLaTeXCodeToObject,
 } = require("./lattex-impl");
 const {
   postprocessDocumentsData,
   postprocessDocumentData
 } = require("./postprocessor")
 const { executeGitGraphql } = require("../executeGitGraphql");
+
+exports.Document = {
+  latex: parseLaTeXCodeToObject,
+  updateDocument: () => null,
+  updateLaTeX: () => null,
+}
 
 exports.Query = {
   documents: pipeResolvers(

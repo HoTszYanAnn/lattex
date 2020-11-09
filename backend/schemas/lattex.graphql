@@ -42,7 +42,7 @@ input DocumentUpdateInput {
 type LaTeXDoc {
 
   # latex_code convert to object
-  documentType: String!
+  documentclass: String!
   haveContentPage: Boolean!
   haveTitle: Boolean!
   titles: Titles!
@@ -64,13 +64,14 @@ type Titles {
 
 type Section {
   section: [Section!]
+  name: String
   content: String!
 }
 
 type File {
-  filename: String!
-  mimetype: String!
-  encoding: String!
+  name: String!
+  oid: String!
+  byteSize: String!
 }
 
 input LaTeXDocUpdateInput {

@@ -1,12 +1,12 @@
-# Type queries into this side of the screen, and you will 
-# see intelligent typeaheads aware of the current GraphQL type schema, 
+# Type queries into this side of the screen, and you will
+# see intelligent typeaheads aware of the current GraphQL type schema,
 # live syntax, and validation errors highlighted within the text.
 
 # We'll get you started with a simple query showing your username!
-query { 
-  viewer { 
-    repositories(first : 100){
-      nodes{
+query {
+  viewer {
+    repositories(first: 100) {
+      nodes {
         createdAt
         description
         url
@@ -17,16 +17,28 @@ query {
         ... on Repository {
           object(expression: "master:") {
             ... on Tree {
-        			entries {
-          			name
-          			type
-          			object {
-            			... on Blob {
-              			byteSize
-              			text
-            			}
-          			}
-        			}
+              entries {
+                name
+                type
+                object {
+                  ... on Tree {
+                    entries {
+                      name
+                      type
+                      object {
+                        ... on Blob {
+                          byteSize
+                          text
+                        }
+                      }
+                    }
+                  }
+                  ... on Blob {
+                    byteSize
+                    text
+                  }
+                }
+              }
             }
           }
         }
@@ -37,4 +49,3 @@ query {
 }
 
 #get repository file graphql
-

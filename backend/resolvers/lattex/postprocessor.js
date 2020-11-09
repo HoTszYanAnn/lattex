@@ -23,6 +23,17 @@ exports.postprocessDocumentData = (parent, input, context, info) => {
 const postprocessData = (data) => {
   //filter out repo not made by lattex
   if (!data || !data.description || !data.description.includes('(made by lattex)')) return null
-
-  return data
+  
+  if (!data.object) return data
+  //images data.object.entries[0]
+  const repo_obj = _.mapValues(_.keyBy(data.object.entries, 'name'), 'object')
+  
+  const image = _.mapValues(_.keyBy(repo_obj.images.entries, 'name'), 'object')
+  const latex_code = repo_obj['main.tex'].text
+  
+  return {
+    ...data,
+    latex_code,
+    image,
+  }
 }

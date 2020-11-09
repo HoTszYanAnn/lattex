@@ -38,6 +38,7 @@ const server = new ApolloServer({
         `
       }, undefined, { gitUser })
     } catch (e) {
+      console.log(e)
       throw new Error('not authenticate')
     }
 

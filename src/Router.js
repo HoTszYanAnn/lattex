@@ -72,7 +72,7 @@ const Router = ({ AUTHORIZED, USER_PROFILE }) => {
 
 const Routing = ({ dispatch, AUTHORIZED, TOKEN, USER_PROFILE, history, location }) => {
   const [readyToRender, setReadyToRender] = useState(false);
-
+  console.log(TOKEN)
   const onTokenGqlCompleted = (data) => {
     if (data) {
       localStorage.setItem("lattex-token", data)
@@ -101,6 +101,8 @@ const Routing = ({ dispatch, AUTHORIZED, TOKEN, USER_PROFILE, history, location 
     onCompleted: onProfileGqlCompleted,
     onError: (error) => {
       onGqlError(error);
+      localStorage.removeItem("lattex-token");
+      dispatch(logout());
       setReadyToRender(true);
     },
   });
@@ -110,10 +112,10 @@ const Routing = ({ dispatch, AUTHORIZED, TOKEN, USER_PROFILE, history, location 
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result)
           onTokenGqlCompleted(result?.access_token)
         },
         (error) => {
+          localStorage.removeItem("lattex-token");
           dispatch(logout());
           setReadyToRender(true);
         }
