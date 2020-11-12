@@ -13,7 +13,10 @@ const useStyles = makeStyles((theme) => ({
   },
   footer: {
     height: '25px',
-    backgroundColor: '#ffe7bd'
+    width: '100%',
+    backgroundColor: '#ffe7bd',
+    position: 'sticky',
+    bottom: '0px'
   }
 }));
 

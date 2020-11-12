@@ -1,8 +1,58 @@
 {
-    "section": {
-        "name":  "Unnumbered Section",
-        "size": "12pt",
-        "weight": "bold",
-        "code": "\\section*{}"
+    "part*": {
+        "name": "Unnumbered Part",
+        "left": "",
+        "top": "1em",
+        "bottom": "1em",
+        "size": "2.2rem",
+        "weight": "bold"
+    },
+    "chapter*": {
+        "name": "Unnumbered Chapter",
+        "left": "",
+        "top": "1em",
+        "bottom": "1em",
+        "size": "1.45rem",
+        "weight": "bold"
+    },
+    "section*": {
+        "name": "Unnumbered Section",
+        "left": "",
+        "top": "3.5ex",
+        "bottom": "2.3ex",
+        "size": "1.45rem",
+        "weight": "bold"
+    },
+    "subsection*": {
+        "name": "Unnumbered Subsection",
+        "left": "",
+        "top": "3.25ex",
+        "bottom": "1.5ex",
+        "size": "1.2rem",
+        "weight": "bold"
+    },
+    "subsubsection*": {
+        "name": "Unnumbered Subsubsection",
+        "left": "",
+        "top": "3.25ex",
+        "bottom": "1.5ex",
+        "size": "1rem",
+        "weight": "bold"
+    },
+    "paragraph*": {
+        "name": "Unnumbered Paragraph",
+        "left": "",
+        "top": "3.25ex",
+        "bottom": "1em",
+        "size": "1.2rem",
+        "weight": "bold"
+    },
+    "subparagraph*": {
+        "name": "Unnumbered Subparagraph",
+        "left": "1em",
+        "top": "3.25ex",
+        "bottom": "1em",
+        "size": "1rem",
+        "weight": "bold"
     }
 }

@@ -1,35 +1,33 @@
 import React from 'react'
 import { 
   Box,
-  TextField,
+  Container,
  } from '@material-ui/core'
- import dict from '../../dict.json'
+import TextTitle from './components/text-title'
+import dict from '../../dict.json'
+import TextContent from './components/text-content'
 
- 
-function TextBox(props) {
-  const info = props.info;
-  return(
-    <TextField
-        id="standard-input" 
-        label={info.name}
-        fullWidth
-        inputProps={{
-          style: {
-              fontSize: info.size,
-              fontFamily: info.family,
-              fontWeight: info.weight,
-          }
-        }}
-    />
-  )
-}
+const UIEditor = () => {
+  const items=[]
+  for (var key in dict) {
+    items.push(<TextTitle info={dict[key]}/>)
+  }
 
-const UIEditor = (textbox) => {
-  console.log(dict['section']);
   return (
-    <Box>
-      <TextBox info={dict['section']}/>
+    <>
+    <Box 
+      style={{
+        boxSizing: 'border-box',
+        overflow: "auto",
+        height: '100%',
+        padding: '2em'
+      }} 
+    >
+     <TextContent/>
+     {items}
+     {items}
     </Box>
+    </>
   )
 }
 
