@@ -13,7 +13,6 @@ const TextContent = () => {
     <RichTextEditor 
         value={value}
         onChange={onValueChange} 
-        style={{zIndex: '-10'}}
     />
   );
 }

@@ -1,5 +1,5 @@
 exports.git = {
-  client_id: 'f44bb47b10c102f17f8a',
-  client_secret: '9b9906c3c3e2e1f08b0a48155c48d4f494ec1aef',
-  redirect_uri: 'http://localhost:3000/login'
+  client_id: '91ba4217f7895ed7e855',
+  client_secret: 'e73d14425c267d170211ebc394656e82b785e412',
+  redirect_uri: 'http://localhost:3000'
 } 
