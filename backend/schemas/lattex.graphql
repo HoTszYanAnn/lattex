@@ -7,12 +7,6 @@ type Mutation {
   addDocument(input: DocumentCreateInput!): Document!
 }
 
-input DocumentCreateInput {
-  name: String!
-  description: String
-  visibility: RepositoryVisibility!
-}
-
 enum RepositoryVisibility {
   PUBLIC
   PRIVATE
@@ -29,14 +23,8 @@ type Document {
   url: URL!
 
   latex: LaTeXDoc
-
-  updateDocument(input: DocumentUpdateInput!): Document
-  updateLaTeX(input: LaTeXDocUpdateInput!): LaTeXDoc!
-}
-
-input DocumentUpdateInput {
-  name: String!
-  description: String
+  
+  updateLaTeX(input: LaTeXDocUpdateInput!): Document
 }
 
 type LaTeXDoc {
@@ -46,6 +34,7 @@ type LaTeXDoc {
   haveContentPage: Boolean!
   haveTitle: Boolean!
   titles: Titles!
+  setting: Setting
   content: [Section!]
   image: [File!]
 
@@ -53,6 +42,12 @@ type LaTeXDoc {
   latex_code: String!
 
   # function to update latex document
+}
+
+type Setting{
+  fontSize: Float
+  lineHeight: Float
+  firstLineIndentation: Float
 }
 
 type Titles {
@@ -72,33 +67,4 @@ type File {
   name: String!
   oid: String!
   byteSize: String!
-}
-
-input LaTeXDocUpdateInput {
-  filename: String!
-
-  documentType: String!
-  haveContentPage: Boolean!
-  haveTitle: Boolean!
-  titles: TitlesInput!
-  content: [SectionInput!]
-  image: [FileInput!]
-}
-
-input TitlesInput {
-  title: String!
-  author: String
-  date: DateTime
-  always_today: Boolean!
-}
-
-input SectionInput {
-  section: [SectionInput!]
-  content: String!
-}
-
-input FileInput {
-  filename: String!
-  mimetype: String!
-  encoding: String!
 }

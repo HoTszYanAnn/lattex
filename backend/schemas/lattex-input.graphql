@@ -1,0 +1,46 @@
+input DocumentCreateInput {
+  name: String!
+  description: String
+  visibility: RepositoryVisibility!
+}
+
+input DocumentUpdateInput {
+  name: String!
+  description: String
+}
+
+input LaTeXDocUpdateInput {
+  filename: String
+
+  documentType: String
+  haveContentPage: Boolean
+  haveTitle: Boolean
+  titles: TitlesInput
+  setting: SettingInput
+  content: [SectionInput!]
+  image: [FileInput!]
+}
+
+input SettingInput {
+  fontSize: Float
+  lineHeight: Float
+  firstLineIndentation: Float
+}
+input TitlesInput {
+  title: String
+  author: String
+  date: DateTime
+  always_today: Boolean
+}
+
+input SectionInput {
+  section: [SectionInput!]
+  content: String
+  name: String
+}
+
+input FileInput {
+  filename: String
+  mimetype: String
+  encoding: String
+}

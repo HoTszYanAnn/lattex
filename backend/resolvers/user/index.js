@@ -1,7 +1,7 @@
 const _ = require("lodash");
 const { pipeResolvers, combineResolvers } = require("graphql-resolvers");
 const { getSelfInfo } = require("./user-impl");
-const { executeGitGraphql } = require("../executeGitGraphql");
+const { executeGitGraphql } = require("../executeQuery");
 
 exports.Query = {
   me: pipeResolvers(

@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { executeGitGraphql } = require('./resolvers/executeGitGraphql')
+const { executeGitGraphql } = require('./resolvers/executeQuery')
 const { getAuthToken } = require('./api/authenticate')
 var cors = require('cors')
 const express = require("express");
@@ -14,44 +14,46 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req }) => {
-    const token = req.headers.authorization
-      ? req.headers.authorization.split(" ")[1]
-      : ''
-
-    const gitUser = axios.create({
-      headers: {
-        common: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-      baseURL: 'https://api.github.com/graphql'
-    });
-
     try {
+      const token = req.headers.authorization
+        ? req.headers.authorization.split(" ")[1]
+        : ''
+
+      const gitUser = axios.create({
+        headers: {
+          common: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        baseURL: 'https://api.github.com'
+      });
+
       const res = await executeGitGraphql({
         query: `
           query{
             viewer{
-              avatarUrl
+              login
             }
           }
         `
       }, undefined, { gitUser })
+      const username = res.rawData.viewer.login
+
+      return Object.assign(
+        {},
+        {
+          req,
+          token,
+          gitUser,
+          username
+        },
+        {
+        }
+      );
     } catch (e) {
       console.log(e)
       throw new Error('not authenticate')
     }
-
-    return Object.assign(
-      {},
-      {
-        req,
-        token,
-        gitUser
-      },
-      {
-      }
-    );
   },
   playground: true,
 });

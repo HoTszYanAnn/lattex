@@ -30,10 +30,13 @@ const postprocessData = (data) => {
   
   const image = _.mapValues(_.keyBy(repo_obj.images.entries, 'name'), 'object')
   const latex_code = repo_obj['main.tex'].text
-  
+  const oid = repo_obj['main.tex'].oid
+
   return {
     ...data,
+    oid,
     latex_code,
     image,
   }
 }
+
