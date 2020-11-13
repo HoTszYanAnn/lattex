@@ -4,6 +4,7 @@ type Query {
 }
 
 type Mutation {
+  document(name: String!): Document!
   addDocument(input: DocumentCreateInput!): Document!
 }
 

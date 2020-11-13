@@ -50,6 +50,15 @@ exports.Query = {
 }
 
 exports.Mutation = {
+  document: pipeResolvers(
+    getDocument,
+    executeGitGraphql,
+    (parent) => ({
+      ...parent,
+      data: parent.rawData.viewer.repository
+    }),
+    postprocessDocumentData,
+  ),
   addDocument: pipeResolvers(
     addDocument,
     executeGitGraphql,
