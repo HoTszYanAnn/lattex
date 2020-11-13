@@ -26,6 +26,9 @@ const postprocessData = (data) => {
   
   if (!data.object) return data
   //images data.object.entries[0]
+  
+  const description = data.description.replace('(made by lattex)', '')
+  
   const repo_obj = _.mapValues(_.keyBy(data.object.entries, 'name'), 'object')
   
   const image = _.mapValues(_.keyBy(repo_obj.images.entries, 'name'), 'object')
@@ -34,6 +37,7 @@ const postprocessData = (data) => {
 
   return {
     ...data,
+    description,
     oid,
     latex_code,
     image,

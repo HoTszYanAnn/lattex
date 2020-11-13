@@ -25,6 +25,7 @@ type Document {
   latex: LaTeXDoc
   
   updateLaTeX(input: LaTeXDocUpdateInput!): Document
+  deleteDocument: Boolean
 }
 
 type LaTeXDoc {

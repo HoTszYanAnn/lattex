@@ -30,8 +30,21 @@ exports.executeGitPutRepo = async (parent, input, { gitUser, username }, info) =
       message: `update ${new Date()}`,
       content: utf8.encode(Base64.encode(parseText))
     })).data;
-    
+
     return parent;
+  } catch (e) {
+    console.log(e)
+    throw new Error(e)
+  }
+}
+
+exports.executeGitDeleteRepo = async (parent, input, { gitUser, username }, info) => {
+  const { parseText, name, oid } = parent
+  try {
+    const rawData = (await gitUser.delete(`/repos/${username}/${name}`, {
+    })).data;
+
+    return true;
   } catch (e) {
     console.log(e)
     throw new Error(e)
