@@ -18,7 +18,6 @@ const { executeGitGraphql, executeGitPutRepo } = require("../executeQuery");
 
 exports.Document = {
   latex: parseLaTeXCodeToObject,
-  updateDocument: () => null,
   updateLaTeX: pipeResolvers(
     parseObjectToLatexCode,
     executeGitPutRepo,
