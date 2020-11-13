@@ -22,7 +22,7 @@ import LoginButton from './components/login-button'
 
 const useStyles = makeStyles((theme) => ({
   header: {
-    height: '56px',
+    height: '6vh',
   }
 }));
 

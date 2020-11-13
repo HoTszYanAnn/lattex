@@ -19,7 +19,7 @@ const LoginButton = () => {
   const scopes = ['user', 'repo'];
   const scope = scopes.join(',');
   const client_id = process.env.REACT_APP_CLIENT_ID;
-  const redirect_uri = process.env.REACT_APP_REDIRECT_URI;
+  const redirect_uri = process.env.REACT_APP_REACT_URL;
 
   return (
     <Button
