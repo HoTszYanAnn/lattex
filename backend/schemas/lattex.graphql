@@ -37,8 +37,8 @@ type LaTeXDoc {
   haveTitle: Boolean!
   titles: Titles!
   setting: Setting
-  content: [Section!]
-  image: [File!]
+  contents: [Section!]
+  images: [File!]
 
   # complete latex code
   latex_code: String!
@@ -60,9 +60,8 @@ type Titles {
 }
 
 type Section {
-  section: [Section!]
-  name: String
-  content: String!
+  code: String
+  text: String
 }
 
 type File {

@@ -2,7 +2,7 @@ const _ = require("lodash")
 
 exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
   const { latex_code, image } = parent
-  const textArray = latex_code.split(/\s*(\n)\s*/).filter(item => item !== '\n')
+  const textArray = latex_code.split(/\s*(\n)\s*/).filter(item => !['\n', ''].includes(item))
   const beginIndex = textArray.findIndex(item => item.includes('\\begin{document}'))
   const makeTitleIndex = textArray.findIndex(item => item.includes('\\maketitle'))
   const tableOfContentIndex = textArray.findIndex(item => item.includes('\\tableofcontents'))
@@ -51,33 +51,18 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
   let contentArrayObject = []
   for (let i = 1; i < content.length - 1; i++) {
     if (content[i].startsWith('\\')) {
-      if (content[i].startsWith('\\section')) {
-        contentArrayObject.push({
-          name: content[i].substring(1).split(/{|}/, 2)[1],
-        })
-      } else if (content[i].startsWith('\\subsection')) {
-        //subsection
-        if (!contentArrayObject[contentArrayObject.length - 1].section)
-          contentArrayObject[contentArrayObject.length - 1].section = []
-        contentArrayObject[contentArrayObject.length - 1].section.push({
-          name: content[i].substring(1).split(/{|}/, 2)[1],
-          content: content[i + 1]
-        })
-        i = i + 1
-      } else if (content[i].startsWith('\\newpage')) {
-        contentArrayObject.push({
-          content: content[i]
-        })
-      }
+      contentArrayObject.push({
+        code: content[i],
+      })
     } else {
-      contentArrayObject[contentArrayObject.length - 1].content = content[i]
+      contentArrayObject[contentArrayObject.length - 1].text = content[i]
     }
   }
 
   return {
     ...settingObject,
-    image: imageObject,
-    content: contentArrayObject
+    images: imageObject,
+    contents: contentArrayObject
   }
 }
 
@@ -101,27 +86,11 @@ exports.parseObjectToLatexCode = (parent, { input }, context, info) => {
   parseText = parseText + `${!updatedObject.haveContentPage ? '%' : ''}\\tableofcontents\n`
 
   //content
-  updatedObject.content.map((item) => {
+  updatedObject.contents.map((item) => {
     if (item.name) {
-      parseText = parseText + `\\section{${item.name}}\n`
+      parseText = parseText + `${item.code}\n`
     }
-    parseText = parseText + `${item.content}\n`
-    if (item.section && item.section.length > 0) {
-      item.section.map((subItem) => {
-        if (subItem.name) {
-          parseText = parseText + `\\subsection{${subItem.name}}\n`
-        }
-        parseText = parseText + `${subItem.content}\n`
-        if (subItem.section && subItem.section.length > 0) {
-          item.section.map((subsubItem) => {
-            if (subsubItem.name) {
-              parseText = parseText + `\\subsubsection{${subsubItem.name}}\n`
-            }
-            parseText = parseText + `${subsubItem.content}\n`
-          })
-        }
-      })
-    }
+    parseText = parseText + `${item.text}\n`
   })
 
   //end

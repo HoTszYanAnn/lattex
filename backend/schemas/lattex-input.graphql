@@ -34,9 +34,8 @@ input TitlesInput {
 }
 
 input SectionInput {
-  section: [SectionInput!]
-  content: String
-  name: String
+  code: String
+  text: String
 }
 
 input FileInput {
