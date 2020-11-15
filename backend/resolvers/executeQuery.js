@@ -49,3 +49,20 @@ exports.executeGitDeleteRepo = async (parent, { name }, { gitUser, username }, i
     throw new Error(e)
   }
 }
+
+exports.executeCopyTemplateGraphql = async (parent, { path, input }, { gitUser, username }, info) => {
+  try{
+    const rawData = (await gitUser.get(`/repos/MHW2003/template/contents/${path}`, {
+    })).data.content;
+
+    const putResult = (await gitUser.put(`/repos/${username}/${input.name}/contents/main.tex`, {
+      message: `clone ${path} ${new Date()}`,
+      content: rawData
+    })).data;
+
+    return parent
+  }catch(e){
+    console.log(e)
+    throw new Error(e)
+  }
+}

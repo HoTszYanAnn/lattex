@@ -5,7 +5,7 @@ type Query {
 
 type Mutation {
   document(name: String!): Document!
-  addDocument(input: DocumentCreateInput!): Document!
+  addDocument(input: DocumentCreateInput!, path: String!): Document!
   deleteDocument(name: String!): [Document!]
 }
 

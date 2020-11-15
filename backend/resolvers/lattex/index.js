@@ -14,7 +14,12 @@ const {
   parseLaTeXCodeToObject,
   parseObjectToLatexCode,
 } = require("./parse-lattex")
-const { executeGitGraphql, executeGitPutRepo, executeGitDeleteRepo } = require("../executeQuery");
+const { 
+  executeGitGraphql, 
+  executeGitPutRepo, 
+  executeGitDeleteRepo,
+  executeCopyTemplateGraphql,
+} = require("../executeQuery");
 
 exports.Document = {
   latex: parseLaTeXCodeToObject,
@@ -65,6 +70,7 @@ exports.Mutation = {
       ...parent,
       data: parent.rawData.createRepository.repository
     }),
+    executeCopyTemplateGraphql,
     postprocessDocumentData,
   ),
   deleteDocument: pipeResolvers(

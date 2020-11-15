@@ -9,7 +9,7 @@ import {
   FormControlLabel
 } from '@material-ui/core'
 
-const DocumentInformationForm = ({ docInfo, setDocInfo }) => {
+const DocumentInformationForm = ({ docInfo, setDocInfo, filename }) => {
   const onChange = (key, val) => {
     setDocInfo({ ...docInfo, [key]: val })
   }
@@ -20,6 +20,8 @@ const DocumentInformationForm = ({ docInfo, setDocInfo }) => {
         <Grid item container justify="center" style={{ width: '60%' }} spacing={4}>
           <Grid item xs={12}>
             <TextField
+              error={filename.includes(docInfo.name) || !docInfo.name}
+              helperText={filename.includes(docInfo.name) ? 'Repeated' : !docInfo.name ? 'cannot be empty' : ''}
               fullWidth
               value={docInfo.name}
               onChange={(e) => onChange('name', e.target.value)}

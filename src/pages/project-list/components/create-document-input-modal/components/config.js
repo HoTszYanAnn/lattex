@@ -1,22 +1,22 @@
-import img1 from '../../../../../assets/template-image/1.jpg'
-import img2 from '../../../../../assets/template-image/2.jpg'
+import img1 from '../../../../../assets/template-image/article-1.jpg'
+import img2 from '../../../../../assets/template-image/report-1.jpg'
 import { v4 as uuidv4 } from 'uuid';
 
 export const templateList = [
   {
-    pdf: `${process.env.REACT_APP_REACT_URL}/pdf/1.pdf`,
+    pdf: `${process.env.REACT_APP_REACT_URL}/pdf/default.pdf`,
     image: img1,
-    name: 'default article',
-    code: 'https://github.com/MHW2003/defaultTemplate/blob/master/default.tex',
-    description: 'aaaaaaaaaa',
+    name: 'article',
+    path: 'default.tex',
+    description: 'simple document',
     key: uuidv4(),
   },
   {
-    pdf: `${process.env.REACT_APP_REACT_URL}/pdf/2.pdf`,
+    pdf: `${process.env.REACT_APP_REACT_URL}/pdf/report.pdf`,
     image: img2,
-    name: 'test2',
-    code: '',
-    description: 'bbbbbbbbb',
+    name: 'report',
+    path: 'report.tex',
+    description: 'simple report',
     key: uuidv4(),
   }
 ]

@@ -23,8 +23,8 @@ const GET_DOCUMENTS_GQL = gql`
 `;
 
 const CREATE_DOCUMENT_GQL = gql`
-  mutation($input: DocumentCreateInput!) {
-    addDocument(input: $input){
+  mutation($input: DocumentCreateInput!, $path: String!) {
+    addDocument(input: $input, path: $path){
       name
     }
   }
@@ -57,14 +57,17 @@ const ProjectList = () => {
   const history = useHistory();
   const classes = useStyles();
   const [documents, setDocuments] = useState([])
+  const [filename, setFilename] = useState([])
   const [createModalOpen, setCreateModalOpen] = useState(false)
 
   const onGqlCompleted = (data) => {
     setDocuments(data.documents)
+    setFilename(data.documents.map(item => item.name))
   }
 
   const onDeleteGqlCompleted = (data) => {
     setDocuments(data.deleteDocument)
+    setFilename(data.documents.map(item => item.name))
   }
 
   const { loading: getDocumentsGqlLoading } = useQuery(GET_DOCUMENTS_GQL, {
@@ -96,7 +99,8 @@ const ProjectList = () => {
   const createDocument = (input, template) => {
     CreateDocument({
       variables: {
-        input
+        input,
+        path: template.path
       }
     })
   }
@@ -113,7 +117,13 @@ const ProjectList = () => {
   return (
     <>
       <ProjectListTable documents={documents} loading={getDocumentsGqlLoading || deleteDocumentGqlLoading} deleteDocument={deleteDocument} />
-      <CreateDocumentInputModal open={createModalOpen} setOpen={setCreateModalOpen} createDocument={createDocument} createDocumentGqlLoading={createDocumentGqlLoading} />
+      <CreateDocumentInputModal
+        open={createModalOpen}
+        setOpen={setCreateModalOpen}
+        createDocument={createDocument}
+        createDocumentGqlLoading={createDocumentGqlLoading}
+        filename={filename}
+      />
       <Fab className={classes.fab} color='primary' onClick={() => setCreateModalOpen(true)}>
         <AddButton style={{ color: 'white' }} />
       </Fab>

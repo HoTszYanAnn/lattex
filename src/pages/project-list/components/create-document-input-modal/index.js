@@ -37,7 +37,7 @@ function getSteps() {
   return ['Document Information', 'Select Template', 'Confirm Create Document'];
 }
 
-const CreateDocumentInputModal = ({ open, setOpen, createDocument, createDocumentGqlLoading}) => {
+const CreateDocumentInputModal = ({ open, setOpen, createDocument, createDocumentGqlLoading, filename}) => {
   const classes = useStyles();
   const [docInfo, setDocInfo] = useState({
     name: '',
@@ -60,7 +60,7 @@ const CreateDocumentInputModal = ({ open, setOpen, createDocument, createDocumen
 
   useEffect(()=> {
     if (activeStep === 0){
-      if (docInfo.name){
+      if (docInfo.name && !filename.includes(docInfo.name)){
         setNextDisabled(false)
       }else{
         setNextDisabled(true)
@@ -105,7 +105,7 @@ const CreateDocumentInputModal = ({ open, setOpen, createDocument, createDocumen
           ))}
         </Stepper>
         <div style={{ maxHeight: '70vh' }}>
-          {activeStep === 0 && <DocumentInfomationForm docInfo={docInfo} setDocInfo={setDocInfo} />}
+          {activeStep === 0 && <DocumentInfomationForm docInfo={docInfo} setDocInfo={setDocInfo} filename={filename} />}
           {activeStep === 1 && <SelectTemplateForm template={template} setTemplate={setTemplate} />}
           {activeStep === 2 && <ConfirmCreateDocument docInfo={docInfo} template={template} />}
 
