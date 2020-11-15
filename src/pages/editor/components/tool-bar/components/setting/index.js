@@ -26,45 +26,19 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SaveIcon from '@material-ui/icons/Save';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { difference } from '../../../../../../function'
+import _ from 'lodash'
 
 // change document type, title, have content, etc... 
 // (edit the latexcode before /begin)
-const classList = ['article', 'report', 'book']
+const classList = ['article', 'report']
 const titleList = ['title', 'date', 'author']
 const commentBoolLineList = ['haveTitle', 'haveContentPage']
-const wording = {
-  'haveTitle': 'maketitle',
-  'haveContentPage': 'tableofcontents'
-}
 
-const Setting = ({ packedLatexCode, setPackedLatexCode }) => {
-  const defaultSetting = () => {
-    const documentType = classList.find((val) => packedLatexCode.documentType.includes(val))
-    const split = packedLatexCode.titles.split('\n')
-    const titles = titleList.reduce((map, key) => {
-      return {
-        ...map,
-        [key]: split.find((val) => val.includes(key))?.replace(`\\${key}{`, '').slice(0, -1) || null
-      }
-    }, {})
-
-    const commentBoolLine = commentBoolLineList.reduce((map, key) => {
-      return {
-        ...map,
-        [key]: !packedLatexCode[key].includes('%')
-      }
-    }, {})
-
-    return {
-      titles,
-      documentType,
-      ...commentBoolLine
-    }
-  }
-
+const Setting = ({ doc, pushAndCompile }) => {
   const [open, setOpen] = useState(false)
-  const origSetting = defaultSetting()
-  const [setting, setSetting] = useState(defaultSetting())
+  const origSetting = _(doc.latex).pick(['haveTitle', 'haveContentPage', 'titles', 'documentclass']).value()
+
+  const [setting, setSetting] = useState(origSetting)
 
   const onSettingChange = (key, val) => {
     if (titleList.includes(key)) {
@@ -82,25 +56,10 @@ const Setting = ({ packedLatexCode, setPackedLatexCode }) => {
     setOpen(val)
   }
 
-  const saveCode = () => {
+  const onSave = () => {
     const diff = difference(setting, origSetting)
-    for (const key in diff) {
-      if (commentBoolLineList.includes(key)) {
-        diff[key] = `${diff[key] ? '' : '%'}\\${wording[key]}\n`
-      } else if (key === "documentType") {
-        diff[key] = `\\document{${diff[key]}}\n`
-      } else if (key === "titles") {
-        diff[key] = titleList.reduce((map, deepkey) => {
-          return map = map + `\\${deepkey}{${diff.titles[deepkey] || ''}}\n`
-        }, '') 
-      }
-    }
 
-    const newCode = {
-      ...packedLatexCode,
-      ...diff
-    }
-    setPackedLatexCode(newCode)
+    pushAndCompile(diff)
     setOpen(false)
   }
 
@@ -109,7 +68,7 @@ const Setting = ({ packedLatexCode, setPackedLatexCode }) => {
       <Tooltip title='Setting' aria-label='Setting' placement="top">
         <IconButton
           onClick={() => {
-            setSetting(defaultSetting)
+            setSetting(origSetting)
             handleChange(true)
           }}
         >
@@ -136,7 +95,7 @@ const Setting = ({ packedLatexCode, setPackedLatexCode }) => {
           </Tooltip>
           <Box flexGrow={1} />
           <Tooltip title="Save" placement="top">
-            <IconButton onClick={saveCode}>
+            <IconButton onClick={onSave}>
               <SaveIcon />
             </IconButton>
           </Tooltip>
@@ -148,9 +107,9 @@ const Setting = ({ packedLatexCode, setPackedLatexCode }) => {
               <FormControl fullWidth>
                 <InputLabel >Document Type</InputLabel>
                 <Select
-                  value={setting.documentType}
+                  value={setting.documentclass}
                   onChange={(e) =>
-                    onSettingChange('documentType', e.target.value)
+                    onSettingChange('documentclass', e.target.value)
                   }
                 >
                   {classList.map((val) =>
@@ -180,7 +139,7 @@ const Setting = ({ packedLatexCode, setPackedLatexCode }) => {
               <TextField
                 label="date"
                 fullWidth
-                disabled={setting.titles.date === '\\today'}
+                disabled={setting.titles.always_today}
                 value={setting.titles.date}
                 onChange={(e) => onSettingChange('date', e.target.value)}
               />
@@ -189,8 +148,8 @@ const Setting = ({ packedLatexCode, setPackedLatexCode }) => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={setting.titles.date === '\\today'}
-                    onChange={(e) => onSettingChange('date', e.target.checked ? '\\today' : null)
+                    checked={setting.titles.always_today}
+                    onChange={(e) => onSettingChange('always_today', e.target.checked)
                     }
                   />
                 }

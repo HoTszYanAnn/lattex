@@ -22,6 +22,7 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
         if (key === 'date') {
           if (value === '\\today') {
             acc.titles['always_today'] = true
+            acc.titles[key] = null
           } else {
             acc.titles['always_today'] = false
             acc.titles[key] = value;
@@ -58,11 +59,12 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
       contentArrayObject[contentArrayObject.length - 1].text = content[i]
     }
   }
-
+  console.log(settingObject)
   return {
     ...settingObject,
     images: imageObject,
-    contents: contentArrayObject
+    contents: contentArrayObject,
+    latex_code,
   }
 }
 
@@ -85,12 +87,15 @@ exports.parseObjectToLatexCode = (parent, { input }, context, info) => {
   //contentpage
   parseText = parseText + `${!updatedObject.haveContentPage ? '%' : ''}\\tableofcontents\n`
 
+  console.log(updatedObject.contents)
   //content
   updatedObject.contents.map((item) => {
-    if (item.name) {
+    if (item.code) {
       parseText = parseText + `${item.code}\n`
     }
-    parseText = parseText + `${item.text}\n`
+    if (item.text) {
+      parseText = parseText + `${item.text}\n`
+    }
   })
 
   //end

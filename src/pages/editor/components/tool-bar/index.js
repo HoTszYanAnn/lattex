@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ToolBar = ({ latexCode, showCompiler, changeShowCompiler, pushAndCompile, packedLatexCode, setPackedLatexCode }) => {
+const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc }) => {
   const classes = useStyles()
 
   return (
@@ -32,14 +32,14 @@ const ToolBar = ({ latexCode, showCompiler, changeShowCompiler, pushAndCompile, 
       <Box className={classes.toolBox}>
         <Box mx={1} />
         <SettingButton 
-          packedLatexCode={packedLatexCode} 
-          setPackedLatexCode={setPackedLatexCode}
+          doc={doc}
+          pushAndCompile={pushAndCompile}
         />
         <Box alignSelf='flex-start'>
           <AddButton/>
         </Box>
         <Box flexGrow={1} />
-        <LatexCodeButton code={latexCode} />
+        <LatexCodeButton code={doc.latex.latex_code} />
         <Tooltip title='Show Compiler?' aria-label='Show Compiler?' placement="top">
           <IconButton onClick={changeShowCompiler}>{showCompiler ? <VisibilityIcon /> : <VisibilityOffIcon />}</IconButton>
         </Tooltip>
