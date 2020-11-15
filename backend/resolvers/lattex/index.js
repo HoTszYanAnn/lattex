@@ -29,7 +29,6 @@ exports.Document = {
     }),
     postprocessDocumentData,
   ),
-  deleteDocument: executeGitDeleteRepo
 }
 
 exports.Query = {
@@ -68,4 +67,10 @@ exports.Mutation = {
     }),
     postprocessDocumentData,
   ),
+  deleteDocument: pipeResolvers(
+    executeGitDeleteRepo,
+    getDocuments,
+    executeGitGraphql,
+    postprocessDocumentsData,
+  )
 }

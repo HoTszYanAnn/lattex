@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 const LoginButton = () => {
   const classes = useStyles();
 
-  const scopes = ['user', 'repo'];
+  const scopes = ['user', 'repo', 'delete_repo'];
   const scope = scopes.join(',');
   const client_id = process.env.REACT_APP_CLIENT_ID;
   const redirect_uri = process.env.REACT_APP_REACT_URL;

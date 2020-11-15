@@ -38,8 +38,7 @@ exports.executeGitPutRepo = async (parent, input, { gitUser, username }, info) =
   }
 }
 
-exports.executeGitDeleteRepo = async (parent, input, { gitUser, username }, info) => {
-  const { parseText, name, oid } = parent
+exports.executeGitDeleteRepo = async (parent, { name }, { gitUser, username }, info) => {
   try {
     const rawData = (await gitUser.delete(`/repos/${username}/${name}`, {
     })).data;

@@ -6,6 +6,7 @@ type Query {
 type Mutation {
   document(name: String!): Document!
   addDocument(input: DocumentCreateInput!): Document!
+  deleteDocument(name: String!): [Document!]
 }
 
 enum RepositoryVisibility {
@@ -26,7 +27,6 @@ type Document {
   latex: LaTeXDoc
   
   updateLaTeX(input: LaTeXDocUpdateInput!): Document
-  deleteDocument: Boolean
 }
 
 type LaTeXDoc {

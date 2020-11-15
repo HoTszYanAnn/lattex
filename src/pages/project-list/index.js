@@ -32,8 +32,13 @@ const CREATE_DOCUMENT_GQL = gql`
 
 const DELETE_DOCUMENT_GQL = gql`
   mutation($name: String!) {
-    document(name: $name){
-      deleteDocument
+    deleteDocument(name: $name){
+      id
+      name
+      description
+      pushedAt
+      createdAt
+      isPrivate
     }
   }
 `;
@@ -58,6 +63,10 @@ const ProjectList = () => {
     setDocuments(data.documents)
   }
 
+  const onDeleteGqlCompleted = (data) => {
+    setDocuments(data.deleteDocument)
+  }
+
   const { loading: getDocumentsGqlLoading } = useQuery(GET_DOCUMENTS_GQL, {
     onCompleted: onGqlCompleted,
     onError: onGqlError,
@@ -79,7 +88,7 @@ const ProjectList = () => {
   })
 
   const [DeleteDocument, { loading: deleteDocumentGqlLoading }] = useMutation(DELETE_DOCUMENT_GQL, {
-    onCompleted: onCreateGqlCompleted,
+    onCompleted: onDeleteGqlCompleted,
     onError: onGqlError,
     fetchPolicy: 'no-cache'
   })
@@ -103,8 +112,8 @@ const ProjectList = () => {
 
   return (
     <>
-      <ProjectListTable documents={documents} loading={getDocumentsGqlLoading} deleteDocument={deleteDocument}/>
-      <CreateDocumentInputModal open={createModalOpen} setOpen={setCreateModalOpen} createDocument={createDocument} createDocumentGqlLoading={createDocumentGqlLoading}/>
+      <ProjectListTable documents={documents} loading={getDocumentsGqlLoading || deleteDocumentGqlLoading} deleteDocument={deleteDocument} />
+      <CreateDocumentInputModal open={createModalOpen} setOpen={setCreateModalOpen} createDocument={createDocument} createDocumentGqlLoading={createDocumentGqlLoading} />
       <Fab className={classes.fab} color='primary' onClick={() => setCreateModalOpen(true)}>
         <AddButton style={{ color: 'white' }} />
       </Fab>
