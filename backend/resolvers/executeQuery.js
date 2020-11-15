@@ -57,6 +57,7 @@ exports.executeCopyTemplateGraphql = async (parent, { path, input }, { gitUser, 
 
     const putResult = (await gitUser.put(`/repos/${username}/${input.name}/contents/main.tex`, {
       message: `clone ${path} ${new Date()}`,
+      branch: 'master',
       content: rawData
     })).data;
 

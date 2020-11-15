@@ -30,8 +30,10 @@ const postprocessData = (data) => {
   const description = data.description.replace('(made by lattex)', '')
   
   const repo_obj = _.mapValues(_.keyBy(data.object.entries, 'name'), 'object')
-  
-  const image = _.mapValues(_.keyBy(repo_obj.images.entries, 'name'), 'object')
+  let image = []
+  if (repo_obj.images){
+     image = _.mapValues(_.keyBy(repo_obj.images.entries, 'name'), 'object')
+  }
   const latex_code = repo_obj['main.tex'].text
   const oid = repo_obj['main.tex'].oid
 
