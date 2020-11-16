@@ -90,10 +90,12 @@ const Routing = ({ dispatch, AUTHORIZED, TOKEN, USER_PROFILE, history, location 
     console.log(data)
     if (me) {
       dispatch(login(me));
+      history.push(APP_PATHS.HOME)
       setReadyToRender(true);
     } else {
       localStorage.removeItem("lattex-token");
       dispatch(logout());
+      history.push(APP_PATHS.HOME)
     }
   };
 
@@ -117,6 +119,7 @@ const Routing = ({ dispatch, AUTHORIZED, TOKEN, USER_PROFILE, history, location 
         (error) => {
           localStorage.removeItem("lattex-token");
           dispatch(logout());
+          history.push(APP_PATHS.HOME)
           setReadyToRender(true);
         }
       )
