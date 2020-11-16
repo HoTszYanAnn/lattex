@@ -47,11 +47,11 @@ const HeaderMenu = ({ USER_PROFILE, client, dispatch }) => {
 
   return (
     <>
-      <Button size="small" 
-        onClick={handleMenu} 
+      <Button size="small"
+        onClick={handleMenu}
         startIcon={<Avatar src={USER_PROFILE.avatarUrl} />}
-        >
-          {USER_PROFILE.name}
+      >
+        {USER_PROFILE.name}
       </Button>
       <Menu
         id="menu-appbar"
@@ -85,10 +85,10 @@ const Header = ({ AUTHORIZED, USER_PROFILE, client, dispatch }) => {
     <>
       <AppBar position="static" className={classes.header}>
         <Toolbar>
-          <Typography variant="h5">LätTeX</Typography>
+          <Typography variant="h4" component={Link} to={APP_PATHS.HOME} style={{ textDecoration: 'none', color: 'white' }}>LätTeX</Typography>
           <Box flexGrow={1} />
           {AUTHORIZED
-            ? <HeaderMenu USER_PROFILE={USER_PROFILE} client={client} dispatch={dispatch}/>
+            ? <HeaderMenu USER_PROFILE={USER_PROFILE} client={client} dispatch={dispatch} />
             : <LoginButton />
           }
         </Toolbar>
