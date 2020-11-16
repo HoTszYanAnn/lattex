@@ -3,6 +3,7 @@ import { forwardRef } from 'react';
 import MaterialTable, { MTableToolbar } from 'material-table'
 import { useTheme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -22,6 +23,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Fab, IconButton } from '@material-ui/core';
 import { APP_ROUTES } from '../../../config';
+
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -54,10 +56,10 @@ const ProjectListTable = ({ documents, loading, deleteDocument }) => {
         isLoading={loading}
         data={documents}
         columns={[
-          { title: 'name', field: 'name' },
-          { title: 'description', field: 'description' },
-          { title: 'pushedAt', field: 'pushedAt' },
-          { title: 'createdAt', field: 'createdAt' },
+          { title: 'Name', field: 'name' },
+          { title: 'Description', field: 'description' },
+          { title: 'Last Edited Time', field: 'pushedAt', render: rowData => moment(rowData.pushedAt).fromNow(), defaultSort: 'desc',},
+          { title: 'Created Date', field: 'createdAt', render: rowData => moment.utc(rowData.createdAt).format('yyyy-MM-DD') },
         ]}
         title="Documents"
         actions={[
@@ -79,7 +81,9 @@ const ProjectListTable = ({ documents, loading, deleteDocument }) => {
           paging: false,
           headerStyle: {
             backgroundColor: theme.palette.primary.main
-          }
+          },
+          draggable: false,
+          thirdSortClick: false,
         }}
         components={{
           Toolbar: props => (
