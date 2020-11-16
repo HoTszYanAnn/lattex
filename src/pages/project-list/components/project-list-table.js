@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { forwardRef } from 'react';
-import MaterialTable, { MTableToolbar } from 'material-table'
+import MaterialTable, { MTableToolbar, MTableBody, MTableHeader } from 'material-table'
 import { useTheme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
@@ -21,7 +21,13 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Fab, IconButton } from '@material-ui/core';
+import {
+  Fab,
+  IconButton,
+  Paper,
+  Box,
+  withWidth
+} from '@material-ui/core';
 import { APP_ROUTES } from '../../../config';
 
 
@@ -49,6 +55,24 @@ const ProjectListTable = ({ documents, loading, deleteDocument }) => {
   const history = useHistory();
   const theme = useTheme();
 
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    function handleResize() {
+      // Set window width/height to state
+      setWidth(window.innerWidth);
+    }
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, [])
+
   return (
     <>
       <MaterialTable
@@ -58,7 +82,7 @@ const ProjectListTable = ({ documents, loading, deleteDocument }) => {
         columns={[
           { title: 'Name', field: 'name' },
           { title: 'Description', field: 'description' },
-          { title: 'Last Edited Time', field: 'pushedAt', render: rowData => moment(rowData.pushedAt).fromNow(), defaultSort: 'desc',},
+          { title: 'Last Edited Time', field: 'pushedAt', render: rowData => moment(rowData.pushedAt).fromNow(), defaultSort: 'desc', },
           { title: 'Created Date', field: 'createdAt', render: rowData => moment.utc(rowData.createdAt).format('yyyy-MM-DD') },
         ]}
         title="Documents"
@@ -76,20 +100,27 @@ const ProjectListTable = ({ documents, loading, deleteDocument }) => {
         ]}
         options={{
           actionsColumnIndex: -1,
-          minBodyHeight: '80vh',
-          maxBodyHeight: '80vh',
+          minBodyHeight: '75vh',
+          maxBodyHeight: '75vh',
           paging: false,
-          headerStyle: {
-            backgroundColor: theme.palette.primary.main
-          },
           draggable: false,
           thirdSortClick: false,
+          searchFieldAlignment: 'left',
+          showTitle: false,
+          searchFieldStyle: {
+            width: width > 1280 ? 1232 - 24 - 24 : width - 24 * 4,
+          },
+          headerStyle: {
+            backgroundColor: theme.palette.primary.main,
+          }
         }}
         components={{
-          Toolbar: props => (
-            <div style={{ backgroundColor: theme.palette.primary.main }}>
-              <MTableToolbar {...props} />
-            </div>
+          Container: props => (
+            <>
+              <Paper children={props.children.slice(0, 3)} style={{...props.style, backgroundColor: theme.palette.primary.main }} elevation={4}/>
+              <Box mb={3} />
+              <Paper children={props.children.slice(3, props.children.length)} style={props.style} elevation={4}/>
+            </>
           ),
           Action:
             props => {
@@ -118,10 +149,11 @@ const ProjectListTable = ({ documents, loading, deleteDocument }) => {
               }
               return <></>
             }
+
         }}
       />
     </>
   )
 }
 
-export default ProjectListTable
+export default withWidth()(ProjectListTable)
