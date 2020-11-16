@@ -56,7 +56,7 @@ type Titles {
   title: String!
   author: String
   date: DateTime
-  always_today: Boolean!
+  always_today: Boolean
 }
 
 type Section {
