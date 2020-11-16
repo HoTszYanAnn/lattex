@@ -17,7 +17,8 @@ import { useQuery, useMutation } from "react-apollo";
 import { onGqlError } from "../../function"
 import gql from 'graphql-tag'
 import { connect } from "react-redux";
-
+import Loading from '../../components/loading'
+ 
 const DOCUMENT_FRAGMENT = gql`
   fragment DocumentFragment on Document {
     id
@@ -148,7 +149,7 @@ const Editor = ({ width, match }) => {
   }
 
 
-  return loading ? <CircularProgress /> : (
+  return loading ? <Loading /> : (
     <>
       <Box className={classes.toolbar}>
         <ToolBar
