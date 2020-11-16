@@ -16,8 +16,6 @@ const ConfirmCreateDocument = ({ docInfo, template }) => {
             <Typography align="right" >{docInfo.name}</Typography>
             <Typography >Description:</Typography>
             <Typography align="right" >{docInfo.decription ? docInfo.description : 'N/A'}</Typography>
-            <Typography >Visibility:</Typography>
-            <Typography align="right" >{docInfo.visibility}</Typography>
           </Grid>
         </Grid>
         <Grid item xs={6} style={{ height: '60vh' }}>

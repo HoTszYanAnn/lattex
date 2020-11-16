@@ -60,7 +60,7 @@ const CreateDocumentInputModal = ({ open, setOpen, createDocument, createDocumen
 
   useEffect(()=> {
     if (activeStep === 0){
-      if (docInfo.name && !filename.includes(docInfo.name)){
+      if (docInfo.name && !filename.includes(docInfo.name) && !docInfo.name.includes(' ')){
         setNextDisabled(false)
       }else{
         setNextDisabled(true)

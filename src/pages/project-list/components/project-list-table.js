@@ -58,7 +58,6 @@ const ProjectListTable = ({ documents, loading, deleteDocument }) => {
           { title: 'description', field: 'description' },
           { title: 'pushedAt', field: 'pushedAt' },
           { title: 'createdAt', field: 'createdAt' },
-          { title: 'isPrivate', field: 'isPrivate' },
         ]}
         title="Documents"
         actions={[
