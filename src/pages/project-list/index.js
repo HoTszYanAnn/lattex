@@ -67,7 +67,7 @@ const ProjectList = () => {
 
   const onDeleteGqlCompleted = (data) => {
     setDocuments(data.deleteDocument)
-    setFilename(data.documents.map(item => item.name))
+    setFilename(data.deleteDocument.map(item => item.name))
   }
 
   const { loading: getDocumentsGqlLoading } = useQuery(GET_DOCUMENTS_GQL, {
@@ -79,7 +79,6 @@ const ProjectList = () => {
   const onCreateGqlCompleted = (data) => {
     console.log(data)
     if (data.addDocument.name) {
-      console.log('hiiii')
       history.push(APP_ROUTES.EDITOR(data.addDocument.name))
     }
   }
