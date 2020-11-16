@@ -1,19 +1,19 @@
 import React, { PropTypes, useState } from 'react'
-import RichTextEditor from 'react-rte'
- 
+import 'braft-editor/dist/index.css'
+import BraftEditor from 'braft-editor'
+import {
+  Box
+} from '@material-ui/core'
+
 const TextContent = () => {
-    const [value, setValue] = useState(RichTextEditor.createEmptyValue())
-    
-    const onValueChange = (value) => {
-        setValue(value);
-        const markdown = value.toString("markdown");
-        console.log(markdown);
-    }
-  return(
-    <RichTextEditor 
-        value={value}
-        onChange={onValueChange} 
-    />
+  const [value, setValue] = useState(BraftEditor.createEditorState(null))
+
+
+  return (
+    <Box style={{ height: 300, backgroundColor: 'white' }}>
+      <BraftEditor value={value} onChange={setValue} language="en"
+        contentStyle={{ height: 210, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)' }} />
+    </Box>
   );
 }
 
