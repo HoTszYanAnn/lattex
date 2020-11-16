@@ -40,8 +40,13 @@ const LatexCode = ({ code }) => {
         maxWidth='lg'
         disableBackdropClick={true}
         disableEscapeKeyDown={true}
+        PaperProps={{
+          style: {
+            backgroundColor: 'rgb(43, 43, 43)',
+          },
+        }}
       >
-        <Box display='flex' style={{ backgroundColor: 'rgb(43, 43, 43)' }}>
+        <Box display='flex' style={{ position: 'sticky', top: 0  }}>
           <Tooltip title="Back" placement="top">
             <IconButton onClick={() => handleChange(false)}>
               <ArrowBackIcon style={{ color: "#fff" }} />
@@ -54,7 +59,7 @@ const LatexCode = ({ code }) => {
             </IconButton>
           </Tooltip>
         </Box>
-        <Box px={2} style={{ height: '50vh', backgroundColor: 'rgb(43, 43, 43)' }}>
+        <Box px={4} style={{ height: '50vh', backgroundColor: 'rgb(43, 43, 43)' }}>
           <SyntaxHighlighter language="latex" showLineNumbers wrapLongLines wrapLines style={a11yDark}>
             {code}
           </SyntaxHighlighter>
