@@ -23,11 +23,11 @@ exports.postprocessDocumentData = (parent, input, context, info) => {
 const postprocessData = (data) => {
   //filter out repo not made by lattex
   if (!data || !data.description || !data.description.includes('(made by lattex)')) return null
-  
-  if (!data.object) return data
-  //images data.object.entries[0]
-  
+
   const description = data.description.replace('(made by lattex)', '')
+  
+  if (!data.object) return { ...data, description }
+  //images data.object.entries[0]
   
   const repo_obj = _.mapValues(_.keyBy(data.object.entries, 'name'), 'object')
   let image = []
