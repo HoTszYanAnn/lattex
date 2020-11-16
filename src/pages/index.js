@@ -7,8 +7,9 @@ import { connect } from "react-redux";
 import "react-notifications-component/dist/theme.css";
 
 const Layout = ({ dispatch, TOKEN, ERROR }) => {
-  return(
+  return (
     <>
+      <ReactNotification />
       <Router />
     </>
   )
