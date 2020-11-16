@@ -18,6 +18,12 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
     })
     .reduce((acc, val) => {
       const [key, value] = val;
+      if (!acc.titles) {
+        acc.titles = {}
+        acc.titles['always_today'] = false
+      } else if (!acc.titles['always_today']) {
+        acc.titles['always_today'] = false
+      }
       if (titlesList.includes(key)) {
         if (key === 'date') {
           if (value === '\\today') {

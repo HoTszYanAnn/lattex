@@ -55,8 +55,8 @@ type Setting{
 type Titles {
   title: String!
   author: String
-  date: DateTime
-  always_today: Boolean
+  date: String
+  always_today: Boolean!
 }
 
 type Section {

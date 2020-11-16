@@ -29,7 +29,7 @@ input SettingInput {
 input TitlesInput {
   title: String
   author: String
-  date: DateTime
+  date: String
   always_today: Boolean
 }
 
