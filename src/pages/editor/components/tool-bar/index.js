@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc }) => {
+const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox}) => {
   const classes = useStyles()
 
   return (
@@ -36,7 +36,7 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc }) => {
           pushAndCompile={pushAndCompile}
         />
         <Box alignSelf='flex-start'>
-          <AddButton/>
+          <AddButton setBox={setBox}/>
         </Box>
         <Box flexGrow={1} />
         <LatexCodeButton code={doc.latex.latex_code} />

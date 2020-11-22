@@ -167,7 +167,7 @@ const Setting = ({ doc, pushAndCompile }) => {
                     }
                   />
                 }
-                label="Have title?"
+                label="Title?"
               />
             </Grid>
             <Grid item xs={6}>
@@ -179,7 +179,7 @@ const Setting = ({ doc, pushAndCompile }) => {
                     }
                   />
                 }
-                label="Have Content Page?"
+                label="Content Page?"
               />
             </Grid>
           </Grid>

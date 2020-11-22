@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useState}from 'react'
 import { 
   TextField,
 } from '@material-ui/core'
  
-const TextTitle = ({info}) => {
+const TextTitle = ({info, text}) => {
+  const [value, setValue] = useState(text)
   return(
     <TextField
         id="standard-input" 
@@ -19,7 +20,9 @@ const TextTitle = ({info}) => {
               fontSize: info.size,
               fontFamily: info.family,
               fontWeight: info.weight,
-          }
+          },
+          value: value,
+          onChange: (e) => setValue(e.target.value)                   
         }}
     />
   )
