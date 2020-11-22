@@ -18,7 +18,7 @@ import { onGqlError } from "../../function"
 import gql from 'graphql-tag'
 import { connect } from "react-redux";
 import Loading from '../../components/loading'
- 
+
 const DOCUMENT_FRAGMENT = gql`
   fragment DocumentFragment on Document {
     id
@@ -149,25 +149,30 @@ const Editor = ({ width, match }) => {
   }
 
 
-  return loading ? <Loading /> : (
+  return (
     <>
-      <Box className={classes.toolbar}>
-        <ToolBar
-          showCompiler={showCompiler}
-          changeShowCompiler={changeShowCompiler}
-          pushAndCompile={pushAndCompile}
-          doc={doc}
-          updateDocument={updateDocument}
-        />
-      </Box>
-      <Grid container>
-        <Grid item xs={12} lg={showCompiler ? 6 : 12} className={classes.editor} style={{ display: showCompiler ? ['xs', 'sm', 'md'].includes(width) ? 'none' : 'block' : 'block' }}>
-          <UIEditor />
-        </Grid>
-        <Grid item xs={12} lg={6} className={classes.compiler} style={{ display: showCompiler ? 'block' : 'none' }}>
-          <LatexCompiler doc={doc} key={key} />
-        </Grid>
-      </Grid>
+      <Loading loading={loading} />
+      {!loading &&
+        <>
+          <Box className={classes.toolbar}>
+            <ToolBar
+              showCompiler={showCompiler}
+              changeShowCompiler={changeShowCompiler}
+              pushAndCompile={pushAndCompile}
+              doc={doc}
+              updateDocument={updateDocument}
+            />
+          </Box>
+          <Grid container>
+            <Grid item xs={12} lg={showCompiler ? 6 : 12} className={classes.editor} style={{ display: showCompiler ? ['xs', 'sm', 'md'].includes(width) ? 'none' : 'block' : 'block' }}>
+              <UIEditor />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.compiler} style={{ display: showCompiler ? 'block' : 'none' }}>
+              <LatexCompiler doc={doc} key={key} />
+            </Grid>
+          </Grid>
+        </>
+      }
     </>
   )
 }
