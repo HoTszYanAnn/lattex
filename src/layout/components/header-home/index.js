@@ -9,6 +9,7 @@ import {
   Avatar,
   Menu,
   MenuItem,
+  useTheme
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,10 +19,15 @@ import { APP_PATHS } from "../../../config";
 import { connect } from "react-redux";
 import { withApollo } from "react-apollo";
 import { logout } from "../../../store/actions/";
+import lattexSvg from '../../../assets/logo/lattex-header-logo.svg'
 
 const useStyles = makeStyles((theme) => ({
   header: {
-    height: '6vh',
+    width: 'calc(100vw - 100px - 16px)',
+    height: '50px',
+    position: 'fixed',
+    top: 0,
+    zIndex: 1,
   }
 }));
 
@@ -79,19 +85,13 @@ const HeaderMenu = ({ USER_PROFILE, client, dispatch }) => {
 
 const Header = ({ AUTHORIZED, USER_PROFILE, client, dispatch }) => {
   const classes = useStyles();
-
+  const theme = useTheme(); 
   return (
     <>
-      <AppBar position="static" className={classes.header}>
-        <Toolbar>
-          <Typography variant="h4" component={Link} to={APP_PATHS.HOME} style={{ textDecoration: 'none', color: 'white' }}>LätTeX</Typography>
-          <Box flexGrow={1} />
-          {AUTHORIZED
-            ? <HeaderMenu USER_PROFILE={USER_PROFILE} client={client} dispatch={dispatch} />
-            : <></> //not possible
-          }
-        </Toolbar>
-      </AppBar>
+      <Box display="flex" className={classes.header} style={{ background: theme.palette.primary.opposite }}>
+        <Typography variant="h4" component={Link} to={APP_PATHS.HOME} style={{ textDecoration: 'none' }} color='black'><img src={lattexSvg} height="100%"/></Typography>
+        <Box flexGrow={1} />
+      </Box>
     </>
   );
 };
