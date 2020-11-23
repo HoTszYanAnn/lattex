@@ -14,7 +14,8 @@ import {
   MenuItem,
   InputLabel,
   DialogTitle,
-  Typography
+  Typography,
+  Fab
 } from '@material-ui/core'
 import DateFnsUtils from '@date-io/date-fns';
 import { format } from 'date-fns'
@@ -25,7 +26,7 @@ import {
 import SettingsIcon from '@material-ui/icons/Settings';
 import SaveIcon from '@material-ui/icons/Save';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { difference } from '../../../../../../function'
+import { difference } from '../../../../../../../../function'
 import _ from 'lodash'
 
 // change document type, title, have content, etc... 
@@ -65,15 +66,15 @@ const Setting = ({ doc, pushAndCompile }) => {
 
   return (
     <>
-      <Tooltip title='Setting' aria-label='Setting' placement="top">
-        <IconButton
+      <Tooltip title='Setting' aria-label='Setting' placement="right" size="small">
+        <Fab
           onClick={() => {
             setSetting(origSetting)
             handleChange(true)
           }}
         >
           <SettingsIcon />
-        </IconButton>
+        </Fab>
       </Tooltip>
       <Dialog
         onClose={() => handleChange(false)}

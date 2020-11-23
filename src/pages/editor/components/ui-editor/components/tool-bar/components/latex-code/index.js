@@ -5,7 +5,8 @@ import {
   Box,
   IconButton,
   Tooltip,
-  Dialog
+  Dialog,
+  Fab
 } from '@material-ui/core';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -28,10 +29,10 @@ const LatexCode = ({ code }) => {
 
   return (
     <>
-      <Tooltip title="Source Code" placement="top">
-        <IconButton onClick={() => handleChange(true)}>
+      <Tooltip title="Source Code" placement="right">
+        <Fab onClick={() => handleChange(true)} size="small">
           <CodeIcon />
-        </IconButton>
+        </Fab>
       </Tooltip>
       <Dialog
         onClose={() => handleChange(false)}

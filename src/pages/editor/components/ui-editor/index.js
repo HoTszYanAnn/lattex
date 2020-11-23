@@ -2,16 +2,25 @@ import React, { useState, useEffect, useCallback } from 'react'
 import {
   Box,
   Button,
+  makeStyles,
 } from '@material-ui/core'
 import TextTitle from './components/text-title'
 import dict from '../../dict.json'
 import TextContent from './components/text-content'
+import ToolBar from './components/tool-bar'
 import _ from 'lodash'
 
 //equation https://www.npmjs.com/package/equation-editor-react
 //rte 
-
-const UIEditor = ({ doc }) => {
+const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    position: 'fixed',
+    top: '100px',
+    zIndex: 9999,
+  },
+}));
+const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument, setBox }) => {
+  const classes = useStyles()
   const origContent = _(doc.latex).pick(['contents']).value()
   const [state, setState] = useState(origContent.contents)
 
@@ -42,12 +51,22 @@ const UIEditor = ({ doc }) => {
 
   return (
     <>
+      <Box className={classes.toolbar}>
+        <ToolBar
+          showCompiler={showCompiler}
+          changeShowCompiler={changeShowCompiler}
+          pushAndCompile={pushAndCompile}
+          doc={doc}
+          updateDocument={updateDocument}
+          setBox={setBox}
+        />
+      </Box>
       <Box
         style={{
           boxSizing: 'border-box',
           overflow: 'auto',
           height: '100%',
-          padding: '1.5em'
+          padding: '1.5em',
         }}
       >
         {

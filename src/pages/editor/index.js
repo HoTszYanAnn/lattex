@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { UIEditor, LatexCompiler, ToolBar } from './components'
+import { UIEditor, LatexCompiler } from './components'
 import { v4 as uuidv4 } from 'uuid';
 import {
   Box,
@@ -156,7 +156,7 @@ const Editor = ({ width, match }) => {
       <Loading loading={loading} />
       {!loading &&
         <>
-          <Box className={classes.toolbar}>
+          {/*<Box className={classes.toolbar}>
             <ToolBar
               showCompiler={showCompiler}
               changeShowCompiler={changeShowCompiler}
@@ -166,10 +166,19 @@ const Editor = ({ width, match }) => {
               setBox={setBox}
             //box={box}
             />
-          </Box>
+          </Box>*/}
           <Grid container>
             <Grid item xs={12} lg={showCompiler ? 6 : 12} className={classes.editor} style={{ display: showCompiler ? ['xs', 'sm', 'md'].includes(width) ? 'none' : 'block' : 'block' }}>
-              <UIEditor doc={doc} box={box} />
+              <UIEditor
+                doc={doc}
+                box={box}
+                showCompiler={showCompiler}
+                changeShowCompiler={changeShowCompiler}
+                pushAndCompile={pushAndCompile}
+                doc={doc}
+                updateDocument={updateDocument}
+                setBox={setBox}
+              />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.compiler} style={{ display: showCompiler ? 'block' : 'none' }}>
               <LatexCompiler doc={doc} key={key} />
