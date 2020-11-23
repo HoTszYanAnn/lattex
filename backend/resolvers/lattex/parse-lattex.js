@@ -9,7 +9,7 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
   const tableOfContentIndex = textArray.findIndex(item => item.includes('\\tableofcontents'))
 
   const setting = textArray.slice(0, beginIndex).concat(textArray[makeTitleIndex], textArray[tableOfContentIndex]);
-  const content = textArray.slice(tableOfContentIndex+1, endIndex);
+  const content = textArray.slice(tableOfContentIndex + 1, endIndex);
 
   const titlesList = ['title', 'author', 'date']
 
@@ -58,12 +58,12 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
 
   let contentArrayObject = content
     .map(item => {
-      return item.split(/{|}/,2)
+      return item.split(/{|}/, 2)
     })
     .reduce((acc, val) => {
       const [key, value] = val
       console.log(val)
-      if (key.includes('\\')) {
+      if (key.startsWith('\\')) {
         acc.push({
           code: key,
           text: value,
@@ -111,9 +111,8 @@ exports.parseObjectToLatexCode = (parent, { input }, context, info) => {
   //content
   updatedObject.contents.map((item) => {
     if (item.code) {
-      parseText = parseText + `${item.code}`
-    }
-    if (item.text) {
+      parseText = parseText + `\\${item.code}{${item.text}}\n`
+    } else {
       parseText = parseText + `${item.text}\n`
     }
   })

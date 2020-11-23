@@ -6,9 +6,9 @@ import { Footer, Header, RedirectButton, HomeHeader, HomeFooter, Nav } from "./c
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(0),
-    height: "90vh",
+    paddingTop: '50px', //header size
+    height: "calc(100vh - 50px)",
+    width: '100vw',
   },
   paddingTop: {
     paddingTop: theme.spacing(2),
@@ -38,17 +38,14 @@ export const MainLayout = ({
       <Header />
       <Container
         component={layoutComponent}
-        maxWidth={layoutMaxWidth}
+        maxWidth={false}
         className={clsx({
           [classes.root]: true,
-          [classes.paddingTop]: layoutPaddingTop,
-          [classes.paddingBottom]: layoutPaddingBottom,
           [classes.noPaddingX]: noPaddingX,
         })}
       >
         {children}
       </Container>
-      <Footer />
     </>
   )
 }

@@ -78,15 +78,17 @@ const UPDATE_DOCUMENT_GQL = gql`
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
-    height: '40px',
-    backgroundColor: '#ffe8c9'
+    height: '50px',
+    position: 'fixed',
+    top: '50px',
+    zIndex: 9999,
   },
   editor: {
-    height: '85vh',
+    height: 'calc(100vh - 50px)',
     backgroundColor: '#efefef'
   },
   compiler: {
-    height: '85vh',
+    height: 'calc(100vh - 50px)',
     backgroundColor: 'grey',
   },
 }));
@@ -154,25 +156,25 @@ const Editor = ({ width, match }) => {
       <Loading loading={loading} />
       {!loading &&
         <>
-      <Box className={classes.toolbar}>
-        <ToolBar
-          showCompiler={showCompiler}
-          changeShowCompiler={changeShowCompiler}
-          pushAndCompile={pushAndCompile}
-          doc={doc}
-          updateDocument={updateDocument}
-          setBox={setBox}
-          //box={box}
-        />
-      </Box>
-      <Grid container>
-        <Grid item xs={12} lg={showCompiler ? 6 : 12} className={classes.editor} style={{ display: showCompiler ? ['xs', 'sm', 'md'].includes(width) ? 'none' : 'block' : 'block' }}>
-          <UIEditor doc={doc} box={box}/>
-        </Grid>
-        <Grid item xs={12} lg={6} className={classes.compiler} style={{ display: showCompiler ? 'block' : 'none' }}>
-          <LatexCompiler doc={doc} key={key} />
-        </Grid>
-      </Grid>
+          <Box className={classes.toolbar}>
+            <ToolBar
+              showCompiler={showCompiler}
+              changeShowCompiler={changeShowCompiler}
+              pushAndCompile={pushAndCompile}
+              doc={doc}
+              updateDocument={updateDocument}
+              setBox={setBox}
+            //box={box}
+            />
+          </Box>
+          <Grid container>
+            <Grid item xs={12} lg={showCompiler ? 6 : 12} className={classes.editor} style={{ display: showCompiler ? ['xs', 'sm', 'md'].includes(width) ? 'none' : 'block' : 'block' }}>
+              <UIEditor doc={doc} box={box} />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.compiler} style={{ display: showCompiler ? 'block' : 'none' }}>
+              <LatexCompiler doc={doc} key={key} />
+            </Grid>
+          </Grid>
         </>
       }
     </>
