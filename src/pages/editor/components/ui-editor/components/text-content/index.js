@@ -13,8 +13,15 @@ const TextContent = ({ id, text, setText }) => {
       {label: 'Underline', style: 'UNDERLINE'},
       {label: 'Strikethrough', style: 'STRIKETHROUGH'}
     ],
-    BLOCK_ALIGNMENT_BUTTONS, 
-    BLOCK_TYPE_BUTTONS,
+    BLOCK_ALIGNMENT_BUTTONS: [
+      {label: 'Align Left', style: 'ALIGN_LEFT'},
+      {label: 'Align Center', style: 'ALIGN_CENTER'},
+      {label: 'Align Right', style: 'ALIGN_RIGHT'},
+    ], 
+    BLOCK_TYPE_BUTTONS: [
+      {label: 'UL', style: 'unordered-list-item'},
+      {label: 'OL', style: 'ordered-list-item'}
+    ],
     BLOCK_TYPE_DROPDOWN: [
       {label: 'normal', style: 'unstyled'},
       {label: 'Huge', style: 'header-one'},

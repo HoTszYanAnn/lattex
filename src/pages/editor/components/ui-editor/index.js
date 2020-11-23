@@ -15,7 +15,8 @@ import _ from 'lodash'
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     position: 'fixed',
-    top: '100px',
+    top: '80px',
+    right: '10px',
     zIndex: 9999,
   },
 }));
