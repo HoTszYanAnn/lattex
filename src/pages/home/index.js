@@ -25,13 +25,13 @@ const App = () => {
 
   return (
     <>
-      <Parallax ref={ref => parallax = ref} pages={3} style={{ backgroundColor: '#F8F8F8' }} className='big-box'>
-        <ParallaxLayer offset={1} speed={1} style={{ backgroundColor: '#805E73' }} />
-        <ParallaxLayer offset={2} speed={1} style={{ backgroundColor: '#87BCDE' }} />
-        <ParallaxLayer horizontal offset={0} speed={1} style={{ backgroundColor: theme.palette.primary.main }} />
-
+      <Parallax ref={ref => parallax = ref} pages={1} style={{ backgroundColor: '#F8F8F8' }} className='big-box'>
+        <ParallaxLayer offset={0} speed={1} style={{ backgroundColor: theme.palette.primary.main }} />
         <ParallaxLayer offset={0} speed={0} factor={3} style={{ backgroundImage: url('stars', true), backgroundSize: 'cover' }} />
         {/*
+        <ParallaxLayer offset={1} speed={1} style={{ backgroundColor: '#805E73' }} />
+        <ParallaxLayer offset={2} speed={1} style={{ backgroundColor: '#87BCDE' }} />
+
         <ParallaxLayer offset={0.7} speed={-0.4} style={{ pointerEvents: 'none' }}>
           <img src={equation_4} style={{ width: '20%', marginLeft: '70%', transform: 'rotate(-5deg)' }} />
         </ParallaxLayer>
@@ -43,7 +43,6 @@ const App = () => {
         <ParallaxLayer offset={0.2} speed={0.25} style={{ pointerEvents: 'none' }}>
           <img src={graphbar} style={{ width: '10%', marginLeft: '80%', transform: 'rotate(-5deg)' }} />
         </ParallaxLayer>
-        */}
         <ParallaxLayer offset={1.3} speed={-0.1} style={{ pointerEvents: 'none' }}>
           <img src={url('satellite4')} style={{ width: '15%', marginLeft: '70%' }} />
         </ParallaxLayer>
@@ -87,6 +86,7 @@ const App = () => {
             backgroundImage: url('clients', true)
           }}
         />
+        */}
 
         <ParallaxLayer
           offset={0}
@@ -99,7 +99,7 @@ const App = () => {
             <Typography variant="h3" className="text" >AN ONLINE LATEX DOCUMENT PROCESSOR</Typography>
           </div>
         </ParallaxLayer>
-
+        {/*
         <ParallaxLayer
           offset={1}
           speed={0.1}
@@ -115,6 +115,7 @@ const App = () => {
           onClick={() => parallax.scrollTo(0)}>
           <img src={url('clients-main')} style={{ width: '40%' }} />
         </ParallaxLayer>
+        */}
       </Parallax>
     </>
   )
