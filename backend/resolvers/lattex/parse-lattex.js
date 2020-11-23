@@ -4,11 +4,12 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
   const { latex_code, image } = parent
   const textArray = latex_code.split(/\s*(\n)\s*/).filter(item => !['\n', ''].includes(item))
   const beginIndex = textArray.findIndex(item => item.includes('\\begin{document}'))
+  const endIndex = textArray.findIndex(item => item.includes('\\end{document}'))
   const makeTitleIndex = textArray.findIndex(item => item.includes('\\maketitle'))
   const tableOfContentIndex = textArray.findIndex(item => item.includes('\\tableofcontents'))
 
-  const setting = textArray.slice(0, beginIndex).concat(textArray[makeTitleIndex], textArray[tableOfContentIndex])
-  const content = textArray.slice(beginIndex, makeTitleIndex).concat(textArray.slice(makeTitleIndex + 1, tableOfContentIndex), textArray.slice(tableOfContentIndex + 1));
+  const setting = textArray.slice(0, beginIndex).concat(textArray[makeTitleIndex], textArray[tableOfContentIndex]);
+  const content = textArray.slice(tableOfContentIndex+1, endIndex);
 
   const titlesList = ['title', 'author', 'date']
 
@@ -54,18 +55,31 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
       .mapValues((value, name) => _.merge({}, value, { name }))
       .values()
       .value()
-  console.log(content)
-  let contentArrayObject = []
-  for (let i = 1; i < content.length - 1; i++) {
-    if (content[i].startsWith('\\')) {
-      contentArrayObject.push({
-        code: content[i],
-      })
-    } else {
-      contentArrayObject[contentArrayObject.length - 1].text = content[i]
-    }
-  }
-  console.log(settingObject)
+
+  let contentArrayObject = content
+    .map(item => {
+      return item.split(/{|}/,2)
+    })
+    .reduce((acc, val) => {
+      const [key, value] = val
+      console.log(val)
+      if (key.includes('\\')) {
+        acc.push({
+          code: key,
+          text: value,
+        })
+      } else {
+        acc.push({
+          code: null,
+          text: key,
+        })
+      }
+      console.log(acc)
+      return acc;
+    }, [])
+
+  console.log(contentArrayObject)
+  console.log("hello3")
   return {
     ...settingObject,
     images: imageObject,
@@ -97,7 +111,7 @@ exports.parseObjectToLatexCode = (parent, { input }, context, info) => {
   //content
   updatedObject.contents.map((item) => {
     if (item.code) {
-      parseText = parseText + `${item.code}\n`
+      parseText = parseText + `${item.code}`
     }
     if (item.text) {
       parseText = parseText + `${item.text}\n`

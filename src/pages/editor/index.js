@@ -97,6 +97,7 @@ const Editor = ({ width, match }) => {
   const [doc, setDoc] = useState(null)
   const [key, setKey] = useState(uuidv4())
   const [loading, setLoading] = useState(true)
+  const [box, setBox] = useState([])
 
   const { params } = match;
 
@@ -148,35 +149,35 @@ const Editor = ({ width, match }) => {
     })
   }
 
-
   return (
     <>
       <Loading loading={loading} />
       {!loading &&
         <>
-          <Box className={classes.toolbar}>
-            <ToolBar
-              showCompiler={showCompiler}
-              changeShowCompiler={changeShowCompiler}
-              pushAndCompile={pushAndCompile}
-              doc={doc}
-              updateDocument={updateDocument}
-            />
-          </Box>
-          <Grid container>
-            <Grid item xs={12} lg={showCompiler ? 6 : 12} className={classes.editor} style={{ display: showCompiler ? ['xs', 'sm', 'md'].includes(width) ? 'none' : 'block' : 'block' }}>
-              <UIEditor />
-            </Grid>
-            <Grid item xs={12} lg={6} className={classes.compiler} style={{ display: showCompiler ? 'block' : 'none' }}>
-              <LatexCompiler doc={doc} key={key} />
-            </Grid>
-          </Grid>
+      <Box className={classes.toolbar}>
+        <ToolBar
+          showCompiler={showCompiler}
+          changeShowCompiler={changeShowCompiler}
+          pushAndCompile={pushAndCompile}
+          doc={doc}
+          updateDocument={updateDocument}
+          setBox={setBox}
+          //box={box}
+        />
+      </Box>
+      <Grid container>
+        <Grid item xs={12} lg={showCompiler ? 6 : 12} className={classes.editor} style={{ display: showCompiler ? ['xs', 'sm', 'md'].includes(width) ? 'none' : 'block' : 'block' }}>
+          <UIEditor doc={doc} box={box}/>
+        </Grid>
+        <Grid item xs={12} lg={6} className={classes.compiler} style={{ display: showCompiler ? 'block' : 'none' }}>
+          <LatexCompiler doc={doc} key={key} />
+        </Grid>
+      </Grid>
         </>
       }
     </>
   )
 }
-
 const mapStateToProps = ({ USER_PROFILE }) => ({ USER_PROFILE });
 
 export default connect(mapStateToProps)(withWidth()(Editor))
