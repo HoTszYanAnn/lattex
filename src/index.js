@@ -16,8 +16,9 @@ const store = configureStore();
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#FCB941',
-    }
+      main: '#F8B21C',
+      opposite: '#ffffff'
+    },
   },
   typography: {
     fontFamily: 'Inika',

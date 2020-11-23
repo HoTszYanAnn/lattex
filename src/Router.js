@@ -10,7 +10,7 @@ import ProjectListPage from './pages/project-list'
 
 import EditorPage from './pages/editor'
 
-import { MainLayout, noPaddingLayout } from "./layout"
+import { MainLayout, noPaddingLayout, HomeLayout } from "./layout"
 import ErrorBoundary from "./components/error-boundary";
 import { loading, setToken, logout, login } from "./store/actions/";
 import gql from 'graphql-tag'
@@ -49,8 +49,15 @@ const Router = ({ AUTHORIZED, USER_PROFILE }) => {
       <Switch>
         <Route
           exact
-          component={AUTHORIZED ? withLayout(MainLayout)(ProjectListPage) : withLayout(MainLayout)(HomePage)}
+          component={withLayout(HomeLayout)(HomePage)}
           path={APP_PATHS.HOME}
+        />
+
+        <PrivateRoute
+          exact
+          condition={AUTHORIZED}
+          component={withLayout(MainLayout)(ProjectListPage)}
+          path={APP_PATHS.EDITORS}
         />
 
         <PrivateRoute
@@ -115,6 +122,7 @@ const Routing = ({ dispatch, AUTHORIZED, TOKEN, USER_PROFILE, history, location 
       .then(
         (result) => {
           onTokenGqlCompleted(result?.access_token)
+          history.push(APP_PATHS.EDITORS)
         },
         (error) => {
           localStorage.removeItem("lattex-token");

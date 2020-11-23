@@ -10,7 +10,7 @@ const Layout = ({ dispatch, TOKEN, ERROR }) => {
   return (
     <>
       <ReactNotification />
-      <Router />
+      <Router key={TOKEN} />
     </>
   )
 }

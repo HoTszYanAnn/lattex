@@ -14,6 +14,7 @@ export const APP_ROUTES = {
   HOME: `${STEMS.HOME}`,
 
   EDITOR: (id) => `${STEMS.EDITOR}/${id}`,
+  EDITORS: `${STEMS.EDITOR}`,
   PROJECT_LIST: `${STEMS.PROJECT_LIST}`,
 
   NOT_FOUND: `${STEMS.NOT_FOUND}`,
@@ -24,6 +25,7 @@ export const APP_PATHS = {
   LOGIN: `${STEMS.LOGIN}`,
   
   EDITOR: `${STEMS.EDITOR}/:id`,
+  EDITORS: `${STEMS.EDITOR}`,
   PROJECT_LIST: `${STEMS.PROJECT_LIST}`,
 
   NOT_FOUND: `${STEMS.NOT_FOUND}`,
