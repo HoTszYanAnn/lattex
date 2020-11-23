@@ -1,55 +1,33 @@
 import React, { PropTypes, useState } from 'react'
-import RichTextEditor from 'react-rte';
+import 'braft-editor/dist/index.css'
+import BraftEditor from 'braft-editor'
 import {
   Box
 } from '@material-ui/core'
 
 const TextContent = ({ id, text, setText }) => {
-  const toolbarConfig = {
-    display: ['INLINE_STYLE_BUTTONS', 'BLOCK_ALIGNMENT_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'BLOCK_TYPE_DROPDOWN', 'LINK_BUTTONS', 'HISTORY_BUTTONS'],
-    INLINE_STYLE_BUTTONS: [
-      {label: 'Bold', style: 'BOLD'},
-      {label: 'Italic', style: 'ITALIC'},
-      {label: 'Underline', style: 'UNDERLINE'},
-      {label: 'Strikethrough', style: 'STRIKETHROUGH'}
-    ],
-    BLOCK_ALIGNMENT_BUTTONS: [
-      {label: 'Align Left', style: 'ALIGN_LEFT'},
-      {label: 'Align Center', style: 'ALIGN_CENTER'},
-      {label: 'Align Right', style: 'ALIGN_RIGHT'},
-    ], 
-    BLOCK_TYPE_BUTTONS: [
-      {label: 'UL', style: 'unordered-list-item'},
-      {label: 'OL', style: 'ordered-list-item'}
-    ],
-    BLOCK_TYPE_DROPDOWN: [
-      {label: 'normal', style: 'unstyled'},
-      {label: 'Huge', style: 'header-one'},
-      {label: 'huge', style: 'header-two'},
-      {label: 'Large', style: 'header-three'},
-      {label: 'large', style: 'header-four'},
-      {label: 'small', style: 'header-five'},
-      {label: 'foot note', style: 'header-six'},
-      {label: 'code', style: 'code-block'},
-    ],
-  }
 
-  const [value, setValue] = useState(RichTextEditor.createValueFromString(text, 'html'))
-  
-
-  const onChange = (val) => {
-    setValue(val)
-    setText(id, val)
-  }
+ const onChange = (val) => {
+  setValue(val)
+  setText(id, val)
+}
+  const [value, setValue] = useState(BraftEditor.createEditorState(`<p>${text}</p>`))
+  const excludeControls = ['headings', 'emoji','hr','blockquote', 'separator', 'letter-spacing']
+  const fontSize = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 23, 27, 33]
+  const lineHeights = [1, 1.2, 1.5, 1.75, 2]
   return (
     <Box>
-      <RichTextEditor
-        toolbarConfig={toolbarConfig}
-        value={value}
-        onChange={onChange}
-      />
+      <BraftEditor style={{height: 200, overflow: 'auto', backgroundColor: 'white'}} 
+        value={value} 
+        onChange={onChange} 
+        fontSizes={fontSize}
+        lineHeight={lineHeights}
+        excludeControls={excludeControls} 
+        language='en'
+        contentStyle={{ height: 50, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)' }} 
+        />
     </Box>
-  )
+  );
 }
 
 export default TextContent
