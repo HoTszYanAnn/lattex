@@ -10,7 +10,7 @@ import ProjectListPage from './pages/project-list'
 
 import EditorPage from './pages/editor'
 
-import { MainLayout, noPaddingLayout, HomeLayout } from "./layout"
+import { MainLayout, noPaddingLayout, HomeLayout, EditorNavLayout } from "./layout"
 import ErrorBoundary from "./components/error-boundary";
 import { loading, setToken, logout, login } from "./store/actions/";
 import gql from 'graphql-tag'
@@ -56,16 +56,10 @@ const Router = ({ AUTHORIZED, USER_PROFILE }) => {
         <PrivateRoute
           exact
           condition={AUTHORIZED}
-          component={withLayout(MainLayout)(ProjectListPage)}
+          component={withLayout(EditorNavLayout)(ProjectListPage)}
           path={APP_PATHS.EDITORS}
         />
 
-        <PrivateRoute
-          exact
-          condition={AUTHORIZED}
-          component={withLayout(MainLayout)(ProjectListPage)}
-          path={APP_PATHS.PROJECT_LIST}
-        />
         <PrivateRoute
           exact
           condition={AUTHORIZED}

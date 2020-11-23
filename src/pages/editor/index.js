@@ -18,7 +18,7 @@ import { onGqlError } from "../../function"
 import gql from 'graphql-tag'
 import { connect } from "react-redux";
 import Loading from '../../components/loading'
- 
+
 const DOCUMENT_FRAGMENT = gql`
   fragment DocumentFragment on Document {
     id
@@ -149,8 +149,11 @@ const Editor = ({ width, match }) => {
     })
   }
 
-  return loading ? <Loading /> : (
+  return (
     <>
+      <Loading loading={loading} />
+      {!loading &&
+        <>
       <Box className={classes.toolbar}>
         <ToolBar
           showCompiler={showCompiler}
@@ -170,6 +173,8 @@ const Editor = ({ width, match }) => {
           <LatexCompiler doc={doc} key={key} />
         </Grid>
       </Grid>
+        </>
+      }
     </>
   )
 }
