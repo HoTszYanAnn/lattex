@@ -14,7 +14,7 @@ const Container = ({ loading }) => {
       }}
       to={loading
         ? { top: "50%", left: "50%", transform: 'translate(-50%, -50%)', width: '100vw', height: '100vh', backgroundColor: theme.palette.primary.main, zIndex: 9999, position: 'fixed', opacity: 1 }
-        : { top: "50%", left: "50%", transform: 'translate(-50%, -50%)', width: '50vw', height: '50vh', backgroundColor: theme.palette.primary.main, zIndex: 9999, position: 'fixed', opacity: 0 }
+        : { top: "50%", left: "50%", transform: 'translate(-50%, -50%)', width: '0vw', height: '0vh', backgroundColor: theme.palette.primary.main, zIndex: -9999, position: 'fixed', opacity: 0 }
       }
       toggle={loading}
     >
