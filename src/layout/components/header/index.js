@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     position: 'fixed',
     top: 0,
-    boxShadow: '0 2px 5px 0 rgba(184,134,11,.3)'
+    boxShadow: '0 2px 5px 0 rgba(184,134,11,.3)',
+    zIndex: 9999
   }
 }));
 

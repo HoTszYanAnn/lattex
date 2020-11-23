@@ -4,7 +4,7 @@ import { useQuery, useMutation } from "react-apollo";
 import { onGqlError } from "../../function"
 import gql from 'graphql-tag'
 import { Fab, makeStyles } from "@material-ui/core";
-import AddButton from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from 'react-router-dom';
 import { APP_ROUTES } from "../../config";
 import CreateDocumentInputModal from './components/create-document-input-modal'
@@ -48,8 +48,12 @@ const DELETE_DOCUMENT_GQL = gql`
 const useStyles = makeStyles((theme) => ({
   fab: {
     position: 'absolute',
-    bottom: theme.spacing(7),
-    right: theme.spacing(4),
+    top: '100px',
+    left: '112.5px',
+    transform: 'translate(-50%, -50%)'
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(2),
   },
 }))
 
@@ -123,8 +127,9 @@ const ProjectList = () => {
         createDocumentGqlLoading={createDocumentGqlLoading}
         filename={filename}
       />
-      <Fab className={classes.fab} color='primary' onClick={() => setCreateModalOpen(true)}>
-        <AddButton style={{ color: 'white' }} />
+      <Fab className={classes.fab} variant="extended" size="medium" onClick={() => setCreateModalOpen(true)}>
+        <AddIcon className={classes.extendedIcon} />
+          Add New
       </Fab>
     </>
   )

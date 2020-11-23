@@ -156,17 +156,6 @@ const Editor = ({ width, match }) => {
       <Loading loading={loading} />
       {!loading &&
         <>
-          {/*<Box className={classes.toolbar}>
-            <ToolBar
-              showCompiler={showCompiler}
-              changeShowCompiler={changeShowCompiler}
-              pushAndCompile={pushAndCompile}
-              doc={doc}
-              updateDocument={updateDocument}
-              setBox={setBox}
-            //box={box}
-            />
-          </Box>*/}
           <Grid container>
             <Grid item xs={12} lg={showCompiler ? 6 : 12} className={classes.editor} style={{ display: showCompiler ? ['xs', 'sm', 'md'].includes(width) ? 'none' : 'block' : 'block' }}>
               <UIEditor

@@ -90,39 +90,27 @@ export const EditorNavLayout = ({
   const theme = useTheme();
   return (
     <>
-        <Header />
-        <Box style={{ whiteSpace: 'nowrap' }}>
-          <Box display="inline-block" style={{ width: 225, height: '100%', verticalAlign: 'top', background: theme.palette.primary.main }}>
-            <Container
-              component={layoutComponent}
-              maxWidth={layoutMaxWidth}
-              className={clsx({
-                [classes.root]: true,
-                [classes.paddingTop]: layoutPaddingTop,
-                [classes.paddingBottom]: layoutPaddingBottom,
-                [classes.noPaddingX]: noPaddingX,
-              })}
-              style={{ height: '100vh', paddingTop: '100px' }}
-            >
-              <Nav />
-            </Container>
-          </Box>
-          <Box display="inline-block" style={{ width: 'calc(100vw - 16px - 225px)', minWidth: 900, height: '100%', overflowInline: 'scroll' }}>
-            <Container
-              component={layoutComponent}
-              maxWidth={layoutMaxWidth}
-              className={clsx({
-                [classes.root]: true,
-                [classes.paddingTop]: layoutPaddingTop,
-                [classes.paddingBottom]: layoutPaddingBottom,
-                [classes.noPaddingX]: noPaddingX,
-              })}
-              style={{ height: '100vh', paddingTop: '100px' }}
-            >
-              {children}
-            </Container>
-          </Box>
+      <Header />
+      <Box style={{ whiteSpace: 'nowrap' }}>
+        <Box display="inline-block" style={{ width: 225, height: 'calc(100vh - 100px)', paddingTop: '100px', verticalAlign: 'top', background: theme.palette.primary.main }}>
+          <Nav />
         </Box>
+        <Box display="inline-block" style={{ width: 'calc(100vw - 16px - 225px)', minWidth: 900, height: '100%', overflowInline: 'scroll' }}>
+          <Container
+            component={layoutComponent}
+            maxWidth={layoutMaxWidth}
+            className={clsx({
+              [classes.root]: true,
+              [classes.paddingTop]: layoutPaddingTop,
+              [classes.paddingBottom]: layoutPaddingBottom,
+              [classes.noPaddingX]: noPaddingX,
+            })}
+            style={{ height: '100vh', paddingTop: '100px' }}
+          >
+            {children}
+          </Container>
+        </Box>
+      </Box>
     </>
   )
 }
