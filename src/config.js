@@ -4,7 +4,6 @@ export const STEMS = {
   HOME: "/",
 
   EDITOR: "/editor",
-  PROJECT_LIST: "project",
 
   NOT_FOUND: "/404",
 };
@@ -15,7 +14,6 @@ export const APP_ROUTES = {
 
   EDITOR: (id) => `${STEMS.EDITOR}/${id}`,
   EDITORS: `${STEMS.EDITOR}`,
-  PROJECT_LIST: `${STEMS.PROJECT_LIST}`,
 
   NOT_FOUND: `${STEMS.NOT_FOUND}`,
 };
@@ -26,7 +24,6 @@ export const APP_PATHS = {
   
   EDITOR: `${STEMS.EDITOR}/:id`,
   EDITORS: `${STEMS.EDITOR}`,
-  PROJECT_LIST: `${STEMS.PROJECT_LIST}`,
 
   NOT_FOUND: `${STEMS.NOT_FOUND}`,
 };
