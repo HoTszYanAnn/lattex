@@ -14,13 +14,14 @@ import {
 
 import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
-
 import CachedIcon from '@material-ui/icons/Cached';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import SettingButton from './components/setting';
 import AddButton from './components/add-box'
 import LatexCodeButton from './components/latex-code'
+import ButtonMenu from './components/button-menu'
+import _ from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
   toolBox: {
@@ -32,24 +33,43 @@ const useStyles = makeStyles((theme) => ({
 const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox }) => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false);
+  const [currentOpenWindow, setWindowOpen] = React.useState(null);
 
+  const handleOpenWindow = (val) => {
+    if (val === currentOpenWindow)
+      setWindowOpen(null)
+    else
+      setWindowOpen(val)
+  }
   const handleClick = () => {
     setOpen(!open);
+    setWindowOpen(null)
   };
 
   return (
     <>
       <Box>
-        <Box display="inline-block">
+        <Box display="block">
           <Tooltip title='ToolBar' aria-label='ToolBar'>
             <Fab onClick={handleClick} size="medium" color="primary">
-              {open ? <CloseIcon /> : <EditIcon />}
+              {open ? <CloseIcon style={{ color: 'white' }} /> : <EditIcon style={{ color: 'white' }} />}
             </Fab>
           </Tooltip>
         </Box>
-        <Box display="inline-block" mx={1} />
-        <Box display="inline-block">
-          <Grid item container direction="row" style={{ display: open ? 'flex' : 'none' }} alignItems="center" spacing={3}>
+        <Box display="block" my={2} />
+        <Box display="block">
+          <Grid item container direction="column" style={{ display: open ? 'flex' : 'none' }} alignItems="center" spacing={3}>
+            {
+              [0, 1, 2].map((item, index) => (
+                <Grid item key={index}>
+                  {console.log(index)}
+                  {console.log(item)}
+                  <Box alignSelf='flex-start'>
+                    <ButtonMenu id={index} key={index} currentOpenWindow={currentOpenWindow} handleOpenWindow={handleOpenWindow} />
+                  </Box>
+                </Grid>
+              ))
+            }
             <Grid item>
               <SettingButton doc={doc} pushAndCompile={pushAndCompile} />
             </Grid>

@@ -1,0 +1,53 @@
+
+//braft editor
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.editor:focus-within {
+  //border: 1px solid #F8B21C;
+  //border-radius: 5px;
+  box-shadow: 0 0 1000px rgba(0, 0, 0, 1);
+}
+
+.bf-controlbar {
+  display: none;
+  box-shadow: none;
+}
+
+.editor:focus-within {
+  .bf-controlbar {
+    background: white;
+    z-index: 9999;
+    display: block;
+    position: absolute;
+    top: 100%;
+  }
+}
+
+.bf-content {
+  height: auto;
+  overflow: auto;
+  padding: 0;
+}
+
+.bf-container .public-DraftEditor-content {
+  padding: 5;
+}
+
+.bf-container .public-DraftEditor-content > div {
+  padding: 0;
+}
