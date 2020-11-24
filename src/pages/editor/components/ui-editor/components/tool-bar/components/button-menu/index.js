@@ -4,12 +4,9 @@ import {
   Fab,
   Box
 } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add';
 
-const ButtonMenu = ({ id, currentOpenWindow, handleOpenWindow }) => {
+const ButtonMenu = ({ id, currentOpenWindow, handleOpenWindow, children, icon }) => {
   const open = currentOpenWindow === id
-
-
   return (
     <>
       <Box style={{ position: 'relative' }}>
@@ -19,7 +16,7 @@ const ButtonMenu = ({ id, currentOpenWindow, handleOpenWindow }) => {
           className={`toolbar-button${open ? ' opened-toolbar-button' : ''}`}
           disableRipple={true}
         >
-          <AddIcon style={{ color: open ? 'white' : 'orange', fontSize: 35 }} />
+          {icon}
         </Fab>
         {/* TODO: wtf how to make that shape in svg*/}
         <Box className={open ? 'opened-toolbar-button-menu-shape-white-up' : ''} />
@@ -29,7 +26,7 @@ const ButtonMenu = ({ id, currentOpenWindow, handleOpenWindow }) => {
         <Box className={open ? 'opened-toolbar-button-menu-bridge' : ''} />
       </Box>
       <Box className="toolbar-button-menu" style={{ display: open ? 'block' : 'none' }}>
-        asdfasdf
+        {children}
       </Box>
     </>
   )

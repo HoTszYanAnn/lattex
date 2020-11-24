@@ -21,6 +21,8 @@ import SettingButton from './components/setting';
 import AddButton from './components/add-box'
 import LatexCodeButton from './components/latex-code'
 import ButtonMenu from './components/button-menu'
+import AddIcon from '@material-ui/icons/Add';
+import SettingIcon from '@material-ui/icons/Settings';
 import _ from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
@@ -59,19 +61,36 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
         <Box display="block" my={2} />
         <Box display="block">
           <Grid item container direction="column" style={{ display: open ? 'flex' : 'none' }} alignItems="center" spacing={3}>
-            {
-              [0, 1, 2].map((item, index) => (
-                <Grid item key={index}>
-                  {console.log(index)}
-                  {console.log(item)}
-                  <Box alignSelf='flex-start'>
-                    <ButtonMenu id={index} key={index} currentOpenWindow={currentOpenWindow} handleOpenWindow={handleOpenWindow} />
-                  </Box>
-                </Grid>
-              ))
-            }
-            <Grid item>
-              <SettingButton doc={doc} pushAndCompile={pushAndCompile} />
+            {/* TODO: how can parse and use map lol */}
+            <Grid item key="add-button">
+              <Box alignSelf='flex-start'>
+                <ButtonMenu
+                  id="add-button"
+                  key="add-button"
+                  currentOpenWindow={currentOpenWindow}
+                  handleOpenWindow={handleOpenWindow}
+                  icon={<AddIcon style={{ color: currentOpenWindow === 'add-button' ? 'white' : 'orange', fontSize: 35 }} />}
+                  children={
+                    <>
+                      asdasdasd add-button
+                    </>
+                  }
+                />
+              </Box>
+            </Grid>
+            <Grid item key="setting-button">
+              <Box alignSelf='flex-start'>
+                <ButtonMenu
+                  id="setting-button"
+                  key="setting-button"
+                  currentOpenWindow={currentOpenWindow}
+                  handleOpenWindow={handleOpenWindow}
+                  icon={<SettingIcon style={{ color: currentOpenWindow === 'setting-button' ? 'white' : 'orange', fontSize: 35 }} />}
+                  children={
+                    <SettingButton doc={doc} pushAndCompile={pushAndCompile} />
+                  }
+                />
+              </Box>
             </Grid>
             <Grid item>
               <Box alignSelf='flex-start'>
