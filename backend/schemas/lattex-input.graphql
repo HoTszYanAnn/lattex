@@ -13,8 +13,6 @@ input LaTeXDocUpdateInput {
   filename: String
 
   documentType: String
-  haveContentPage: Boolean
-  haveTitle: Boolean
   titles: TitlesInput
   setting: SettingInput
   content: [SectionInput!]

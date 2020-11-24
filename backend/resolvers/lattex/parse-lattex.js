@@ -6,11 +6,9 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
   const textArray = latex_code.split(/\s*(\n)\s*/).filter(item => !['\n', ''].includes(item))
   const beginIndex = textArray.findIndex(item => item.includes('\\begin{document}'))
   const endIndex = textArray.findIndex(item => item.includes('\\end{document}'))
-  const makeTitleIndex = textArray.findIndex(item => item.includes('\\maketitle'))
-  const tableOfContentIndex = textArray.findIndex(item => item.includes('\\tableofcontents'))
 
-  const setting = textArray.slice(0, beginIndex).concat(textArray[makeTitleIndex], textArray[tableOfContentIndex]);
-  const content = textArray.slice(tableOfContentIndex + 1, endIndex);
+  const setting = textArray.slice(0, beginIndex)
+  const content = textArray.slice(beginIndex + 1, endIndex);
 
   const titlesList = ['title', 'author', 'date']
 
@@ -41,10 +39,6 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
           }
           acc.titles[key] = value;
         }
-      } else if (key.includes('maketitle')) {
-        acc.haveTitle = key.includes('\\') ? false : true
-      } else if (key.includes('tableofcontents')) {
-        acc.haveContentPage = key.includes('\\') ? false : true
       } else {
         acc[key] = value;
       }
@@ -105,10 +99,6 @@ exports.parseObjectToLatexCode = (parent, { input }, context, info) => {
 
   //begin
   parseText = parseText + '\\begin{document}\n'
-  //title
-  parseText = parseText + `${!updatedObject.haveTitle ? '%' : ''}\\maketitle\n`
-  //contentpage
-  parseText = parseText + `${!updatedObject.haveContentPage ? '%' : ''}\\tableofcontents\n`
 
   console.log(updatedObject.contents)
   //content

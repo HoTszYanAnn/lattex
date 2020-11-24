@@ -30,8 +30,6 @@ const DOCUMENT_FRAGMENT = gql`
     url
     latex{
       documentclass
-      haveContentPage
-      haveTitle
       titles{
         title
         author

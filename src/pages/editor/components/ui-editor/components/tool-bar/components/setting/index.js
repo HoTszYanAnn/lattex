@@ -157,32 +157,6 @@ const Setting = ({ doc, pushAndCompile }) => {
                 label="Always 'Today'"
               />
             </Grid>
-            <Grid item xs={6}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={setting.haveTitle}
-                    onChange={(e) => {
-                      onSettingChange('haveTitle', e.target.checked)
-                    }
-                    }
-                  />
-                }
-                label="Title?"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={setting.haveContentPage}
-                    onChange={(e) => onSettingChange('haveContentPage', e.target.checked)
-                    }
-                  />
-                }
-                label="Content Page?"
-              />
-            </Grid>
           </Grid>
         </Box>
       </Dialog>

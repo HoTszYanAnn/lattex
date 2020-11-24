@@ -33,8 +33,6 @@ type LaTeXDoc {
 
   # latex_code convert to object
   documentclass: String!
-  haveContentPage: Boolean!
-  haveTitle: Boolean!
   titles: Titles!
   setting: Setting
   contents: [Section!]
