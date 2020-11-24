@@ -25,13 +25,14 @@ const App = () => {
 
   return (
     <>
-      <Parallax ref={ref => parallax = ref} pages={1} style={{ backgroundColor: '#F8F8F8' }} className='big-box'>
+      <Parallax ref={ref => parallax = ref} pages={3} style={{ backgroundColor: '#F8F8F8' }} className='big-box'>
         <ParallaxLayer offset={0} speed={1} style={{ backgroundColor: theme.palette.primary.main }} />
         <ParallaxLayer offset={0} speed={0} factor={3} style={{ backgroundImage: url('stars', true), backgroundSize: 'cover' }} />
-        {/*
+
         <ParallaxLayer offset={1} speed={1} style={{ backgroundColor: '#805E73' }} />
         <ParallaxLayer offset={2} speed={1} style={{ backgroundColor: '#87BCDE' }} />
 
+        {/*
         <ParallaxLayer offset={0.7} speed={-0.4} style={{ pointerEvents: 'none' }}>
           <img src={equation_4} style={{ width: '20%', marginLeft: '70%', transform: 'rotate(-5deg)' }} />
         </ParallaxLayer>
@@ -73,9 +74,6 @@ const App = () => {
           <img src={url('cloud')} style={{ display: 'block', width: '15%', marginLeft: '75%' }} />
         </ParallaxLayer>
 
-        <ParallaxLayer offset={2.5} speed={-0.4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
-          <img src={url('earth')} style={{ width: '60%' }} />
-        </ParallaxLayer>
 
         <ParallaxLayer
           offset={2}
@@ -88,6 +86,10 @@ const App = () => {
         />
         */}
 
+        <ParallaxLayer offset={2.5} speed={-0.4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+          <img src={url('earth')} style={{ width: '60%' }} />
+        </ParallaxLayer>
+        
         <ParallaxLayer
           offset={0}
           speed={0.1}
@@ -99,13 +101,14 @@ const App = () => {
             <Typography variant="h3" className="text" >AN ONLINE LATEX DOCUMENT PROCESSOR</Typography>
           </div>
         </ParallaxLayer>
-        {/*
+
         <ParallaxLayer
           offset={1}
           speed={0.1}
           onClick={() => parallax.scrollTo(2)}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
           <img src={url('bash')} style={{ width: '40%' }} />
+          <Typography variant="h3" className="text" style={{ width: '40%' }}>Easily create a professional Document in LaTeX format without any code knowledge</Typography>
         </ParallaxLayer>
 
         <ParallaxLayer
@@ -113,9 +116,10 @@ const App = () => {
           speed={-0}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           onClick={() => parallax.scrollTo(0)}>
+          <Typography variant="h3" className="text" style={{ width: '40%' }}>Web-based and cloud-saving Type and edit in anywhere and anytime</Typography>
           <img src={url('clients-main')} style={{ width: '40%' }} />
         </ParallaxLayer>
-        */}
+
       </Parallax>
     </>
   )
