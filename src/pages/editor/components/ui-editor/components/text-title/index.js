@@ -6,13 +6,7 @@ import {
   withStyles
 } from '@material-ui/core'
 import "./styles.scss"
-
-const NoMarginTooltip = withStyles((theme) => ({
-  tooltip: {
-    margin: 0,
-    fontSize: 12
-  },
-}))(Tooltip);
+import { NoMarginTooltip } from '../component-style'
 
 const TextTitle = ({ info, text, setText, id }) => {
   return (

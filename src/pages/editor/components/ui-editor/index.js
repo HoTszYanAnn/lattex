@@ -9,6 +9,7 @@ import dict from '../../dict.json'
 import TextContent from './components/text-content'
 import ToolBar from './components/tool-bar'
 import _ from 'lodash'
+import CommandBlock from './components/command-block'
 
 //equation https://www.npmjs.com/package/equation-editor-react
 //rte 
@@ -79,7 +80,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
               item.code
                 ? dict[item.code]
                   ? <TextTitle key={id} info={dict[item.code]} text={item.text} setText={setText} id={id} />
-                  : <Box>{item.code}</Box>
+                  : <CommandBlock text={item.code} id={id} />
                 : <TextContent key={id} text={item.text} setText={setText} id={id} />
             ))
           }
