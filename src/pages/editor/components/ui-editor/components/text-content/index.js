@@ -4,7 +4,6 @@ import BraftEditor from 'braft-editor'
 import {
   Box
 } from '@material-ui/core'
-import './styles.scss'
 
 const TextContent = ({ id, text, setText }) => {
 
