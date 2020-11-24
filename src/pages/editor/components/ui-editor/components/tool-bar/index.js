@@ -39,36 +39,40 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
 
   return (
     <>
-      <Box mx={2} display="flex" style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-        <Tooltip title='ToolBar' aria-label='ToolBar' placement="right" size="small">
-          <Fab onClick={handleClick} size="medium" color="primary">
-            {open ? <CloseIcon /> : <EditIcon />}
-          </Fab>
-        </Tooltip>
-        <Box my={2} />
-        <Grid container direction="column" style={{ display: open ? 'flex' : 'none' }} alignItems="center" spacing={3}>
-          <Grid item>
-            <SettingButton doc={doc} pushAndCompile={pushAndCompile} />
+      <Box>
+        <Box display="inline-block">
+          <Tooltip title='ToolBar' aria-label='ToolBar'>
+            <Fab onClick={handleClick} size="medium" color="primary">
+              {open ? <CloseIcon /> : <EditIcon />}
+            </Fab>
+          </Tooltip>
+        </Box>
+        <Box display="inline-block" mx={1} />
+        <Box display="inline-block">
+          <Grid item container direction="row" style={{ display: open ? 'flex' : 'none' }} alignItems="center" spacing={3}>
+            <Grid item>
+              <SettingButton doc={doc} pushAndCompile={pushAndCompile} />
+            </Grid>
+            <Grid item>
+              <Box alignSelf='flex-start'>
+                <AddButton setBox={setBox} />
+              </Box>
+            </Grid>
+            <Grid item>
+              <LatexCodeButton code={doc.latex.latex_code} />
+            </Grid>
+            <Grid item>
+              <Tooltip title='Show Compiler?' aria-label='Show Compiler?' placement="top">
+                <Fab size="small" onClick={changeShowCompiler}>{showCompiler ? <VisibilityIcon /> : <VisibilityOffIcon />}</Fab>
+              </Tooltip>
+            </Grid>
+            <Grid item>
+              <Tooltip title="Recompile" aria-label="Recompile" placement="top">
+                <Fab size="small" onClick={pushAndCompile} disabled={!showCompiler}><CachedIcon /></Fab>
+              </Tooltip>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Box alignSelf='flex-start'>
-              <AddButton setBox={setBox} />
-            </Box>
-          </Grid>
-          <Grid item>
-            <LatexCodeButton code={doc.latex.latex_code} />
-          </Grid>
-          <Grid item>
-            <Tooltip title='Show Compiler?' aria-label='Show Compiler?' placement="right">
-              <Fab size="small" onClick={changeShowCompiler}>{showCompiler ? <VisibilityIcon /> : <VisibilityOffIcon />}</Fab>
-            </Tooltip>
-          </Grid>
-          <Grid item>
-            <Tooltip title="Recompile" aria-label="Recompile" placement="right">
-              <Fab size="small" onClick={pushAndCompile} disabled={!showCompiler}><CachedIcon /></Fab>
-            </Tooltip>
-          </Grid>
-        </Grid>
+        </Box>
       </Box>
     </>
   )

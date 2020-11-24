@@ -4,6 +4,7 @@ import BraftEditor from 'braft-editor'
 import {
   Box
 } from '@material-ui/core'
+import './styles.scss'
 
 const TextContent = ({ id, text, setText }) => {
 
@@ -17,14 +18,15 @@ const TextContent = ({ id, text, setText }) => {
   const lineHeights = [1, 1.2, 1.5, 1.75, 2]
   return (
     <Box>
-      <BraftEditor style={{height: 200, overflow: 'auto', backgroundColor: 'white'}} 
+      <BraftEditor 
         value={value} 
         onChange={onChange} 
         fontSizes={fontSize}
         lineHeight={lineHeights}
         excludeControls={excludeControls} 
         language='en'
-        contentStyle={{ height: 50, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)' }} 
+        className='editor'
+        placeholder="Write Here..."
         />
     </Box>
   );

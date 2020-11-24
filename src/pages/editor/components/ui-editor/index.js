@@ -15,8 +15,8 @@ import _ from 'lodash'
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     position: 'fixed',
-    top: '80px',
-    right: '10px',
+    top: '60px',
+    left: '10px',
     zIndex: 9999,
   },
 }));
@@ -62,26 +62,29 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
           setBox={setBox}
         />
       </Box>
-      <Box
-        style={{
-          boxSizing: 'border-box',
-          overflow: 'auto',
-          height: '100%',
-          padding: '1.5em',
-        }}
-      >
-        {
-          state.map((item, id) => (
-            item.code
-              ? dict[item.code]
-                ? <TextTitle key={id} info={dict[item.code]} text={item.text} setText={setText} id={id} />
-                : <Box>{item.code}</Box>
-              : <TextContent key={id} text={item.text} setText={setText} id={id} />
-          ))
-        }
-        {console.log(state)}
-        <Button onClick={addTextBox}>Add Section</Button>
-        <Button onClick={addParaBox}>Add Para</Button>
+      <Box style={{ overflowY: 'scroll', height: '100%' }}>
+        <Box
+          style={{
+            boxSizing: 'border-box',
+            padding: '1.5em',
+            margin: '1.5em',
+            background: 'white',
+            minHeight: 'calc(100% - 3em)',
+          }}
+        >
+          {
+            state.map((item, id) => (
+              item.code
+                ? dict[item.code]
+                  ? <TextTitle key={id} info={dict[item.code]} text={item.text} setText={setText} id={id} />
+                  : <Box>{item.code}</Box>
+                : <TextContent key={id} text={item.text} setText={setText} id={id} />
+            ))
+          }
+          {console.log(state)}
+          <Button onClick={addTextBox}>Add Section</Button>
+          <Button onClick={addParaBox}>Add Para</Button>
+        </Box>
       </Box>
     </>
   )
