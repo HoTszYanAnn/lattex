@@ -1,5 +1,7 @@
+$primary-color: #F8B21C;
+
 * {
-  font-family: "Inika", "Kumbh Sans", sans-serif,  !important;
+  font-family: "Inika", "Kumbh Sans", sans-serif !important;
 }
 
 .roboto {
@@ -49,112 +51,7 @@ body {
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-.editor-block-handler {
-  display: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(0%, 0%);
-  z-index: 50;
-  background-color: rgba(0, 0, 0, 0.3);
-  color: white;
-  width: 25px;
-  height: 25px;
-}
-
-.editor-big-block:focus-within {
-  position: relative;
-  .editor-block-handler {
-    display: block;
-  }
-}
-
-//editor
-.section-title-field {
-  padding: 15px;
-  border:none;
-  background-image:none;
-  background-color:transparent;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  font-family: 'Inika' !important;
-  width: calc(100% - 30px);
-}
-
-textarea:focus, input:focus{
-  outline: none;
-  box-shadow: 0 0 1000px rgba(0, 0, 0, 1);
-}
-
-.command-block-label {
-  display: none;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  position: absolute;
-  width: auto;
-  transform: translateY(-100%);
-  border-radius: 5px;
-  padding: 5px 8px;
-  font-size: 12px
-}
-
-.command-block:focus-within {
-  position: relative;
-  .command-block-label {
-    display: block;
-  }
-}
-
-//braft editor
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.editor:focus-within {
-  //border: 1px solid #F8B21C;
-  //border-radius: 5px;
-  box-shadow: 0 0 1000px rgba(0, 0, 0, 1);
-}
-
-.bf-controlbar {
-  display: none;
-  box-shadow: none;
-}
-
-.editor:focus-within {
-  .bf-controlbar {
-    background: white;
-    z-index: 9999;
-    display: block;
-    position: absolute;
-    top: 100%;
-  }
-}
-
-.bf-content {
-  height: auto;
-  overflow: auto;
-  padding: 0;
-}
-
-.bf-container .public-DraftEditor-content {
-  padding: 5;
-}
-
-.bf-container .public-DraftEditor-content > div {
-  padding: 0;
-}
+// COMMON
+@import "./scss/braft-editor.scss";
+@import "./scss/editor-text-field.scss";
+@import "./scss/toolbar.scss";

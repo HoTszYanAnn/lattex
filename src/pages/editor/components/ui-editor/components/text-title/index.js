@@ -21,6 +21,7 @@ const TextTitle = ({ info, text, setText, id }) => {
           onChange={(e) => setText(id, e.target.value)}
           value={text}
           className="section-title-field"
+          placeholder="Write Here..."
         />
       </Box>
     </>

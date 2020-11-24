@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     top: '60px',
     left: '10px',
-    zIndex: 9999,
+    zIndex: 999,
   },
 }));
 const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument}) => {

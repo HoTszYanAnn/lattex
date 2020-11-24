@@ -1,0 +1,78 @@
+//toolbar button menu
+.toolbar-button {
+  background-color: #efefef !important;
+}
+
+.opened-toolbar-button {
+  background-color: $primary-color !important;
+  box-shadow: none !important;
+  z-index: 999
+}
+
+.toolbar-button-menu {
+  position: absolute;
+  top: 0;
+  height: 70vh;
+  width: 400px;
+  left: 60px;
+  background: linear-gradient(90deg, $primary-color 15px, white 15px);
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 20px 20px 20px  rgba(0,0,0,0.1);
+}
+
+.opened-toolbar-button-menu-bridge {
+  position: absolute;
+  top: 0;
+  height: 48px;
+  background-color: $primary-color;
+  width: 40px;
+  left: 20px;
+  z-index: -2;
+}
+
+.opened-toolbar-button-menu-shape-white-up {
+  display: block !important;
+  position: absolute;
+  height: 24px;
+  background-color: white;
+  width: 24px;
+  border-top-right-radius: 50%;
+  left: calc(50% + 20px + 16px);
+  transform: translate(-100%,0%);
+  z-index: -9;
+}
+
+.opened-toolbar-button-menu-shape-orange-up {
+  display: block !important;
+  position: absolute;
+  height: 24px;
+  background-color: $primary-color;
+  width: 24px;
+  left: calc(50% + 20px + 16px);
+  transform: translate(-100%,0%);
+  z-index: -10;
+}
+
+.opened-toolbar-button-menu-shape-white-down {
+  display: block !important;
+  position: absolute;
+  height: 24px;
+  background-color: white;
+  width: 24px;
+  border-bottom-right-radius: 50%;
+  left: calc(50% + 20px + 16px);
+  transform: translate(-100%,-300%);
+  z-index: -9;
+}
+
+.opened-toolbar-button-menu-shape-orange-down {
+  display: block !important;
+  position: absolute;
+  height: 24px;
+  background-color: $primary-color;
+  width: 24px;
+  left: calc(50% + 20px + 16px);
+  transform: translate(-100%,-300%);
+  z-index: -10;
+}
