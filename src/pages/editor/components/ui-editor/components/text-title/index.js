@@ -10,7 +10,7 @@ const TextTitle = ({ info, text, setText, id }) => {
   return (
     <>
       <Box className="command-block">
-        <Box className="command-block-label">{text}</Box>
+        <Box className="command-block-label">{info.name}</Box>
         <input
           style={{
             fontSize: info.size,
