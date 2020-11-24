@@ -21,17 +21,6 @@ const AddBox = ({ setBox }) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   }
 
-  const addBox = (key) => {
-    /*box.push({
-        code: key,
-        text: ''
-    })*/
-    setBox({
-      code: key,
-      text: ''
-    })
-  }
-
   return (
     <>
       <Tooltip title="Add" placement="right">
@@ -53,12 +42,12 @@ const AddBox = ({ setBox }) => {
           horizontal: 'left',
         }}
       >
-        <MenuItem button onClick={() => addBox(null)}>
+        <MenuItem button onClick={() => setBox(null)}>
           Text
         </MenuItem>
         {Object.keys(dict).map((key) => {
           return (
-            <MenuItem button onClick={() => addBox(key)}>
+            <MenuItem button onClick={() => setBox(key)}>
               {dict[key].name}
             </MenuItem>)
         })

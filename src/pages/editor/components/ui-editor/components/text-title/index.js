@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import {
-  TextField,
   Box,
+  Button,
+  TextField,
   Tooltip,
   withStyles
 } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 const TextTitle = ({ info, text, setText, id }) => {
   return (
@@ -14,7 +16,6 @@ const TextTitle = ({ info, text, setText, id }) => {
         <input
           style={{
             fontSize: info.size,
-            fontFamily: info.family,
             fontWeight: info.weight,
           }}
           onChange={(e) => setText(id, e.target.value)}

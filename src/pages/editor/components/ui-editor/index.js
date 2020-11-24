@@ -12,6 +12,7 @@ import _ from 'lodash'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import CommandBlock from './components/command-block'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
+import { difference } from '../../../../function'
 
 //equation https://www.npmjs.com/package/equation-editor-react
 //rte 
@@ -23,35 +24,30 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 9999,
   },
 }));
-const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument, setBox }) => {
+const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument}) => {
   const classes = useStyles()
-  const origContent = _(doc.latex).pick(['contents']).value()
-  const [state, setState] = useState(origContent.contents)
+  const origContent = _(doc.latex).pick(['contents']).value().contents
+  console.log(origContent)
+  const [state, setState] = useState(origContent)
 
   const setText = (id, val) => {
     let newArr = _.cloneDeep(state)
-    if (newArr[id].code) {
-      newArr[id].text = val
-    } else {
-      newArr[id].text = val.toString('html')
-    }
+    newArr[id].text = val
     setState(newArr)
   }
 
-  const addTextBox = () => {
+  const setBox = (code) => {
     let newArr = _.cloneDeep(state)
-    newArr.push({ code: '\\section', text: '' })
+    newArr.push({ id: (parseInt(state[state.length-1].id)+1).toString(), code: code, text: '' })
     setState(newArr)
   };
 
-  const addParaBox = () => {
+  const onSave = () => {
     let newArr = _.cloneDeep(state)
-    newArr.push({ code: null, text: '' })
-    setState(newArr)
-  };
-
-  const l = state.length
-
+    const diff = difference(newArr, origContent)
+    console.log(diff)
+    //pushAndCompile(diff)
+  }
 
   return (
     <>
@@ -63,6 +59,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
           doc={doc}
           updateDocument={updateDocument}
           setBox={setBox}
+          onSave={onSave}
         />
       </Box>
       <Box style={{ overflowY: 'scroll', height: '100%' }}>
@@ -71,7 +68,6 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
             boxSizing: 'border-box',
             padding: '1.5em',
             margin: '1.5em',
-            marginTop: '3em',
             background: 'white',
             minHeight: 'calc(100% - 3em)',
             width: 'calc(100% - 3em)',
@@ -124,19 +120,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
               )}
             </Droppable>
           </DragDropContext>
-          {/*
-            state.map((item, id) => (
-              item.code
-                ? dict[item.code]
-                  ? <TextTitle key={id} info={dict[item.code]} text={item.text} setText={setText} id={id} />
-                  : <CommandBlock text={item.code} id={id} />
-                : <TextContent key={id} text={item.text} setText={setText} id={id} />
-            ))
-            */
-          }
           {console.log(state)}
-          <Button onClick={addTextBox}>Add Section</Button>
-          <Button onClick={addParaBox}>Add Para</Button>
         </Box>
       </Box>
     </>

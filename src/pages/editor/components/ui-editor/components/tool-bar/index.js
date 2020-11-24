@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox }) => {
+const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox, onSave }) => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false);
 

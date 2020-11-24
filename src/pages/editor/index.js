@@ -98,7 +98,6 @@ const Editor = ({ width, match }) => {
   const [doc, setDoc] = useState(null)
   const [key, setKey] = useState(uuidv4())
   const [loading, setLoading] = useState(true)
-  const [box, setBox] = useState([])
 
   const { params } = match;
 
@@ -159,13 +158,11 @@ const Editor = ({ width, match }) => {
             <Grid item xs={12} lg={showCompiler ? 6 : 12} className={classes.editor} style={{ display: showCompiler ? ['xs', 'sm', 'md'].includes(width) ? 'none' : 'block' : 'block' }}>
               <UIEditor
                 doc={doc}
-                box={box}
                 showCompiler={showCompiler}
                 changeShowCompiler={changeShowCompiler}
                 pushAndCompile={pushAndCompile}
                 doc={doc}
                 updateDocument={updateDocument}
-                setBox={setBox}
               />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.compiler} style={{ display: showCompiler ? 'block' : 'none' }}>
