@@ -1,4 +1,5 @@
 const _ = require("lodash")
+const { uniqueId } = require("lodash")
 
 exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
   const { latex_code, image } = parent
@@ -65,11 +66,13 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
       console.log(val)
       if (key.startsWith('\\')) {
         acc.push({
+          id: uniqueId(),
           code: key,
           text: value,
         })
       } else {
         acc.push({
+          id: uniqueId(),
           code: null,
           text: key,
         })

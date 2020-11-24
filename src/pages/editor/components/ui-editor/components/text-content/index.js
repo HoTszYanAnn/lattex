@@ -8,26 +8,29 @@ import './styles.scss'
 
 const TextContent = ({ id, text, setText }) => {
 
- const onChange = (val) => {
-  setValue(val)
-  setText(id, val)
-}
-  const [value, setValue] = useState(BraftEditor.createEditorState(`<p>${text}</p>`))
-  const excludeControls = ['headings', 'emoji','hr','blockquote', 'separator', 'letter-spacing']
+  const onChange = (val) => {
+    setValue(val)
+  }
+  const onBlur = () => {
+    setText(id, value.toHTML())
+  }
+  const [value, setValue] = useState(BraftEditor.createEditorState(text))
+  const excludeControls = ['headings', 'emoji', 'hr', 'blockquote', 'separator', 'letter-spacing']
   const fontSize = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 23, 27, 33]
   const lineHeights = [1, 1.2, 1.5, 1.75, 2]
   return (
     <Box>
-      <BraftEditor 
-        value={value} 
-        onChange={onChange} 
+      <BraftEditor
+        value={value}
+        onChange={onChange}
         fontSizes={fontSize}
         lineHeight={lineHeights}
-        excludeControls={excludeControls} 
+        excludeControls={excludeControls}
         language='en'
         className='editor'
         placeholder="Write Here..."
-        />
+        onBlur={onBlur}
+      />
     </Box>
   );
 }

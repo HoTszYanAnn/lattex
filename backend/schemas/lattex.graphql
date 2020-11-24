@@ -60,6 +60,7 @@ type Titles {
 }
 
 type Section {
+  id: String
   code: String
   text: String
 }

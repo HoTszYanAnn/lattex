@@ -44,6 +44,7 @@ const DOCUMENT_FRAGMENT = gql`
         firstLineIndentation
       }
       contents{
+        id
         code
         text
       }

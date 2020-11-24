@@ -1,9 +1,9 @@
 * {
-  font-family: 'Kumbh Sans', sans-serif, 'Inika', !important;
+  font-family: "Kumbh Sans", sans-serif, "Inika" !important;
 }
 
-.roboto{
-  font-family: 'Roboto', sans-serif !important;
+.roboto {
+  font-family: "Roboto", sans-serif !important;
 }
 
 html {
@@ -47,4 +47,24 @@ body {
     U+FEFF, U+FFFD;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.editor-block-handler {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(0%, 0%);
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  width: 25px;
+  height: 25px;
+}
+
+.editor-big-block:focus-within {
+  position: relative;
+  .editor-block-handler {
+    display: block;
+  }
+}
