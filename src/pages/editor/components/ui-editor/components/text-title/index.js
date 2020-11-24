@@ -1,29 +1,37 @@
 import React, { useState } from 'react'
 import {
   TextField,
+  Box,
+  Tooltip,
+  withStyles
 } from '@material-ui/core'
+import "./styles.scss"
+
+const NoMarginTooltip = withStyles((theme) => ({
+  tooltip: {
+    margin: 0,
+    fontSize: 12
+  },
+}))(Tooltip);
 
 const TextTitle = ({ info, text, setText, id }) => {
   return (
-    <TextField
-      id="standard-input"
-      label={info.name}
-      fullWidth
-      style={{
-        marginLeft: info.left,
-        marginTop: info.top,
-        marginBottom: info.bottom,
-      }}
-      inputProps={{
-        style: {
-          fontSize: info.size,
-          fontFamily: info.family,
-          fontWeight: info.weight,
-        },
-      }}
-      value={text}
-      onChange={(e) => setText(id, e.target.value)}
-    />
+    <>
+      <Box>
+        <NoMarginTooltip title={`${info.name} Title`} aria-label={info.name} placement="top-start">
+          <input
+            style={{
+              fontSize: info.size,
+              fontFamily: info.family,
+              fontWeight: info.weight,
+            }}
+            onChange={(e) => setText(id, e.target.value)}
+            value={text}
+            className="section-title-field"
+          />
+        </NoMarginTooltip>
+      </Box>
+    </>
   )
 }
 

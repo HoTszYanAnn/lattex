@@ -37,7 +37,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
 
   const addTextBox = () => {
     let newArr = _.cloneDeep(state)
-    newArr.push({ code: '\\section', text: 'aaaaaaaaaaaaaaaa' })
+    newArr.push({ code: '\\section', text: '' })
     setState(newArr)
   };
 
@@ -68,8 +68,10 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
             boxSizing: 'border-box',
             padding: '1.5em',
             margin: '1.5em',
+            marginTop: '3em',
             background: 'white',
             minHeight: 'calc(100% - 3em)',
+            width: 'calc(100% - 3em)',
           }}
         >
           {
