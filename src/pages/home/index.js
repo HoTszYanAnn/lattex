@@ -98,7 +98,7 @@ const App = () => {
         >
           <div className="wrapper" style={{ marginLeft: "30%", transform: 'translate(-25%, 0)' }}>
             <img src={lattex} style={{ width: '50%', marginLeft: "50%", transform: 'translate(-50%, 0)' }} className="logo" />
-            <Typography variant="h3" className="text" >AN ONLINE LATEX DOCUMENT PROCESSOR</Typography>
+            <Typography variant="h3" className="text" >LATEX DOCUMENT PROCESSOR</Typography>
           </div>
         </ParallaxLayer>
 
@@ -108,7 +108,10 @@ const App = () => {
           onClick={() => parallax.scrollTo(2)}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
           <img src={url('bash')} style={{ width: '40%' }} />
-          <Typography variant="h3" className="text" style={{ width: '40%' }}>Easily create a professional Document in LaTeX format without any code knowledge</Typography>
+          <Typography variant="h3" className="text" style={{ width: '50%' }}>
+           Create a LaTeX document<br/> 
+           Without coding
+          </Typography>
         </ParallaxLayer>
 
         <ParallaxLayer
@@ -116,7 +119,9 @@ const App = () => {
           speed={-0}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           onClick={() => parallax.scrollTo(0)}>
-          <Typography variant="h3" className="text" style={{ width: '40%' }}>Web-based and cloud-saving Type and edit in anywhere and anytime</Typography>
+          <Typography variant="h3" className="text" style={{ width: '50%' }}>Web-based and cloud-saving
+            <br/> Edit it anywhere and anytime
+          </Typography>
           <img src={url('clients-main')} style={{ width: '40%' }} />
         </ParallaxLayer>
 

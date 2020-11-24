@@ -14,17 +14,41 @@ const TextContent = ({ id, text, setText }) => {
     setText(id, value.toHTML())
   }
   const [value, setValue] = useState(BraftEditor.createEditorState(text))
-  const excludeControls = ['headings', 'emoji', 'hr', 'blockquote', 'separator', 'letter-spacing']
-  const fontSize = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 23, 27, 33]
-  const lineHeights = [1, 1.2, 1.5, 1.75, 2]
+  const controls = [
+    'undo', 'redo', 'remove-styles', 'clear', 
+    'bold', 'italic', 'underline', 
+    'superscript', 'subscript',
+    'list-ul', 'list-ol', 'blockquote', 'code',
+    'link',  'hr', 
+    // 'separator', 'font-family','font-size', 'line-height', 'text-color', 
+    // 'strike-through',  
+    // 'text-indent', 'text-align',
+    //'media', 
+    
+]
+  const fontSize = []
+  const lineHeights = []
+  const fontFamilies = [
+    {
+        name: 'Araial',
+        family: 'Arial, Helvetica, sans-serif'
+    }, {
+        name: 'Georgia',
+        family: 'Georgia, serif'
+    },  {
+        name: 'Monospace',
+        family: '"Courier New", Courier, monospace'
+    },
+]
   return (
     <Box>
       <BraftEditor
         value={value}
         onChange={onChange}
-        fontSizes={fontSize}
-        lineHeight={lineHeights}
-        excludeControls={excludeControls}
+        //fontSizes={fontSize}
+        //lineHeight={lineHeights}
+        //fontFamilies={fontFamilies}
+        controls={controls}
         language='en'
         className='editor'
         placeholder="Write Here..."

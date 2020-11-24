@@ -107,7 +107,7 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
             </Grid>
             <Grid item>
               <Tooltip title="Recompile" aria-label="Recompile" placement="top">
-                <Fab size="small" onClick={pushAndCompile} disabled={!showCompiler}><CachedIcon /></Fab>
+                <Fab size="small" onClick={onSave} disabled={!showCompiler}><CachedIcon /></Fab>
               </Tooltip>
             </Grid>
           </Grid>

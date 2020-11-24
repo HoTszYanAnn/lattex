@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     position: 'fixed',
     top: '60px',
-    left: '10px',
+    left: '5px',
     zIndex: 999,
   },
 }));
@@ -43,9 +43,11 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
   };
 
   const onSave = () => {
+    console.log("hello")
     let newArr = _.cloneDeep(state)
     const diff = difference(newArr, origContent)
     console.log(diff)
+    // convert html to latex
     //pushAndCompile(diff)
   }
 

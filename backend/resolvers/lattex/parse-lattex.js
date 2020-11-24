@@ -1,5 +1,6 @@
 const _ = require("lodash")
 const { uniqueId } = require("lodash")
+const pandoc = require('node-pandoc-promise');
 
 exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
   const { latex_code, image } = parent
@@ -50,6 +51,9 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
       .mapValues((value, name) => _.merge({}, value, { name }))
       .values()
       .value()
+  
+  //const args = '-f latex -t html'
+  const args = ['-f','latex','-t','html']
 
   let contentArrayObject = content
     .map(item => {
@@ -58,25 +62,34 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
     .reduce((acc, val) => {
       const [key, value] = val
       console.log(val)
-      if (key.startsWith('\\')) {
+      if (key.startsWith('\\') || key.startsWith('%')) {
         acc.push({
           id: uniqueId(),
           code: key,
           text: value,
         })
       } else {
+        pandoc(key, args)
+        .then(res=>{
+          acc.push({
+            id: uniqueId(),
+            code: null,
+            text: res,
+          }) 
+        }).catch(err=>{
+            console.error('Oh No: ',err) 
+        })
         acc.push({
           id: uniqueId(),
           code: null,
           text: key,
-        })
+        }) 
       }
       console.log(acc)
       return acc;
     }, [])
 
   console.log(contentArrayObject)
-  console.log("hello3")
   return {
     ...settingObject,
     images: imageObject,
