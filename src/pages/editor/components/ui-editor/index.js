@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 999,
   },
 }));
-const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument}) => {
+const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument }) => {
   const classes = useStyles()
   const origContent = _(doc.latex).pick(['contents']).value().contents
   console.log(origContent)
@@ -38,17 +38,12 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
 
   const setBox = (code) => {
     let newArr = _.cloneDeep(state)
-    newArr.push({ id: (parseInt(state[state.length-1].id)+1).toString(), code: code, text: '' })
+    newArr.push({ id: (parseInt(state[state.length - 1].id) + 1).toString(), code: code, text: '' })
     setState(newArr)
   };
 
   const onSave = () => {
-    console.log("hello")
-    let newArr = _.cloneDeep(state)
-    const diff = difference(newArr, origContent)
-    console.log(diff)
-    // convert html to latex
-    //pushAndCompile(diff)
+    pushAndCompile({ contents: state })
   }
 
   return (

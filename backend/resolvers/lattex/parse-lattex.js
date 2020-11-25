@@ -2,7 +2,7 @@ const _ = require("lodash")
 const { uniqueId } = require("lodash")
 const pandoc = require('node-pandoc-promise');
 
-exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
+exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
   const { latex_code, image } = parent
   const textArray = latex_code.split(/\s*(\n)\s*/).filter(item => !['\n', ''].includes(item))
   const beginIndex = textArray.findIndex(item => item.includes('\\begin{document}'))
@@ -51,44 +51,35 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
       .mapValues((value, name) => _.merge({}, value, { name }))
       .values()
       .value()
-  
-  //const args = '-f latex -t html'
-  const args = ['-f','latex','-t','html']
 
-  let contentArrayObject = content
+  //const args = '-f latex -t html'
+  const args = ['-f', 'latex', '-t', 'html']
+
+  let contentArrayObject = await content
     .map(item => {
-      return item.split(/{|}/, 2)
+      return item.startsWith('\\') ? item.split(/{|}/, 2) : [item, null]
     })
-    .reduce((acc, val) => {
+    .reduce(async (acc, val) => {
+      let newacc = await acc
       const [key, value] = val
-      console.log(val)
-      if (key.startsWith('\\') || key.startsWith('%')) {
-        acc.push({
+      console.log(key)
+      console.log(value)
+      if (key.startsWith('\\')) {
+        newacc.push({
           id: uniqueId(),
-          code: key,
+          code: key.substring(1, key.length),
           text: value,
         })
       } else {
-        pandoc(key, args)
-        .then(res=>{
-          acc.push({
-            id: uniqueId(),
-            code: null,
-            text: res,
-          }) 
-        }).catch(err=>{
-            console.error('Oh No: ',err) 
-        })
-        acc.push({
+        const res = (await pandoc(key, args)).replace('\n', '')
+        newacc.push({
           id: uniqueId(),
           code: null,
-          text: key,
-        }) 
+          text: res,
+        })
       }
-      console.log(acc)
-      return acc;
+      return newacc;
     }, [])
-
   console.log(contentArrayObject)
   return {
     ...settingObject,
@@ -98,11 +89,11 @@ exports.parseLaTeXCodeToObject = (parent, input, context, info) => {
   }
 }
 
-exports.parseObjectToLatexCode = (parent, { input }, context, info) => {
-  const oldObject = this.parseLaTeXCodeToObject(parent)
+exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
+  const oldObject = await this.parseLaTeXCodeToObject(parent)
   const updatedObject = { ...oldObject, ...input }
-
   let parseText = ""
+
   //setting
   parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n`
 
@@ -113,16 +104,21 @@ exports.parseObjectToLatexCode = (parent, { input }, context, info) => {
   //begin
   parseText = parseText + '\\begin{document}\n'
 
-  console.log(updatedObject.contents)
   //content
-  updatedObject.contents.map((item) => {
-    if (item.code) {
-      parseText = parseText + `\\${item.code}{${item.text}}\n`
-    } else {
-      parseText = parseText + `${item.text}\n`
-    }
-  })
+  const args = ['-f', 'html', '-t', 'latex']
 
+  for (let i = 0; i < updatedObject.contents.length; i++) {
+    if (updatedObject.contents[i].code) {
+      if (updatedObject.contents[i].text) {
+        parseText = parseText + `\\${updatedObject.contents[i].code}{${updatedObject.contents[i].text}}\n`
+      } else {
+        parseText = parseText + `\\${updatedObject.contents[i].code}\n`
+      }
+    } else {
+      const res = await pandoc(updatedObject.contents[i].text, args)
+      parseText = parseText + `${res}\n`
+    }
+  }
   //end
   parseText = parseText + '\\end{document}\n'
 

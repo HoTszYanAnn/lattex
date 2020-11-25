@@ -1,83 +1,83 @@
 {
-    "\\part": {
+    "part": {
         "name": "Part",
         "left": "",
         "size": "2.2rem",
         "weight": "bold"
     },
-    "\\chapter": {
+    "chapter": {
         "name": "Chapter",
         "left": "",
         "size": "1.45rem",
         "weight": "bold"
     },
-    "\\section": {
+    "section": {
         "name": "Section",
         "left": "",
         "size": "1.45rem",
         "weight": "bold"
     },
-    "\\subsection": {
+    "subsection": {
         "name": "Subsection",
         "left": "",
         "size": "1.2rem",
         "weight": "bold"
     },
-    "\\subsubsection": {
+    "subsubsection": {
         "name": "Subsubsection",
         "left": "",
         "size": "1rem",
         "weight": "bold"
     },
-    "\\paragraph": {
+    "paragraph": {
         "name": "Paragraph",
         "left": "",
         "size": "1.2rem",
         "weight": "bold"
     },
-    "\\subparagraph": {
+    "subparagraph": {
         "name": "Subparagraph",
         "left": "1em",
         "size": "1rem",
         "weight": "bold"
     },
-    "\\part*": {
+    "part*": {
         "name": "Part*",
         "left": "",
         "size": "2.2rem",
         "weight": "bold"
     },
-    "\\chapter*": {
+    "chapter*": {
         "name": "Chapter*",
         "left": "",
         "size": "1.45rem",
         "weight": "bold"
     },
-    "\\section*": {
+    "section*": {
         "name": "Section*",
         "left": "",
         "size": "1.45rem",
         "weight": "bold"
     },
-    "\\subsection*": {
+    "subsection*": {
         "name": "Subsection*",
         "left": "",
         "size": "1.2rem",
         "weight": "bold"
     },
-    "\\subsubsection*": {
+    "subsubsection*": {
         "name": "Subsubsection*",
         "left": "",
         "size": "1rem",
         "weight": "bold"
     },
-    "\\paragraph*": {
+    "paragraph*": {
         "name": "Paragraph*",
         "left": "",
         "size": "1.2rem",
         "weight": "bold"
     },
-    "\\subparagraph*": {
+    "subparagraph*": {
         "name": "Subparagraph*",
         "left": "1em",
         "size": "1rem",

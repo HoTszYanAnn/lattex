@@ -15,7 +15,7 @@ input LaTeXDocUpdateInput {
   documentType: String
   titles: TitlesInput
   setting: SettingInput
-  content: [SectionInput!]
+  contents: [SectionInput!]
   image: [FileInput!]
 }
 
@@ -32,6 +32,7 @@ input TitlesInput {
 }
 
 input SectionInput {
+  id: String
   code: String
   text: String
 }
