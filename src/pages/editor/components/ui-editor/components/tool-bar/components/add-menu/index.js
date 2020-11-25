@@ -56,8 +56,8 @@ const TextMenuBox = ({ setBox, handleOpenWindow }) => (
           label="Paragraph Block"
         />
         <Box mb={2} />
-        <Typography variant="body1" display="inline">Title </Typography>
-        <Typography variant="body2" display="inline">(add in table content)</Typography>
+        <Typography variant="body1" display="inline">Numbered Section Title </Typography><br/>
+        <Typography variant="body2" display="inline">(included in the table of contents)</Typography>
         <Divider />
         {Object.keys(dict).map(key =>
           <BoxItem
@@ -69,8 +69,8 @@ const TextMenuBox = ({ setBox, handleOpenWindow }) => (
           />
         )}
         <Box mb={2} />
-        <Typography variant="body1" display="inline">Title </Typography>
-        <Typography variant="body2" display="inline">(will not add in table content)</Typography>
+        <Typography variant="body1" display="inline">Unnumbered Section Title</Typography><br/>
+        <Typography variant="body2" display="inline">(excluded in the table of contents.)</Typography>
         <Divider />
         {Object.keys(dict).map(key =>
           <BoxItem
@@ -87,7 +87,7 @@ const TextMenuBox = ({ setBox, handleOpenWindow }) => (
 )
 const OtherMenuBox = ({ setBox, handleOpenWindow }) => (
   <TemplateMenuBox
-    name="Other"
+    name="Command"
     items={
       <>
         <BoxItem
@@ -102,7 +102,7 @@ const OtherMenuBox = ({ setBox, handleOpenWindow }) => (
             setBox('tableofcontents');
             handleOpenWindow(null);
           }}
-          label="Table of Content"
+          label="Table of Contents"
         />
         <BoxItem
           onClick={() => {
@@ -131,7 +131,7 @@ const AddMenu = ({ setBox, handleOpenWindow }) => {
   }
   console.log(open)
 
-  const menu = ['text', 'equation', 'list', 'table', 'other']
+  const menu = ['text', 'equation', 'list', 'table', 'command']
   return (
     <>
       <Box display="table" style={{ height: '100%', minHeight: '70vh' }}>
@@ -152,7 +152,7 @@ const AddMenu = ({ setBox, handleOpenWindow }) => {
           <Box style={{ display: open === 'text' ? 'block' : 'none' }}>
             <TextMenuBox setBox={setBox} handleOpenWindow={handleOpenWindow} />
           </Box>
-          <Box style={{ display: open === 'other' ? 'block' : 'none' }}>
+          <Box style={{ display: open === 'command' ? 'block' : 'none' }}>
             <OtherMenuBox setBox={setBox} handleOpenWindow={handleOpenWindow} />
           </Box>
         </Box>

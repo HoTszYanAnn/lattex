@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Document Information', 'Select Template', 'Confirm Create Document'];
+  return ['Document Information', 'Select Template', 'Confirm'];
 }
 
 const CreateDocumentInputModal = ({ open, setOpen, createDocument, createDocumentGqlLoading, filename}) => {

@@ -73,7 +73,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
           style={{
             boxSizing: 'border-box',
             padding: '1.5em',
-            margin: '1.5em',
+            margin: '2em',
             background: 'white',
             minHeight: 'calc(100% - 3em)',
             width: 'calc(100% - 3em)',
