@@ -118,7 +118,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
       console.log('pandoc html - latex!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
       const temp = updatedObject.contents[i].text.split('</p><p>').join('<br/>')
       console.log(temp)
-      const res = (await pandoc(temp, args)).split('\r\n').join(' ')
+      const res = (await pandoc(temp, args)).split('\r\n').join('')
       console.log({ test: res })
       parseText = parseText + `${res}\n`
     }

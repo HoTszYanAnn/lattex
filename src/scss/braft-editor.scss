@@ -31,10 +31,11 @@
 .editor:focus-within {
   .bf-controlbar {
     background: white;
-    z-index: 9999;
+    z-index: 99;
     display: block;
     position: absolute;
     top: 100%;
+    width: calc(100% - 10px)
   }
 }
 

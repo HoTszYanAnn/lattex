@@ -6,7 +6,6 @@ import {
   Tooltip,
   withStyles
 } from '@material-ui/core'
-import DeleteIcon from '@material-ui/icons/Delete'
 
 const TextTitle = ({ info, text, setText, id }) => {
   return (
