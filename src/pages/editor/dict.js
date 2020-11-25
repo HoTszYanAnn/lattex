@@ -1,4 +1,4 @@
-{
+exports.dict = {
     "part": {
         "name": "Part",
         "left": "",
@@ -40,7 +40,8 @@
         "left": "1em",
         "size": "1rem",
         "weight": "bold"
-    },
+    }
+    /*,
     "part*": {
         "name": "Part*",
         "left": "",
@@ -83,4 +84,5 @@
         "size": "1rem",
         "weight": "bold"
     }
+    */
 }

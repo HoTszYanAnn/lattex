@@ -6,7 +6,7 @@
 .opened-toolbar-button {
   background-color: $primary-color !important;
   box-shadow: none !important;
-  z-index: 999
+  z-index: 999;
 }
 
 .toolbar-button-menu {
@@ -15,7 +15,7 @@
   left: 60px;
   background: linear-gradient(90deg, $primary-color 15px, white 15px);
   border-radius: 15px;
-  box-shadow: 20px 20px 20px  rgba(0,0,0,0.1);
+  box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.1);
 }
 
 .opened-toolbar-button-menu-bridge {
@@ -36,7 +36,7 @@
   width: 24px;
   border-top-right-radius: 50%;
   left: calc(50% + 20px + 16px);
-  transform: translate(-100%,0%);
+  transform: translate(-100%, 0%);
   z-index: -9;
 }
 
@@ -47,7 +47,7 @@
   background-color: $primary-color;
   width: 24px;
   left: calc(50% + 20px + 16px);
-  transform: translate(-100%,0%);
+  transform: translate(-100%, 0%);
   z-index: -10;
 }
 
@@ -59,7 +59,7 @@
   width: 24px;
   border-bottom-right-radius: 50%;
   left: calc(50% + 20px + 16px);
-  transform: translate(-100%,-300%);
+  transform: translate(-100%, -300%);
   z-index: -9;
 }
 
@@ -70,6 +70,48 @@
   background-color: $primary-color;
   width: 24px;
   left: calc(50% + 20px + 16px);
-  transform: translate(-100%,-300%);
+  transform: translate(-100%, -300%);
   z-index: -10;
+}
+
+.menu-leftside-box {
+  //style={{ verticalAlign: 'top', padding: '10px 10px', backgroundColor: theme.palette.primary.main, height: '100%', borderTopLeftRadius: '15px', borderBottomLeftRadius: '15px' }}
+  vertical-align: top;
+  padding: 10px 10px;
+  background-color: $primary-color;
+  height: 100%;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+.menu-leftside-button {
+  margin: 2px 0 !important;
+  padding: 4px 16px !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  min-width: 0 !important;
+  border-radius: 20px !important;
+  box-shadow: 1px 1px 2px hsla(0, 0%, 100%, 0.11),
+    inset 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.menu-leftside-button {
+  margin: 2px 0 !important;
+  padding: 4px 16px !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  min-width: 0 !important;
+  border-radius: 20px !important;
+  box-shadow: none;
+}
+
+.menu-leftside-button:hover {
+  box-shadow: 1px 1px 2px hsla(0, 0%, 100%, 0.11),
+    inset 1px 1px 2px rgba(0, 0, 0, 0.15);
+  background-color: darken($primary-color, 3%) !important;
+}
+
+.menu-leftside-button:active, .menu-leftside-button-active {
+  box-shadow: 1px 1px 2px hsla(0, 0%, 100%, 0.11),
+    inset 1px 1px 2px rgba(0, 0, 0, 0.15);
+  background-color: darken($primary-color, 8%) !important;
 }

@@ -1,91 +1,127 @@
 import React, { useState } from 'react'
 import {
-  List,
-  Menu,
   MenuItem,
-  Collapse,
-  Fab,
-  Tooltip,
-  MenuSubheader,
-  ListItem,
   Box,
-  ThemeProvider,
-  useTheme
+  useTheme,
+  Button,
+  Typography,
+  Divider,
+  makeStyles
 } from '@material-ui/core';
-import dict from '../../../../../../dict.json'
+import { dict } from '../../../../../../dict'
 
+const useStyles = makeStyles((theme) => ({
+  divider: {
+    // Theme Color, or use css color in quote
+    background: theme.palette.primary.main,
+  },
+}));
 
-const TextMenu = ({ setBox, handleOpenWindow }) => {
-  return (
-    <>
+const BoxItem = ({ label, onClick }) => (
+  <>
+    <Box>
       <MenuItem
         button
-        onClick={() => {
-          setBox(null);
-          handleOpenWindow(null);
-        }}
+        onClick={onClick}
       >
-        Text
+        {label}
       </MenuItem>
-      {Object.keys(dict).map((key) => {
-        return (
-          <MenuItem
-            button
+    </Box>
+  </>
+)
+
+const TemplateMenuBox = ({ name, items }) => (
+  <>
+    <Box style={{ padding: '8px' }}>
+      <Typography variant="h5" color="primary">{name}</Typography>
+      <Divider classes={{ root: useStyles().divider }} />
+      <Box mb={2} />
+      <Box style={{ maxHeight: 'calc(70vh - 30px - 32px - 1px - 16px)', overflowY: "auto" }}>
+        {items}
+      </Box>
+    </Box>
+  </>
+)
+
+const TextMenuBox = ({ setBox, handleOpenWindow }) => (
+  <TemplateMenuBox
+    name="Text"
+    items={
+      <>
+        <BoxItem
+          onClick={() => {
+            setBox(null);
+            handleOpenWindow(null);
+          }}
+          label="Paragraph Block"
+        />
+        <Box mb={2} />
+        <Typography variant="body1" display="inline">Title </Typography>
+        <Typography variant="body2" display="inline">(add in table content)</Typography>
+        <Divider />
+        {Object.keys(dict).map(key =>
+          <BoxItem
             onClick={() => {
               setBox(key);
               handleOpenWindow(null);
             }}
-          >
-            {dict[key].name}
-          </MenuItem>)
-      })
-      }
-    </>
-  )
-}
-
-const OtherMenu = ({ setBox, handleOpenWindow }) => {
-  return (
-    <>
-      <MenuItem
-        button
-        onClick={() => {
-          setBox('tableofcontents');
-          handleOpenWindow(null);
-        }}
-      >
-        Table of Content
-      </MenuItem>
-      <MenuItem
-        button
-        onClick={() => {
-          setBox('maketitle');
-          handleOpenWindow(null);
-        }}
-      >
-        Title
-      </MenuItem>
-      <MenuItem
-        button
-        onClick={() => {
-          setBox('newpage');
-          handleOpenWindow(null);
-        }}
-      >
-        New Page
-      </MenuItem>
-      <MenuItem
-        button
-        onClick={() => {
-          setBox('hrule');
-          handleOpenWindow(null);
-        }}
-      >
-        Divider
-      </MenuItem>
-    </>
-  )
-}
+            label={dict[key].name}
+          />
+        )}
+        <Box mb={2} />
+        <Typography variant="body1" display="inline">Title </Typography>
+        <Typography variant="body2" display="inline">(will not add in table content)</Typography>
+        <Divider />
+        {Object.keys(dict).map(key =>
+          <BoxItem
+            onClick={() => {
+              setBox(`${key}*`);
+              handleOpenWindow(null);
+            }}
+            label={dict[key].name}
+          />
+        )}
+      </>
+    }
+  />
+)
+const OtherMenuBox = ({ setBox, handleOpenWindow }) => (
+  <TemplateMenuBox
+    name="Other"
+    items={
+      <>
+        <BoxItem
+          onClick={() => {
+            setBox('maketitle');
+            handleOpenWindow(null);
+          }}
+          label="Make Title"
+        />
+        <BoxItem
+          onClick={() => {
+            setBox('tableofcontents');
+            handleOpenWindow(null);
+          }}
+          label="Table of Content"
+        />
+        <BoxItem
+          onClick={() => {
+            setBox('hrule');
+            handleOpenWindow(null);
+          }}
+          label="Divider"
+        />
+        <BoxItem
+          onClick={() => {
+            setBox('newpage');
+            handleOpenWindow(null);
+          }}
+          label="New Page"
+        />
+      </>
+    }
+  />
+)
 
 const AddMenu = ({ setBox, handleOpenWindow }) => {
   const [open, setOpen] = useState('text')
@@ -99,21 +135,25 @@ const AddMenu = ({ setBox, handleOpenWindow }) => {
   return (
     <>
       <Box display="table" style={{ height: '100%', minHeight: '70vh' }}>
-        <Box display="table-cell" style={{ verticalAlign: 'top', padding: '0px 10px', backgroundColor: theme.palette.primary.main, height: '100%', borderTopLeftRadius: '15px', borderBottomLeftRadius: '15px' }}>
-          <List>
-            {menu.map(item => (
-              <ListItem button key={item} onClick={() => handleClick(item)} style={{ textTransform: 'capitalize', color: 'white' }}>
-                {item}
-              </ListItem>
-            ))}
-          </List>
+        <Box display="table-cell" className="menu-leftside-box">
+          {menu.map(item => (
+            <Button
+              key={item}
+              onClick={() => handleClick(item)}
+              style={{ textTransform: 'capitalize', color: 'white' }}
+              className={open === item ? "menu-leftside-button menu-leftside-button-active" : "menu-leftside-button"}
+              disableRipple
+            >
+              {item}
+            </Button>
+          ))}
         </Box>
-        <Box display="table-cell" style={{ verticalAlign: 'top', minWidth: '150px', padding: '15px' }}>
+        <Box display="table-cell" style={{ verticalAlign: 'top', minWidth: '300px', padding: '7px' }}>
           <Box style={{ display: open === 'text' ? 'block' : 'none' }}>
-            <TextMenu setBox={setBox} handleOpenWindow={handleOpenWindow} />
+            <TextMenuBox setBox={setBox} handleOpenWindow={handleOpenWindow} />
           </Box>
           <Box style={{ display: open === 'other' ? 'block' : 'none' }}>
-            <OtherMenu setBox={setBox} handleOpenWindow={handleOpenWindow} />
+            <OtherMenuBox setBox={setBox} handleOpenWindow={handleOpenWindow} />
           </Box>
         </Box>
       </Box>

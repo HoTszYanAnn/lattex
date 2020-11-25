@@ -5,7 +5,7 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import TextTitle from './components/text-title'
-import dict from '../../dict.json'
+import { dict } from '../../dict'
 import TextContent from './components/text-content'
 import ToolBar from './components/tool-bar'
 import _ from 'lodash'
@@ -117,7 +117,9 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
                             {item.code
                               ? dict[item.code]
                                 ? <TextTitle key={item.id + 'title'} info={dict[item.code]} text={item.text} setText={setText} id={id} />
-                                : <CommandBlock key={item.id + 'cmdBk'} text={item.code} id={item.id} />
+                                : dict[item.code.slice(0, -1)]
+                                  ? <TextTitle key={item.id + 'title'} info={dict[item.code.slice(0, -1)]} star text={item.text} setText={setText} id={id} />
+                                  : <CommandBlock key={item.id + 'cmdBk'} text={item.code} id={item.id} />
                               : <TextContent key={item.id + 'content'} text={item.text} setText={setText} id={id} />
                             }
                           </Box>
