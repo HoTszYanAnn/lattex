@@ -71,7 +71,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
           text: value,
         })
       } else {
-        const res = (await pandoc(key, args)).replace('\n', '')
+        const res = await pandoc(key, args)
         newacc.push({
           id: uniqueId(),
           code: null,
@@ -115,7 +115,11 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
         parseText = parseText + `\\${updatedObject.contents[i].code}\n`
       }
     } else {
-      const res = await pandoc(updatedObject.contents[i].text, args)
+      console.log('pandoc html - latex!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+      const temp = updatedObject.contents[i].text.split('</p><p>').join('<br/>')
+      console.log(temp)
+      const res = (await pandoc(temp, args)).split('\r\n').join(' ')
+      console.log({ test: res })
       parseText = parseText + `${res}\n`
     }
   }
