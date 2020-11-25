@@ -18,12 +18,12 @@ import CachedIcon from '@material-ui/icons/Cached';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import SettingButton from './components/setting';
-import AddButton from './components/add-box'
 import LatexCodeButton from './components/latex-code'
 import ButtonMenu from './components/button-menu'
 import AddIcon from '@material-ui/icons/Add';
 import SettingIcon from '@material-ui/icons/Settings';
 import _ from 'lodash'
+import AddMenu from './components/add-menu';
 
 const useStyles = makeStyles((theme) => ({
   toolBox: {
@@ -71,9 +71,7 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
                   handleOpenWindow={handleOpenWindow}
                   icon={<AddIcon style={{ color: currentOpenWindow === 'add-button' ? 'white' : 'orange', fontSize: 35 }} />}
                   children={
-                    <>
-                      asdasdasd add-button
-                    </>
+                    <AddMenu setBox={setBox} handleOpenWindow={handleOpenWindow}/>
                   }
                 />
               </Box>
@@ -87,14 +85,9 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
                   handleOpenWindow={handleOpenWindow}
                   icon={<SettingIcon style={{ color: currentOpenWindow === 'setting-button' ? 'white' : 'orange', fontSize: 35 }} />}
                   children={
-                    <SettingButton doc={doc} pushAndCompile={pushAndCompile} />
+                    <SettingButton doc={doc} pushAndCompile={pushAndCompile} handleOpenWindow={handleOpenWindow} />
                   }
                 />
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box alignSelf='flex-start'>
-                <AddButton setBox={setBox} />
               </Box>
             </Grid>
             <Grid item>
