@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     position: 'fixed',
     top: '60px',
-    left: '5px',
+    left: '10px',
     zIndex: 999,
   },
 }));

@@ -54,7 +54,7 @@ const Setting = ({ doc, pushAndCompile }) => {
 
   return (
     <>
-      <Box display='flex'>
+      <Box display='flex' style={{ width: '30vw' }}>
         <Box flexGrow={1} />
         <Tooltip title="Save" placement="top">
           <IconButton onClick={onSave}>
