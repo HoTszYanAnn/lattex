@@ -86,8 +86,11 @@ input:focus {
 }
 
 .command-block:focus-within {
-  position: relative;
   .command-block-label {
     display: block;
   }
+}
+
+.command-block {
+  position: relative;
 }

@@ -44,6 +44,49 @@ const TextMenu = ({ setBox, handleOpenWindow }) => {
   )
 }
 
+const OtherMenu = ({ setBox, handleOpenWindow }) => {
+  return (
+    <>
+      <MenuItem
+        button
+        onClick={() => {
+          setBox('tableofcontents');
+          handleOpenWindow(null);
+        }}
+      >
+        Table of Content
+      </MenuItem>
+      <MenuItem
+        button
+        onClick={() => {
+          setBox('maketitle');
+          handleOpenWindow(null);
+        }}
+      >
+        Title
+      </MenuItem>
+      <MenuItem
+        button
+        onClick={() => {
+          setBox('newpage');
+          handleOpenWindow(null);
+        }}
+      >
+        New Page
+      </MenuItem>
+      <MenuItem
+        button
+        onClick={() => {
+          setBox('hrule');
+          handleOpenWindow(null);
+        }}
+      >
+        Divider
+      </MenuItem>
+    </>
+  )
+}
+
 const AddMenu = ({ setBox, handleOpenWindow }) => {
   const [open, setOpen] = useState('text')
   const theme = useTheme()
@@ -59,7 +102,7 @@ const AddMenu = ({ setBox, handleOpenWindow }) => {
         <Box display="table-cell" style={{ verticalAlign: 'top', padding: '0px 10px', backgroundColor: theme.palette.primary.main, height: '100%', borderTopLeftRadius: '15px', borderBottomLeftRadius: '15px' }}>
           <List>
             {menu.map(item => (
-              <ListItem button key={item} onClick={() => handleClick(item)} style={{ textTransform: 'capitalize' }}>
+              <ListItem button key={item} onClick={() => handleClick(item)} style={{ textTransform: 'capitalize', color: 'white' }}>
                 {item}
               </ListItem>
             ))}
@@ -68,6 +111,9 @@ const AddMenu = ({ setBox, handleOpenWindow }) => {
         <Box display="table-cell" style={{ verticalAlign: 'top', minWidth: '150px', padding: '15px' }}>
           <Box style={{ display: open === 'text' ? 'block' : 'none' }}>
             <TextMenu setBox={setBox} handleOpenWindow={handleOpenWindow} />
+          </Box>
+          <Box style={{ display: open === 'other' ? 'block' : 'none' }}>
+            <OtherMenu setBox={setBox} handleOpenWindow={handleOpenWindow} />
           </Box>
         </Box>
       </Box>
