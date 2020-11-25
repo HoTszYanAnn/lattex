@@ -19,4 +19,9 @@
   ::-webkit-scrollbar-thumb:hover {
     background: darken($primary-color, 10%);
   }
+  .latex-code-menu{
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  }
 }

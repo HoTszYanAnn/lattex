@@ -19,6 +19,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import SettingButton from './components/setting';
 import LatexCodeButton from './components/latex-code'
+import CodeIcon from '@material-ui/icons/Code';
 import ButtonMenu from './components/button-menu'
 import AddIcon from '@material-ui/icons/Add';
 import SettingIcon from '@material-ui/icons/Settings';
@@ -71,7 +72,7 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
                   handleOpenWindow={handleOpenWindow}
                   icon={<AddIcon style={{ color: currentOpenWindow === 'add-button' ? 'white' : 'orange', fontSize: 35 }} />}
                   children={
-                    <AddMenu setBox={setBox} handleOpenWindow={handleOpenWindow}/>
+                    <AddMenu setBox={setBox} handleOpenWindow={handleOpenWindow} />
                   }
                 />
               </Box>
@@ -90,9 +91,21 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
                 />
               </Box>
             </Grid>
-            <Grid item>
-              <LatexCodeButton code={doc.latex.latex_code} />
+            <Grid item key="code-button">
+              <Box alignSelf='flex-start'>
+                <ButtonMenu
+                  id="code-button"
+                  key="code-button"
+                  currentOpenWindow={currentOpenWindow}
+                  handleOpenWindow={handleOpenWindow}
+                  icon={<CodeIcon style={{ color: currentOpenWindow === 'code-button' ? 'white' : 'orange', fontSize: 35 }} />}
+                  children={
+                    <LatexCodeButton code={doc.latex.latex_code} handleOpenWindow={handleOpenWindow} />
+                  }
+                />
+              </Box>
             </Grid>
+            {/* TODO: move out below */}
             <Grid item>
               <Tooltip title='Show Compiler?' aria-label='Show Compiler?' placement="top">
                 <Fab size="small" onClick={changeShowCompiler}>{showCompiler ? <VisibilityIcon /> : <VisibilityOffIcon />}</Fab>
