@@ -10,6 +10,7 @@ import TextContent from './components/text-content'
 import ToolBar from './components/tool-bar'
 import _ from 'lodash'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import DeleteIcon from '@material-ui/icons/Delete';
 import CommandBlock from './components/command-block'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import { difference } from '../../../../function'
@@ -44,6 +45,14 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
 
   const onSave = () => {
     pushAndCompile({ contents: state })
+  }
+
+  const removeItemBlock = (id) => {
+    console.log(id)
+    let newArr = _.cloneDeep(state)
+    newArr.splice(id, 1)
+    console.log(newArr)
+    setState(newArr)
   }
 
   return (
@@ -102,6 +111,9 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
                             <Box {...p.dragHandleProps} className="editor-block-handler" >
                               <UnfoldMoreIcon />
                             </Box>
+                            <button onClick={() => removeItemBlock(id)} className="editor-block-deleter" >
+                              <DeleteIcon />
+                            </button>
                             {item.code
                               ? dict[item.code]
                                 ? <TextTitle key={item.id + 'title'} info={dict[item.code]} text={item.text} setText={setText} id={id} />
@@ -117,7 +129,6 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
               )}
             </Droppable>
           </DragDropContext>
-          {console.log(state)}
         </Box>
       </Box>
     </>
