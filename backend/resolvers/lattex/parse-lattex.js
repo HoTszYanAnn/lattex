@@ -1,6 +1,6 @@
 const _ = require("lodash")
-const { uniqueId } = require("lodash")
 const pandoc = require('node-pandoc-promise');
+const { v4: uuidv4 } = require('uuid');
 
 exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
   const { latex_code, image } = parent
@@ -70,14 +70,14 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
       console.log(value)
       if (key.startsWith('\\')) {
         newacc.push({
-          id: uniqueId(),
+          id: uuidv4(),
           code: key.substring(1, key.length),
           text: value,
         })
       } else {
         const res = (await pandoc(key.substring(0, key.length), args)).split(/\n/).join('')
         newacc.push({
-          id: uniqueId(),
+          id: uuidv4(),
           code: null,
           text: res,
         })
@@ -99,7 +99,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
   let parseText = ""
 
   //setting
-  parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n` 
+  parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n`
   parseText = parseText + '\\providecommand{\\tightlist}{\n\\setlength{\\itemsep}{0pt}\\setlength{\\parskip}{0pt}}\n'
 
   parseText = parseText + `\\title{${updatedObject.titles.title}}\n`

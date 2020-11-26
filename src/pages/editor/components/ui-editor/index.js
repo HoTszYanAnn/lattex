@@ -17,6 +17,7 @@ import CommandBlock from './components/command-block'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import { difference } from '../../../../function'
 import SaveIcon from '@material-ui/icons/Save';
+import { v4 as uuidv4 } from 'uuid';
 
 //equation https://www.npmjs.com/package/equation-editor-react
 //rte 
@@ -42,7 +43,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
 
   const setBox = (code) => {
     let newArr = _.cloneDeep(state)
-    newArr.push({ id: (parseInt(state[state.length - 1].id) + 1).toString(), code: code, text: '' })
+    newArr.push({ id: uuidv4(), code: code, text: '' })
     setState(newArr)
   };
 

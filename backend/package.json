@@ -39,7 +39,7 @@
     "stripe": "^8.50.0",
     "twilio": "^3.46.0",
     "utf8": "^3.0.0",
-    "uuid": "^8.1.0"
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
     "apollo-cache-inmemory": "^1.6.6",
