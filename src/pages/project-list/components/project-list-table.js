@@ -108,7 +108,7 @@ const ProjectListTable = ({ documents, loading, deleteDocument }) => {
           searchFieldAlignment: 'left',
           showTitle: false,
           searchFieldStyle: {
-            width: width > 1280 ? 1232 - 24 - 24 : width - 24 * 4,
+            width: width > 960 ? 960 - 24 - 24 - 48 : width - 24 * 4,
           },
           headerStyle: {
             backgroundColor: theme.palette.primary.main,

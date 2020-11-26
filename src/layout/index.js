@@ -81,7 +81,7 @@ export const HomeLayout = ({
 export const EditorNavLayout = ({
   children,
   layoutComponent = Box,
-  layoutMaxWidth = "lg",
+  layoutMaxWidth = "md",
   layoutPaddingTop = true,
   layoutPaddingBottom = true,
   noPaddingX = false,
