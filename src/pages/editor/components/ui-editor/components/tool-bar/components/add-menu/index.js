@@ -43,7 +43,7 @@ const TemplateMenuBox = ({ name, items }) => (
   </>
 )
 
-const TextMenuBox = ({ setBox, handleOpenWindow }) => (
+const TextMenuBox = ({ setBox, handleClose }) => (
   <TemplateMenuBox
     name="Text"
     items={
@@ -51,7 +51,7 @@ const TextMenuBox = ({ setBox, handleOpenWindow }) => (
         <BoxItem
           onClick={() => {
             setBox(null);
-            handleOpenWindow(null);
+            handleClose(null);
           }}
           label="Paragraph Block"
         />
@@ -63,7 +63,7 @@ const TextMenuBox = ({ setBox, handleOpenWindow }) => (
           <BoxItem
             onClick={() => {
               setBox(key);
-              handleOpenWindow(null);
+              handleClose(null);
             }}
             label={dict[key].name}
           />
@@ -76,7 +76,7 @@ const TextMenuBox = ({ setBox, handleOpenWindow }) => (
           <BoxItem
             onClick={() => {
               setBox(`${key}*`);
-              handleOpenWindow(null);
+              handleClose(null);
             }}
             label={dict[key].name}
           />
@@ -85,7 +85,7 @@ const TextMenuBox = ({ setBox, handleOpenWindow }) => (
     }
   />
 )
-const OtherMenuBox = ({ setBox, handleOpenWindow }) => (
+const OtherMenuBox = ({ setBox, handleClose }) => (
   <TemplateMenuBox
     name="Command"
     items={
@@ -93,28 +93,28 @@ const OtherMenuBox = ({ setBox, handleOpenWindow }) => (
         <BoxItem
           onClick={() => {
             setBox('maketitle');
-            handleOpenWindow(null);
+            handleClose(null);
           }}
           label="Make Title"
         />
         <BoxItem
           onClick={() => {
             setBox('tableofcontents');
-            handleOpenWindow(null);
+            handleClose(null);
           }}
           label="Table of Contents"
         />
         <BoxItem
           onClick={() => {
             setBox('hrule');
-            handleOpenWindow(null);
+            handleClose(null);
           }}
           label="Divider"
         />
         <BoxItem
           onClick={() => {
             setBox('newpage');
-            handleOpenWindow(null);
+            handleClose(null);
           }}
           label="New Page"
         />
@@ -123,7 +123,7 @@ const OtherMenuBox = ({ setBox, handleOpenWindow }) => (
   />
 )
 
-const AddMenu = ({ setBox, handleOpenWindow }) => {
+const AddMenu = ({ setBox, handleClose }) => {
   const [open, setOpen] = useState('text')
   const theme = useTheme()
   const handleClick = (key) => {
@@ -150,10 +150,10 @@ const AddMenu = ({ setBox, handleOpenWindow }) => {
         </Box>
         <Box display="table-cell" style={{ verticalAlign: 'top', minWidth: '300px', padding: '7px' }}>
           <Box style={{ display: open === 'text' ? 'block' : 'none' }}>
-            <TextMenuBox setBox={setBox} handleOpenWindow={handleOpenWindow} />
+            <TextMenuBox setBox={setBox} handleClose={handleClose} />
           </Box>
           <Box style={{ display: open === 'command' ? 'block' : 'none' }}>
-            <OtherMenuBox setBox={setBox} handleOpenWindow={handleOpenWindow} />
+            <OtherMenuBox setBox={setBox} handleClose={handleClose} />
           </Box>
         </Box>
       </Box>

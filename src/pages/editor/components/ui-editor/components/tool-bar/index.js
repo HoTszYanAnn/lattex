@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import {
   Box,
   IconButton,
@@ -46,9 +46,38 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
     setWindowOpen(null)
   };
 
+  const handleClose = () => {
+    setOpen(false);
+    setWindowOpen(null)
+  };
+  console.log(open)
+
+  function useOutsideAlerter(ref) {
+    useEffect(() => {
+      /**
+       * Alert if clicked on outside of element
+       */
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          console.log('toolbar outsided!!!!!')
+          handleClose()
+        }
+      }
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
+
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef);
+
   return (
     <>
-      <Box>
+      <Box ref={wrapperRef}>
         <Box display="block">
           <Tooltip title='ToolBar' aria-label='ToolBar'>
             <Fab onClick={handleClick} size="medium" color="primary">
@@ -69,7 +98,7 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
                   handleOpenWindow={handleOpenWindow}
                   icon={<AddIcon style={{ color: currentOpenWindow === 'add-button' ? 'white' : 'orange', fontSize: 35 }} />}
                   children={
-                    <AddMenu setBox={setBox} handleOpenWindow={handleOpenWindow} />
+                    <AddMenu setBox={setBox} handleClose={handleClose} />
                   }
                 />
               </Box>
@@ -83,7 +112,7 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
                   handleOpenWindow={handleOpenWindow}
                   icon={<SettingIcon style={{ color: currentOpenWindow === 'setting-button' ? 'white' : 'orange', fontSize: 35 }} />}
                   children={
-                    <SettingButton doc={doc} pushAndCompile={pushAndCompile} handleOpenWindow={handleOpenWindow} />
+                    <SettingButton doc={doc} pushAndCompile={pushAndCompile} handleClose={handleClose} />
                   }
                 />
               </Box>
@@ -97,7 +126,7 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
                   handleOpenWindow={handleOpenWindow}
                   icon={<CodeIcon style={{ color: currentOpenWindow === 'code-button' ? 'white' : 'orange', fontSize: 35 }} />}
                   children={
-                    <LatexCodeButton code={doc.latex.latex_code} handleOpenWindow={handleOpenWindow} />
+                    <LatexCodeButton code={doc.latex.latex_code} handleClose={handleClose} />
                   }
                 />
               </Box>
