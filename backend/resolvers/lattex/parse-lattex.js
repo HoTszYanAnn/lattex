@@ -9,7 +9,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
   const beginIndex = textArray.findIndex(item => item.includes('\\begin{document}'))
   const endIndex = textArray.findIndex(item => item.includes('\\end{document}'))
 
-  const setting = textArray.slice(titleIndex, beginIndex-1)
+  const setting = textArray.slice(titleIndex, beginIndex - 1)
   const content = textArray.slice(beginIndex + 1, endIndex);
 
   const titlesList = ['title', 'author', 'date']
@@ -46,7 +46,10 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
       }
       return acc;
     }, {})
+
+  settingObject.documentclass = textArray.find(item => item.includes('\\documentclass')).substring(1).split(/{|}/, 2)[1]
   console.log(settingObject)
+
   const imageObject =
     _(image)
       .mapValues((value, name) => _.merge({}, value, { name }))
@@ -72,7 +75,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
           text: value,
         })
       } else {
-        const res = (await pandoc(key.substring(1,key.length-1), args)).split(/\n/).join('')
+        const res = (await pandoc(key.substring(0, key.length), args)).split(/\n/).join('')
         newacc.push({
           id: uniqueId(),
           code: null,
@@ -96,7 +99,8 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
   let parseText = ""
 
   //setting
-  parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n`+'\\providecommand{\\tightlist}{\n\\setlength{\\itemsep}{0pt}\\setlength{\\parskip}{0pt}}\n'
+  parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n` 
+  parseText = parseText + '\\providecommand{\\tightlist}{\n\\setlength{\\itemsep}{0pt}\\setlength{\\parskip}{0pt}}\n'
 
   parseText = parseText + `\\title{${updatedObject.titles.title}}\n`
   parseText = parseText + `\\author{${updatedObject.titles.author}}\n`

@@ -12,7 +12,7 @@ input DocumentUpdateInput {
 input LaTeXDocUpdateInput {
   filename: String
 
-  documentType: String
+  documentclass: String
   titles: TitlesInput
   setting: SettingInput
   contents: [SectionInput!]
