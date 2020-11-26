@@ -10,7 +10,9 @@ import {
   Typography,
   makeStyles,
   withWidth,
-  CircularProgress
+  CircularProgress,
+  Tooltip,
+  Fab
 } from "@material-ui/core";
 import { toLatexCode } from './function'
 import { useQuery, useMutation } from "react-apollo";
@@ -18,6 +20,9 @@ import { onGqlError } from "../../function"
 import gql from 'graphql-tag'
 import { connect } from "react-redux";
 import Loading from '../../components/loading'
+
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 const DOCUMENT_FRAGMENT = gql`
   fragment DocumentFragment on Document {
@@ -154,6 +159,24 @@ const Editor = ({ width, match }) => {
       <Loading loading={loading} />
       {!loading &&
         <>
+          <Box
+            style={{
+              position: 'absolute',
+              top: 'calc(60px + 48px + 16px)',
+              left: showCompiler
+                ? ['xs', 'sm', 'md'].includes(width)
+                  ? 'calc(100vw - 10px - 16px)'
+                  : 'calc(50vw - 10px - 16px)'
+                : 'calc(100vw - 10px - 16px)',
+              transform: "translateX(-100%)",
+              zIndex: 500
+            }}>
+            <Tooltip title='Show Compiler?' aria-label='Show Compiler?' placement="top">
+              <Fab size="medium" color="primary" onClick={changeShowCompiler}>
+                {showCompiler ? <VisibilityIcon style={{ color: 'white' }} /> : <VisibilityOffIcon style={{ color: 'white' }} />}
+              </Fab>
+            </Tooltip>
+          </Box>
           <Grid container>
             <Grid item xs={12} lg={showCompiler ? 6 : 12} className={classes.editor} style={{ display: showCompiler ? ['xs', 'sm', 'md'].includes(width) ? 'none' : 'block' : 'block' }}>
               <UIEditor
@@ -163,6 +186,7 @@ const Editor = ({ width, match }) => {
                 pushAndCompile={pushAndCompile}
                 doc={doc}
                 updateDocument={updateDocument}
+                width={width}
               />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.compiler} style={{ display: showCompiler ? 'block' : 'none' }}>

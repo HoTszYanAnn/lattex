@@ -14,9 +14,6 @@ import {
 
 import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
-import CachedIcon from '@material-ui/icons/Cached';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import SettingButton from './components/setting';
 import LatexCodeButton from './components/latex-code'
 import CodeIcon from '@material-ui/icons/Code';
@@ -104,17 +101,6 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
                   }
                 />
               </Box>
-            </Grid>
-            {/* TODO: move out below */}
-            <Grid item>
-              <Tooltip title='Show Compiler?' aria-label='Show Compiler?' placement="top">
-                <Fab size="small" onClick={changeShowCompiler}>{showCompiler ? <VisibilityIcon /> : <VisibilityOffIcon />}</Fab>
-              </Tooltip>
-            </Grid>
-            <Grid item>
-              <Tooltip title="Recompile" aria-label="Recompile" placement="top">
-                <Fab size="small" onClick={onSave} disabled={!showCompiler}><CachedIcon /></Fab>
-              </Tooltip>
             </Grid>
           </Grid>
         </Box>

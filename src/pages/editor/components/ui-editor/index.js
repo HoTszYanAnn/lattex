@@ -3,6 +3,8 @@ import {
   Box,
   Button,
   makeStyles,
+  Tooltip,
+  Fab
 } from '@material-ui/core'
 import TextTitle from './components/text-title'
 import { dict } from '../../dict'
@@ -14,6 +16,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CommandBlock from './components/command-block'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import { difference } from '../../../../function'
+import SaveIcon from '@material-ui/icons/Save';
 
 //equation https://www.npmjs.com/package/equation-editor-react
 //rte 
@@ -25,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 999,
   },
 }));
-const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument }) => {
+const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument, width }) => {
   const classes = useStyles()
   const origContent = _(doc.latex).pick(['contents']).value().contents
   console.log(origContent)
@@ -68,6 +71,23 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
           onSave={onSave}
         />
       </Box>
+      <Box
+        style={{
+          position: 'absolute',
+          top: 60,
+          left: showCompiler
+            ? ['xs', 'sm', 'md'].includes(width)
+              ? 'calc(100vw - 10px - 16px)'
+              : 'calc(50vw - 10px - 16px)'
+            : 'calc(100vw - 10px - 16px)',
+          transform: "translateX(-100%)",
+          zIndex: 500
+        }}
+      >
+        <Tooltip title="Recompile" aria-label="Recompile" placement="top">
+          <Fab size="medium" onClick={onSave} color="primary"><SaveIcon style={{ color: 'white' }} /></Fab>
+        </Tooltip>
+      </Box>
       <Box style={{ overflowY: 'scroll', height: '100%' }}>
         <Box
           style={{
@@ -76,10 +96,9 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
             margin: '2em',
             background: 'white',
             minHeight: 'calc(100% - 3em)',
-            width: 'calc(100% - 3em)',
+            width: 'calc(100% - 3em - 16px)',
           }}
         >
-
           <DragDropContext
             onDragEnd={result => {
               console.log(result);
