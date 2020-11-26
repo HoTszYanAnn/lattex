@@ -16,10 +16,10 @@ const TextContent = ({ id, text, setText }) => {
   const [value, setValue] = useState(BraftEditor.createEditorState(text))
   const controls = [
     'undo', 'redo', 
-    //'remove-styles', 'clear', 
+    'remove-styles', 'clear', 
     'bold', 'italic', 'underline', 
     'superscript', 'subscript',
-    //'list-ul', 'list-ol', 'blockquote', 'code',
+    'list-ul', 'list-ol', 'blockquote', 'code',
     //'link',  'hr', 
     // 'separator', 'font-family','font-size', 'line-height', 'text-color', 
     // 'strike-through',  
