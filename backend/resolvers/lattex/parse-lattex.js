@@ -48,7 +48,6 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
     }, {})
 
   settingObject.documentclass = textArray.find(item => item.includes('\\documentclass')).substring(1).split(/{|}/, 2)[1]
-  console.log(settingObject)
 
   const imageObject =
     _(image)
@@ -59,15 +58,31 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
   //const args = '-f latex -t html'
   const args = ['-f', 'latex', '-t', 'html']
 
-  let contentArrayObject = await content
+  console.log(content)
+  let parseContentArray = []
+  for (let i = 0; i < content.length; i++) {
+    if (content[i] === '{') {
+      let temp = content[i]
+      i = i + 1
+      while (content[i] !== '}') {
+        temp = temp + '\r\n' + content[i]
+        i = i + 1
+      }
+      temp = temp + content[i]
+      parseContentArray.push(temp)
+    } else {
+      parseContentArray.push(content[i])
+    }
+  }
+  console.log(parseContentArray)
+
+  let contentArrayObject = await parseContentArray
     .map(item => {
-      return item.startsWith('\\') ? item.split(/{|}/, 2) : [item, null]
+      return item.startsWith('{') ? [item, null] : item.split(/{|}/, 2)
     })
     .reduce(async (acc, val) => {
       let newacc = await acc
       const [key, value] = val
-      console.log(key)
-      console.log(value)
       if (key.startsWith('\\')) {
         newacc.push({
           id: uuidv4(),
@@ -75,7 +90,12 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
           text: value,
         })
       } else {
-        const res = (await pandoc(key.substring(0, key.length), args)).split(/\n/).join('')
+        console.log('pandoc latex to html !!!!!!!!!!!')
+        let res = (await pandoc(key.substring(1, key.length - 1), args))
+        if (!res.startsWith('<pre><code>')){
+          res = res.split('\r\n').join('')
+        }
+        console.log({ from: key, to: res })
         newacc.push({
           id: uuidv4(),
           code: null,
@@ -84,7 +104,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
       }
       return newacc;
     }, [])
-  console.log(contentArrayObject)
+
   return {
     ...settingObject,
     images: imageObject,
@@ -121,17 +141,17 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
       }
     } else {
       console.log('pandoc html - latex!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-      //const temp = updatedObject.contents[i].text.split('</p><p>').join('<br/>')
-      const temp = updatedObject.contents[i].text
+      const temp = updatedObject.contents[i].text.split('</p><p>').join('<br/>')
+      //const temp = updatedObject.contents[i].text
       console.log(temp)
-      const res = ((((await pandoc(temp, args))
-      .split(/}\n\n/).join('}'))
-      .split(/\n\n\\/).join('\\'))
-      .split(/\n\n/).join('\\\\'))
-      .split(/\n/).join('')
+      const res = (await pandoc(temp, args))
+      //.split(/}\n\n/).join('}'))
+      //.split(/\n\n\\/).join('\\'))
+      //.split(/\n\n/).join('\\\\'))
+      //.split(/\n/).join('')
       console.log(res)
       console.log({ test: res })
-      parseText = parseText + `{${res}}\n\n`
+      parseText = parseText + `{\n${res}}\n\n`
     }
   }
   //end

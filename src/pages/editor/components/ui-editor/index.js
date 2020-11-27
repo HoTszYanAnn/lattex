@@ -6,18 +6,20 @@ import {
   Tooltip,
   Fab
 } from '@material-ui/core'
-import TextTitle from './components/text-title'
-import { dict } from '../../dict'
-import TextContent from './components/text-content'
-import ToolBar from './components/tool-bar'
-import _ from 'lodash'
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import DeleteIcon from '@material-ui/icons/Delete';
-import CommandBlock from './components/command-block'
-import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
-import { difference } from '../../../../function'
 import SaveIcon from '@material-ui/icons/Save';
+import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from 'uuid';
+import _ from 'lodash'
+
+import ToolBar from './components/tool-bar'
+import TextTitle from './components/text-title'
+import CommandBlock from './components/command-block'
+import ContentBlock from './components/content-block'
+
+import { difference } from '../../../../function'
+import { dict, htmlcode } from '../../dict'
 
 //equation https://www.npmjs.com/package/equation-editor-react
 //rte 
@@ -41,9 +43,9 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
     setState(newArr)
   }
 
-  const setBox = (code) => {
+  const setBox = (code, content) => {
     let newArr = _.cloneDeep(state)
-    newArr.push({ id: uuidv4(), code: code, text: '' })
+    newArr.push({ id: uuidv4(), code: code, text: content ? content : '' })
     setState(newArr)
   };
 
@@ -140,7 +142,9 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
                                 : dict[item.code.slice(0, -1)]
                                   ? <TextTitle key={item.id + 'title'} info={dict[item.code.slice(0, -1)]} star text={item.text} setText={setText} id={id} />
                                   : <CommandBlock key={item.id + 'cmdBk'} text={item.code} id={item.id} />
-                              : <TextContent key={item.id + 'content'} text={item.text} setText={setText} id={id} />
+                              : _.findKey(htmlcode, code => item.text.startsWith(code.codeStart))
+                                ? <ContentBlock key={item.id + 'content'} text={item.text} setText={setText} id={id} htmlcode={htmlcode[_.findKey(htmlcode, code => item.text.startsWith(code.codeStart))]} />
+                                : <ContentBlock key={item.id + 'content'} text={item.text} setText={setText} id={id} />
                             }
                           </Box>
                         )}

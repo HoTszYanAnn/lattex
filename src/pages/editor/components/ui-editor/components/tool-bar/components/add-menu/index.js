@@ -8,7 +8,7 @@ import {
   Divider,
   makeStyles
 } from '@material-ui/core';
-import { dict } from '../../../../../../dict'
+import { dict, htmlcode } from '../../../../../../dict'
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -55,8 +55,17 @@ const TextMenuBox = ({ setBox, handleClose }) => (
           }}
           label="Paragraph Block"
         />
+        {Object.keys(htmlcode).map(key =>
+          <BoxItem
+            onClick={() => {
+              setBox(null, `${htmlcode[key].codeStart}${htmlcode[key].codeEnd}`);
+              handleClose(null);
+            }}
+            label={htmlcode[key].name}
+          />
+        )}
         <Box mb={2} />
-        <Typography variant="body1" display="inline">Numbered Section Title </Typography><br/>
+        <Typography variant="body1" display="inline">Numbered Section Title </Typography><br />
         <Typography variant="body2" display="inline">(included in the table of contents)</Typography>
         <Divider />
         {Object.keys(dict).map(key =>
@@ -69,7 +78,7 @@ const TextMenuBox = ({ setBox, handleClose }) => (
           />
         )}
         <Box mb={2} />
-        <Typography variant="body1" display="inline">Unnumbered Section Title</Typography><br/>
+        <Typography variant="body1" display="inline">Unnumbered Section Title</Typography><br />
         <Typography variant="body2" display="inline">(excluded in the table of contents.)</Typography>
         <Divider />
         {Object.keys(dict).map(key =>

@@ -34,7 +34,7 @@
     z-index: 99;
     display: block;
     position: absolute;
-    top: 100%;
+    top: calc(100% - 15px);
     width: calc(100% - 10px)
   }
 }
