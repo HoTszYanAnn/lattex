@@ -65,7 +65,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
       let temp = content[i]
       i = i + 1
       while (content[i] !== '}') {
-        temp = temp + '\r\n' + content[i]
+        temp = temp + content[i] + '\r\n'
         i = i + 1
       }
       temp = temp + content[i]
@@ -92,7 +92,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
       } else {
         console.log('pandoc latex to html !!!!!!!!!!!')
         let res = (await pandoc(key.substring(1, key.length - 1), args))
-        if (!res.startsWith('<pre><code>')){
+        if (!res.startsWith('<pre><code>')) {
           res = res.split('\r\n').join('')
         }
         console.log({ from: key, to: res })
