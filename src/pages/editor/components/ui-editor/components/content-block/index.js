@@ -61,7 +61,7 @@ const ContentBlock = ({ id, text, setText, htmlcode = false }) => {
         controls={controls}
         language='en'
         className='editor'
-        placeholder="Write Here..."
+        placeholder={htmlcode ? '' : "Write Here..."}
         onBlur={onBlur}
       />
     </Box>
