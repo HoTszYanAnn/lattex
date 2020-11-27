@@ -81,9 +81,8 @@ const ProjectListTable = ({ documents, loading, deleteDocument }) => {
         data={documents}
         columns={[
           { title: 'Name', field: 'name' },
-          { title: 'Description', field: 'description' },
+          { title: 'Description', field: 'description', cellStyle: { width: '400px', minWidth: '400px' }, headerStyle: { width: '400px', minWidth: '400px' } },
           { title: 'Last Edited Time', field: 'pushedAt', render: rowData => moment(rowData.pushedAt).fromNow(), defaultSort: 'desc', },
-          { title: 'Created Date', field: 'createdAt', render: rowData => moment.utc(rowData.createdAt).format('yyyy-MM-DD') },
         ]}
         title="Documents"
         actions={[
@@ -117,9 +116,9 @@ const ProjectListTable = ({ documents, loading, deleteDocument }) => {
         components={{
           Container: props => (
             <>
-              <Paper children={props.children.slice(0, 3)} style={{...props.style, backgroundColor: theme.palette.primary.main }} elevation={4}/>
+              <Paper children={props.children.slice(0, 3)} style={{ ...props.style, backgroundColor: theme.palette.primary.main }} elevation={4} />
               <Box mb={3} />
-              <Paper children={props.children.slice(3, props.children.length)} style={props.style} elevation={4}/>
+              <Paper children={props.children.slice(3, props.children.length)} style={props.style} elevation={4} />
             </>
           ),
           Action:

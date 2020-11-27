@@ -92,7 +92,7 @@ const Header = ({ AUTHORIZED, USER_PROFILE, client, dispatch }) => {
     <>
       <Box className={classes.header} style={{ background: theme.palette.primary.opposite }}>
         <Box display="flex" style={{ padding: '0 30px', height: '100%', alignItems: 'center'}}>
-          <Link to={APP_PATHS.HOME} style={{ height: "70%" }}><img src={lattexSvg} height="100%" /></Link>
+          <Link to={APP_PATHS.EDITORS} style={{ height: "70%" }}><img src={lattexSvg} height="100%" /></Link>
           <Box flexGrow={1} />
           {AUTHORIZED
             ? <HeaderMenu USER_PROFILE={USER_PROFILE} client={client} dispatch={dispatch} />
