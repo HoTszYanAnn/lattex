@@ -93,7 +93,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
         console.log('pandoc latex to html !!!!!!!!!!!')
         let res = (await pandoc(key.substring(1, key.length - 1), args))
         if (!res.startsWith('<pre><code>')) {
-          res = res.split('\r\n').join('')
+          res = res.split('\r\n').join('').split('\n').join('')
         }
         console.log({ from: key, to: res })
         newacc.push({
