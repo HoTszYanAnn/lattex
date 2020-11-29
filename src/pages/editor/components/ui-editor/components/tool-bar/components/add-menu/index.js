@@ -55,7 +55,7 @@ const TextMenuBox = ({ setBox, handleClose }) => (
           }}
           label="Paragraph Block"
         />
-        {Object.keys(htmlcode).map(key =>
+        {/*Object.keys(htmlcode).map(key =>
           <BoxItem
             onClick={() => {
               setBox(null, `${htmlcode[key].codeStart}${htmlcode[key].codeEnd}`);
@@ -63,7 +63,7 @@ const TextMenuBox = ({ setBox, handleClose }) => (
             }}
             label={htmlcode[key].name}
           />
-        )}
+        )*/}
         <Box mb={2} />
         <Typography variant="body1" display="inline">Numbered Section Title </Typography><br />
         <Typography variant="body2" display="inline">(included in the table of contents)</Typography>
@@ -140,7 +140,7 @@ const AddMenu = ({ setBox, handleClose }) => {
   }
   console.log(open)
 
-  const menu = ['text', 'equation', 'list', 'table', 'command']
+  const menu = ['text', 'equation', 'table', 'command']
   return (
     <>
       <Box display="table" style={{ height: '100%', minHeight: '70vh' }}>

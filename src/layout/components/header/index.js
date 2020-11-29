@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     top: 0,
     boxShadow: '0 2px 5px 0 rgba(184,134,11,.3)',
-    zIndex: 9999
+    zIndex: 1200
   }
 }));
 
@@ -74,7 +74,7 @@ const HeaderMenu = ({ USER_PROFILE, client, dispatch }) => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem button onClick={onLogoutClick}>
+        <MenuItem button onClick={onLogoutClick} zIndex="2000">
           <Typography color="inherit">
             logout
           </Typography>

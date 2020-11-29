@@ -19,7 +19,7 @@ import _ from 'lodash'
 
 // change document type, title, have content, etc... 
 // (edit the latexcode before /begin)
-const classList = ['article', 'report']
+const classList = ['article', 'report', 'book']
 const titleList = ['title', 'date', 'author', 'always_today']
 const commentBoolLineList = ['haveTitle', 'haveContentPage']
 

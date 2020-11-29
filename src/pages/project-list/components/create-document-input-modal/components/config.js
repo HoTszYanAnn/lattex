@@ -8,7 +8,7 @@ export const templateList = [
     image: img1,
     name: 'article',
     path: 'default.tex',
-    description: 'simple document',
+    description: 'default article',
     key: uuidv4(),
   },
   {
@@ -16,7 +16,7 @@ export const templateList = [
     image: img2,
     name: 'report',
     path: 'report.tex',
-    description: 'simple report',
+    description: 'default report',
     key: uuidv4(),
   }
 ]

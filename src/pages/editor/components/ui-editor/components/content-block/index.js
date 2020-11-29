@@ -28,8 +28,8 @@ const ContentBlock = ({ id, text, setText, htmlcode = false }) => {
     'undo', 'redo',
     'remove-styles', 'clear',
     'bold', 'italic', 'underline',
-    'superscript', 'subscript'
-    //'list-ul', 'list-ol', 'blockquote', 'code',
+    'superscript', 'subscript',
+    'list-ul', 'list-ol', 'blockquote', 'code',
     //'link',  'hr', 
     // 'separator', 'font-family','font-size', 'line-height', 'text-color', 
     // 'strike-through',  
