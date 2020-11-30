@@ -9,7 +9,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
   const beginIndex = textArray.findIndex(item => item.includes('\\begin{document}'))
   const endIndex = textArray.findIndex(item => item.includes('\\end{document}'))
 
-  const setting = textArray.slice(titleIndex, beginIndex - 1)
+  const setting = textArray.slice(titleIndex, beginIndex)
   const content = textArray.slice(beginIndex + 1, endIndex);
 
   const titlesList = ['title', 'author', 'date']
