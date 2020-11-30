@@ -119,8 +119,8 @@ const App = () => {
           speed={-0}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           onClick={() => parallax.scrollTo(0)}>
-          <Typography variant="h3" className="text" style={{ width: '50%' }}>Web-based and cloud-saving
-            <br/> Edit it anywhere and anytime
+          <Typography variant="h3" className="text" style={{ width: '50%' }}>Web-based and cloud-stored
+            <br/> Write anywhere and anytime
           </Typography>
           <img src={url('clients-main')} style={{ width: '40%' }} />
         </ParallaxLayer>
