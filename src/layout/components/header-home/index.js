@@ -23,7 +23,7 @@ import lattexSvg from '../../../assets/logo/lattex-header-logo.svg'
 
 const useStyles = makeStyles((theme) => ({
   header: {
-    width: 'calc(100vw - 100px - 16px)',
+    width: 'calc(100vw - 100px)',
     height: '50px',
     position: 'fixed',
     top: 0,

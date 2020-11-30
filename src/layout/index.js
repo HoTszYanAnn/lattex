@@ -71,7 +71,7 @@ export const HomeLayout = ({
         <RedirectButton />
         <Box style={{ width: '50px', height: '100vh', left: 0, position: 'fixed', backgroundColor: theme.palette.primary.opposite, zIndex: 500 }} />
         {children}
-        <Box style={{ width: '50px', height: '100vh', right: 16, position: 'fixed', backgroundColor: theme.palette.primary.opposite, zIndex: 999 }} />
+        <Box style={{ width: '50px', height: '100vh', right: 0, position: 'fixed', backgroundColor: theme.palette.primary.opposite, zIndex: 999 }} />
         <HomeFooter />
       </Box>
     </>
