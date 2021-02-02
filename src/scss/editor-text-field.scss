@@ -66,6 +66,14 @@
   width: calc(100% - 30px);
 }
 
+.equation-block{
+  padding: 15px
+}
+.equation-block:focus-within {
+  outline: none;
+  box-shadow: 0 0 1000px rgba(0, 0, 0, 1);
+}
+
 textarea:focus,
 input:focus {
   outline: none;

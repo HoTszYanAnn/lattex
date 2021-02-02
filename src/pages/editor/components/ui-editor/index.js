@@ -17,6 +17,7 @@ import ToolBar from './components/tool-bar'
 import TextTitle from './components/text-title'
 import CommandBlock from './components/command-block'
 import ContentBlock from './components/content-block'
+import EquationBlock from './components/equation-block'
 
 import { difference } from '../../../../function'
 import { dict, htmlcode } from '../../dict'
@@ -40,6 +41,12 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
   const setText = (id, val) => {
     let newArr = _.cloneDeep(state)
     newArr[id].text = val
+    setState(newArr)
+  }
+  console.log(state)
+  const setCode = (id, val) => {
+    let newArr = _.cloneDeep(state)
+    newArr[id].code = val
     setState(newArr)
   }
 
@@ -141,7 +148,9 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
                                 ? <TextTitle key={item.id + 'title'} info={dict[item.code]} text={item.text} setText={setText} id={id} />
                                 : dict[item.code.slice(0, -1)]
                                   ? <TextTitle key={item.id + 'title'} info={dict[item.code.slice(0, -1)]} star text={item.text} setText={setText} id={id} />
-                                  : <CommandBlock key={item.id + 'cmdBk'} text={item.code} id={item.id} />
+                                  : item.code.startsWith('[') && item.code.endsWith(']')
+                                    ? <EquationBlock key={item.id + 'equationBlk'} code={item.code.slice(1, -2)} setCode={setCode} id={id} />
+                                    : <CommandBlock key={item.id + 'cmdBlk'} text={item.code} id={id} />
                               : _.findKey(htmlcode, code => item.text.startsWith(code.codeStart))
                                 ? <ContentBlock key={item.id + 'content'} text={item.text} setText={setText} id={id} htmlcode={htmlcode[_.findKey(htmlcode, code => item.text.startsWith(code.codeStart))]} />
                                 : <ContentBlock key={item.id + 'content'} text={item.text} setText={setText} id={id} />

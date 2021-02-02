@@ -94,6 +94,45 @@ const TextMenuBox = ({ setBox, handleClose }) => (
     }
   />
 )
+
+const EquationMenuBox = ({ setBox, handleClose }) => (
+  <TemplateMenuBox
+    name="Command"
+    items={
+      <>
+        <BoxItem
+          onClick={() => {
+            setBox('[\\ \\sum_{x=1}^5x+1+2\\]');
+            handleClose(null);
+          }}
+          label="Summation"
+        />
+        <BoxItem
+          onClick={() => {
+            setBox('[\\ \\int_a^b x^2\\]');
+            handleClose(null);
+          }}
+          label="Integral"
+        />
+        <BoxItem
+          onClick={() => {
+            setBox('[ \\lim_{x\\to\\infty} f(x) \\]');
+            handleClose(null);
+          }}
+          label="Limits"
+        />
+        <BoxItem
+          onClick={() => {
+            setBox('[ \\prod_{i=a}^{b} f(i) \\]');
+            handleClose(null);
+          }}
+          label="Prod"
+        />
+      </>
+    }
+  />
+)
+
 const OtherMenuBox = ({ setBox, handleClose }) => (
   <TemplateMenuBox
     name="Command"
@@ -160,6 +199,9 @@ const AddMenu = ({ setBox, handleClose }) => {
         <Box display="table-cell" style={{ verticalAlign: 'top', minWidth: '300px', padding: '7px' }}>
           <Box style={{ display: open === 'text' ? 'block' : 'none' }}>
             <TextMenuBox setBox={setBox} handleClose={handleClose} />
+          </Box>
+          <Box style={{ display: open === 'equation' ? 'block' : 'none' }}>
+            <EquationMenuBox setBox={setBox} handleClose={handleClose} />
           </Box>
           <Box style={{ display: open === 'command' ? 'block' : 'none' }}>
             <OtherMenuBox setBox={setBox} handleClose={handleClose} />

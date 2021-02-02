@@ -78,7 +78,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
 
   let contentArrayObject = await parseContentArray
     .map(item => {
-      return item.startsWith('{') ? [item, null] : item.split(/{|}/, 2)
+      return item.startsWith('{') ? [item, null] : item.endsWith('}') ? item.split(/{|}/, 2) : [item, null]
     })
     .reduce(async (acc, val) => {
       let newacc = await acc
