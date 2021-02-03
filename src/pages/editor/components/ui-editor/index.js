@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument, width }) => {
   const classes = useStyles()
   const origContent = _(doc.latex).pick(['contents']).value().contents
-  console.log(origContent)
   const [state, setState] = useState(origContent)
 
   const setText = (id, val) => {
@@ -43,7 +42,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
     newArr[id].text = val
     setState(newArr)
   }
-  console.log(state)
+  
   const setCode = (id, val) => {
     let newArr = _.cloneDeep(state)
     newArr[id].code = val
@@ -61,10 +60,8 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
   }
 
   const removeItemBlock = (id) => {
-    console.log(id)
     let newArr = _.cloneDeep(state)
     newArr.splice(id, 1)
-    console.log(newArr)
     setState(newArr)
   }
 
@@ -111,14 +108,12 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
         >
           <DragDropContext
             onDragEnd={result => {
-              console.log(result);
               const { source, destination, draggableId } = result;
               if (!destination) {
                 return;
               }
 
               let arr = _.cloneDeep(state);
-              console.log(arr);
               const [remove] = arr.splice(source.index, 1);
               arr.splice(destination.index, 0, remove);
               setState(arr);
