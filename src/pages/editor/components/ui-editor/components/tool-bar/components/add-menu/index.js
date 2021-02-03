@@ -8,6 +8,7 @@ import {
   Divider,
   makeStyles
 } from '@material-ui/core';
+import { MathpixMarkdown, MathpixLoader } from 'mathpix-markdown-it';
 import { dict, htmlcode } from '../../../../../../dict'
 
 const useStyles = makeStyles((theme) => ({
@@ -94,40 +95,64 @@ const TextMenuBox = ({ setBox, handleClose }) => (
     }
   />
 )
+const equationTemplate = [
+  {
+    name: "Fraction",
+    equation: "x/y ",
+  },
+  {
+    name: "Script",
+    equation: "x^y",
+  },
+  {
+    name: "Radical",
+    equation: "\\sqrt x",
+  },
+  {
+    name: "Integral",
+    equation: "\\int_{a}^{b} x^2 \\,dx",
+  },
+  {
+    name: "Differentials",
+    equation: "\\frac{dx}{dy} 2x ",
+  },
+  {
+    name: "Summation",
+    equation: "\\sum_{i=a}^{b} f(i)",
+  },
+  {
+    name: "Products",
+    equation: "\\prod_{i=a}^{b} f(i)",
+  },
+  {
+    name: "Limits",
+    equation: "\\lim_{x\\to\\infty} f(x)",
+  }
+]
 
 const EquationMenuBox = ({ setBox, handleClose }) => (
   <TemplateMenuBox
-    name="Command"
+    name="Equation"
     items={
       <>
-        <BoxItem
-          onClick={() => {
-            setBox('[\\ \\sum_{x=1}^5x+1+2\\]');
-            handleClose(null);
-          }}
-          label="Summation"
-        />
-        <BoxItem
-          onClick={() => {
-            setBox('[\\ \\int_a^b x^2\\]');
-            handleClose(null);
-          }}
-          label="Integral"
-        />
-        <BoxItem
-          onClick={() => {
-            setBox('[ \\lim_{x\\to\\infty} f(x) \\]');
-            handleClose(null);
-          }}
-          label="Limits"
-        />
-        <BoxItem
-          onClick={() => {
-            setBox('[ \\prod_{i=a}^{b} f(i) \\]');
-            handleClose(null);
-          }}
-          label="Prod"
-        />
+        {equationTemplate.map((item) => (
+          <BoxItem
+            onClick={() => {
+              setBox(`[\\ ${item.equation} \\]`);
+              handleClose(null);
+            }}
+            label={
+              <>
+                <Box>
+                  <Typography>{item.name}</Typography>
+                  <MathpixLoader>
+                    <MathpixMarkdown text={`\\( ${item.equation} \\)`} />
+                  </MathpixLoader>
+                </Box>
+              </>
+            }
+          />
+        ))}
       </>
     }
   />

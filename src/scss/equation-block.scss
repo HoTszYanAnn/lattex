@@ -1,0 +1,94 @@
+.equation-block-content{
+  padding: 15px
+}
+
+.equation-block-tool-bar {
+  display: none;
+}
+
+.equation-block:focus-within {
+  outline: none;
+  box-shadow: 0 0 1000px rgba(0, 0, 0, 1);
+  .equation-block-tool-bar {
+    background: white;
+    z-index: 99;
+    display: block;
+    position: absolute;
+    top: calc(100% - 15px);
+    width: 100%
+  }
+}
+
+.equation-block-tool-bar .control-item {
+  display: block;
+  float: left;
+  height: 36px;
+  margin: 5px 0 5px 3px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.equation-block-tool-bar .control-item.button {
+  box-sizing: border-box;
+  min-width: 36px;
+  padding: 0 8px;
+  background-color: transparent;
+  border: none;
+  color: #6a6f7b;
+  font-size: 14px;
+}
+
+.equation-block-tool-bar .control-item.button:hover {
+  background-color: rgba(0,0,0,.05);
+}
+
+.equation-block-tool-bar [data-title]:hover:after, .equation-block-tool-bar [data-title]:hover:before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.equation-block-tool-bar [data-title]:before {
+  margin-top: 3px;
+  border: 5px solid transparent;
+  border-bottom-color: #21242a;
+  content: "";
+}
+
+.equation-block-tool-bar [data-title]:after {
+  margin-top: 12px;
+  padding: 5px;
+  background-color: #21242a;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  content: attr(data-title);
+}
+
+.equation-block-tool-bar [data-title]:after, .equation-block-tool-bar [data-title]:before {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  left: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-5px);
+  transition: opacity .3s,transform .3s;
+}
+
+.equation-block-tool-bar [data-title]:after, .equation-block-tool-bar [data-title]:before {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  left: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-5px);
+  transition: opacity .3s,transform .3s;
+  text-transform: capitalize;
+}
+
+.latex-equation-display-button #preview{
+  padding: 0 !important
+}
