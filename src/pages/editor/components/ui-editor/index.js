@@ -38,15 +38,19 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
   const [state, setState] = useState(origContent)
 
   const setText = (id, val) => {
-    let newArr = _.cloneDeep(state)
-    newArr[id].text = val
-    setState(newArr)
+    if (state[id].text !== val) {
+      let newArr = _.cloneDeep(state)
+      newArr[id].text = val
+      setState(newArr)
+    }
   }
-  
+
   const setCode = (id, val) => {
-    let newArr = _.cloneDeep(state)
-    newArr[id].code = val
-    setState(newArr)
+    if (state[id].code !== val) {
+      let newArr = _.cloneDeep(state)
+      newArr[id].code = val
+      setState(newArr)
+    }
   }
 
   const setBox = (code, content) => {
