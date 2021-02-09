@@ -46,6 +46,90 @@ const letter = {
       code: '\\gamma',
     },
     {
+      title: 'Delta',
+      code: '\\delta',
+    },
+    {
+      title: 'Epsilon',
+      code: '\\epsilon',
+    },
+    {
+      title: 'Epsilon',
+      code: '\\epsilon',
+    },
+    {
+      title: 'Zeta',
+      code: '\\zeta',
+    },
+    {
+      title: 'Eta',
+      code: '\\eta',
+    },
+    {
+      title: 'Iota',
+      code: '\\iota',
+    },
+    {
+      title: 'Kappa',
+      code: '\\kappa',
+    },
+    {
+      title: 'Lambda',
+      code: '\\lambda',
+    },
+    {
+      title: 'Nu',
+      code: '\\nu',
+    },
+    {
+      title: 'Xi',
+      code: '\\xi',
+    },
+    {
+      title: 'Pi',
+      code: '\\pi',
+    },
+    {
+      title: 'Sigma',
+      code: '\\sigma',
+    },
+    {
+      title: 'Tau',
+      code: '\\tau',
+    },
+    {
+      title: 'Upsilon',
+      code: '\\upsilon',
+    },
+    {
+      title: 'Phi',
+      code: '\\phi',
+    },
+    {
+      title: 'Phi',
+      code: '\\Phi',
+    },
+    {
+      title: 'Varphi',
+      code: '\\varphi',
+    },
+    {
+      title: 'Psi',
+      code: '\\psi',
+    },
+    {
+      title: 'Psi',
+      code: '\\Psi',
+    },
+    {
+      title: 'Omega',
+      code: '\\omega',
+    },
+    {
+      title: 'Omega',
+      code: '\\Omega',
+    },
+    {
       title: 'Rho',
       code: '\\rho',
     },
@@ -53,14 +137,6 @@ const letter = {
       title: 'Theta',
       code: '\\theta',
     },
-    {
-      code: '\\mp',
-      title: ''
-    },
-    {
-      code: '\\pm',
-      title: ''
-    }
   ]
 }
 
