@@ -92,3 +92,17 @@
 .latex-equation-display-button #preview{
   padding: 0 !important
 }
+
+.equation-block-tool-bar-button-box{
+  position: relative;
+  border: 3px solid #73AD21;
+}
+
+.equation-block-tool-bar-submenu{
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  transform: translate(-8px, calc(-100% - 32px));
+  width: 250px;
+  z-index: 9;
+}
