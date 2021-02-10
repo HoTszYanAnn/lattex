@@ -1,4 +1,28 @@
 exports.dict = {
+    "begin{frame}": {
+        "name": "Frame",
+        "left": "",
+        "size": "1.2rem",
+        "weight": "bold"
+    },
+    "begin{block}": {
+        "name": "Block",
+        "left": "",
+        "size": "1rem",
+        "weight": "bold"
+    },
+    "begin{alertblock}": {
+        "name": "AlertBlock",
+        "left": "",
+        "size": "1rem",
+        "weight": "bold"
+    },
+    "begin{exampleblock}": {
+        "name": "ExampleBlock",
+        "left": "",
+        "size": "1rem",
+        "weight": "bold"
+    },
     "part": {
         "name": "Part",
         "left": "",

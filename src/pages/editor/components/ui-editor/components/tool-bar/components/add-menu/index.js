@@ -98,7 +98,7 @@ const TextMenuBox = ({ setBox, handleClose }) => (
 const equationTemplate = [
   {
     name: "Fraction",
-    equation: "x/y ",
+    equation: "\\frac{x}{y} ",
   },
   {
     name: "Script",

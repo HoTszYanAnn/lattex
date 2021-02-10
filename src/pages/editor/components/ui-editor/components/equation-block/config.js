@@ -529,19 +529,19 @@ const Integral = {
   code: '\\int_{x}^{-x}',
   buttonArray: [
     {
-      title: 'Sine',
+      title: '',
       code: '\\int{x}',
     },
     {
-      title: 'Sine',
+      title: '',
       code: '\\int_{x}^{-x}{f(x)}',
     },
     {
-      title: 'Sine',
+      title: '',
       code: '\\oint_V f(s)',
     },
     {
-      title: 'Sine',
+      title: '',
       code: '\\frac{dx}{dy}',
     },
     {
@@ -550,31 +550,11 @@ const Integral = {
     },
     {
       title: '',
-      code: '\\frac{\\partial^2 f}{\\partial x^2}',
-    },
-    {
-      title: '',
       code: '\\frac{\\partial^k f}{\\partial x^k}',
-    },
-    {
-      title: 'Sine',
-      code: 'dx',
-    },
-    {
-      title: 'Sine',
-      code: 'dy',
-    },
-    {
-      title: 'Sine',
-      code: 'd\\theta',
     },
     {
       title: '',
       code: "f'(x)",
-    },
-    {
-      title: '',
-      code: "f''(x)",
     },
     {
       title: '',
@@ -588,35 +568,35 @@ const LimitAndLog = {
   code: '\\lim_{x \\to +\\infty} f(x)',
   buttonArray: [
     {
-      title: 'Sine',
+      title: '',
       code: '\\lim_{x \\to +\\infty} f(x)',
     },
     {
-      title: 'Sine',
+      title: '',
       code: '\\lim_{x \\to -\\infty} f(x)',
     },
     {
-      title: 'Sine',
+      title: '',
       code: '\\lim_{x \\to \\alpha} f(x)',
     },
     {
-      title: 'Sine',
+      title: '',
       code: '\\inf_{x > s}f(x)',
     },
     {
-      title: 'Sine',
+      title: '',
       code: '\\sup_{x \\in \\mathbb{R}}f(x)',
     },
     {
-      title: 'Sine',
+      title: '',
       code: '\\max_{x \\in \\mathbb{R}}f(x)',
     },
     {
-      title: 'Sine',
+      title: '',
       code: '\\min_{x \\in \\mathbb{R}}f(x)',
     },
     {
-      title: 'Sine',
+      title: '',
       code: '\\log{f(x)}',
     },
   ]

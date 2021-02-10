@@ -78,17 +78,33 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
 
   let contentArrayObject = await parseContentArray
     .map(item => {
-      return item.startsWith('{') ? [item, null] : item.endsWith('}') ? item.split(/{|}/, 2) : [item, null]
+      return (item.startsWith('{') ? [item, null] : item.endsWith('}') ? item.split(/{|}/) : [item, null]).filter(item => ![''].includes(item))
     })
     .reduce(async (acc, val) => {
       let newacc = await acc
-      const [key, value] = val
+      const [key, value, extra] = val
       if (key.startsWith('\\')) {
-        newacc.push({
-          id: uuidv4(),
-          code: key.substring(1, key.length),
-          text: value,
-        })
+        if (key.includes('begin')) {
+          newacc.push({
+            id: uuidv4(),
+            code: key.substring(1, key.length)+"{"+value+"}",
+            text: extra,
+          })
+        } else {
+          if (key.includes('end')) {
+            newacc.push({
+              id: uuidv4(),
+              code: key.substring(1, key.length)+" "+value,
+              text: null,
+            })
+          } else {
+            newacc.push({
+              id: uuidv4(),
+              code: key.substring(1, key.length),
+              text: value,
+            })
+          }
+        }
       } else {
         console.log('pandoc latex to html !!!!!!!!!!!')
         let res = (await pandoc(key.substring(1, key.length - 1), args))
@@ -121,6 +137,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
   //setting
   parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n`
   parseText = parseText + '\\providecommand{\\tightlist}{\n\\setlength{\\itemsep}{0pt}\\setlength{\\parskip}{0pt}}\n'
+  if(updatedObject.documentclass=="beamer") parseText = parseText + '\\usetheme{Madrid}\n'
 
   parseText = parseText + `\\title{${updatedObject.titles.title}}\n`
   parseText = parseText + `\\author{${updatedObject.titles.author}}\n`
