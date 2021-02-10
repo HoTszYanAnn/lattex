@@ -380,7 +380,7 @@ const letter = {
 }
 
 const basicFunc = {
-  title: 'Fraction',
+  title: 'Basic Equation',
   code: 'x^y',
   buttonArray: [
     {
@@ -388,14 +388,238 @@ const basicFunc = {
       code: 'x^y',
     },
     {
-      title: 'Super Script',
-      code: 'x^y',
+      title: 'Sub Script',
+      code: 'x_{y}',
     },
     {
-      title: 'Super Script',
-      code: 'x^y',
+      title: 'Sub Script',
+      code: 'x^{n}_{m}',
+    },
+    {
+      title: 'Fraction',
+      code: '\\frac{x}{y}',
+    },
+    {
+      title: 'Root',
+      code: '\\sqrt[n]{x}',
     },
   ]
 }
 
-exports.equationTools = [symbol, letter, arrow, basicFunc]
+const LargeOperator = {
+  title: 'Large Operator',
+  code: '\\sum_{k=1}^{n}',
+  buttonArray: [
+    {
+      title: 'Summation',
+      code: '\\sum_{k=1}^{n}',
+    },
+    {
+      title: 'Products',
+      code: '\\prod_{k=1}^{n}',
+    },
+  ]
+}
+
+const Function = {
+  title: 'Function',
+  code: '\\sin{x}',
+  buttonArray: [
+    {
+      title: 'Sine',
+      code: '\\sin{x}',
+    },
+    {
+      title: 'Cosine',
+      code: '\\cos{x}',
+    },
+    {
+      title: 'Tangent',
+      code: '\\tan{x}',
+    },
+    {
+      title: 'Sine',
+      code: '\\csc{x}',
+    },
+    {
+      title: 'Cosine',
+      code: '\\sec{x}',
+    },
+    {
+      title: 'Tangent',
+      code: '\\cot{x}',
+    },
+    {
+      title: 'Sine',
+      code: '\\sin^{-1}{x}',
+    },
+    {
+      title: 'Cosine',
+      code: '\\cos^{-1}{x}',
+    },
+    {
+      title: 'Tangent',
+      code: '\\tan^{-1}{x}',
+    },
+    {
+      title: 'Sine',
+      code: '\\csc^{-1}{x}',
+    },
+    {
+      title: 'Cosine',
+      code: '\\sec^{-1}{x}',
+    },
+    {
+      title: 'Tangent',
+      code: '\\cot^{-1}{x}',
+    },
+    {
+      title: 'Sine',
+      code: '\\sinh{x}',
+    },
+    {
+      title: 'Cosine',
+      code: '\\cosh{x}',
+    },
+    {
+      title: 'Tangent',
+      code: '\\tanh{x}',
+    },
+    {
+      title: 'Sine',
+      code: '\\text{csch}^{-1} {x}',
+    },
+    {
+      title: 'Cosine',
+      code: '\\text{sech} {x}',
+    },
+    {
+      title: 'Tangent',
+      code: '\\coth{x}',
+    },
+    {
+      title: 'Sine',
+      code: '\\sinh^{-1}{x}',
+    },
+    {
+      title: 'Cosine',
+      code: '\\cosh^{-1}{x}',
+    },
+    {
+      title: 'Tangent',
+      code: '\\tanh^{-1}{x}',
+    },
+    {
+      title: 'Sine',
+      code: '\\text{csch}^{-1} {x}',
+    },
+    {
+      title: 'Cosine',
+      code: '\\text{sech}^{-1} {x}',
+    },
+    {
+      title: 'Tangent',
+      code: '\\coth^{-1}{x}',
+    },
+  ]
+}
+
+const Integral = {
+  title: 'Integral',
+  code: '\\int_{x}^{-x}',
+  buttonArray: [
+    {
+      title: 'Sine',
+      code: '\\int{x}',
+    },
+    {
+      title: 'Sine',
+      code: '\\int_{x}^{-x}{f(x)}',
+    },
+    {
+      title: 'Sine',
+      code: '\\oint_V f(s)',
+    },
+    {
+      title: 'Sine',
+      code: '\\frac{dx}{dy}',
+    },
+    {
+      title: '',
+      code: '\\frac{\\partial f}{\\partial x}',
+    },
+    {
+      title: '',
+      code: '\\frac{\\partial^2 f}{\\partial x^2}',
+    },
+    {
+      title: '',
+      code: '\\frac{\\partial^k f}{\\partial x^k}',
+    },
+    {
+      title: 'Sine',
+      code: 'dx',
+    },
+    {
+      title: 'Sine',
+      code: 'dy',
+    },
+    {
+      title: 'Sine',
+      code: 'd\\theta',
+    },
+    {
+      title: '',
+      code: "f'(x)",
+    },
+    {
+      title: '',
+      code: "f''(x)",
+    },
+    {
+      title: '',
+      code: 'f^{(k)}(x)',
+    },
+  ]
+}
+
+const LimitAndLog = {
+  title: 'Limit and Log',
+  code: '\\lim_{x \\to +\\infty} f(x)',
+  buttonArray: [
+    {
+      title: 'Sine',
+      code: '\\lim_{x \\to +\\infty} f(x)',
+    },
+    {
+      title: 'Sine',
+      code: '\\lim_{x \\to -\\infty} f(x)',
+    },
+    {
+      title: 'Sine',
+      code: '\\lim_{x \\to \\alpha} f(x)',
+    },
+    {
+      title: 'Sine',
+      code: '\\inf_{x > s}f(x)',
+    },
+    {
+      title: 'Sine',
+      code: '\\sup_{x \\in \\mathbb{R}}f(x)',
+    },
+    {
+      title: 'Sine',
+      code: '\\max_{x \\in \\mathbb{R}}f(x)',
+    },
+    {
+      title: 'Sine',
+      code: '\\min_{x \\in \\mathbb{R}}f(x)',
+    },
+    {
+      title: 'Sine',
+      code: '\\log{f(x)}',
+    },
+  ]
+}
+
+exports.equationTools = [symbol, letter, arrow, basicFunc, LargeOperator, Function, Integral, LimitAndLog]
