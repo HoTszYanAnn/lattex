@@ -1,14 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import EquationEditor from "equation-editor-react";
 import { Box, Button } from '@material-ui/core';
 import { MathpixMarkdown, MathpixLoader } from 'mathpix-markdown-it';
 import { v4 as uuidv4 } from 'uuid';
 import { equationTools } from './config.js'
+import LazyLoad, { forceCheck } from 'react-lazyload';
 
 const EquationBlock = ({ code, setCode, id }) => {
   const [equation, setEquation] = useState(code);
   const [key, setKey] = useState(uuidv4())
   const [menu, setMenu] = useState(-1)
+
+  useEffect(() => {
+    forceCheck();
+  }, [menu])
 
   const setOpenMenu = (val) => {
     setMenu(val)
@@ -53,11 +58,13 @@ const EquationBlock = ({ code, setCode, id }) => {
               <Box style={{ display: menu === index ? 'block' : 'none' }} className="equation-block-tool-bar-submenu">
                 {item.buttonArray.map(subitem => (
                   <Button className="control-item button" disableRipple={true} data-title={subitem.title} onClick={() => onAdd(subitem.code)} >
-                    <MathpixLoader>
-                      <Box className="latex-equation-display-button">
-                        <MathpixMarkdown text={`\\( ${subitem.code} \\)`} display="inline-block" className="latex-equation-display-button" />
-                      </Box>
-                    </MathpixLoader>
+                    <LazyLoad height={200}>
+                      <MathpixLoader>
+                        <Box className="latex-equation-display-button">
+                          <MathpixMarkdown text={`\\( ${subitem.code} \\)`} display="inline-block" className="latex-equation-display-button" />
+                        </Box>
+                      </MathpixLoader>
+                    </LazyLoad>
                   </Button>
                 ))}
               </Box>
