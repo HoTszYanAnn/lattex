@@ -9,7 +9,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { MathpixMarkdown, MathpixLoader } from 'mathpix-markdown-it';
-import { dict, htmlcode } from '../../../../../../dict'
+import { dict, htmlcode, beamer } from '../../../../../../dict'
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -95,6 +95,42 @@ const TextMenuBox = ({ setBox, handleClose }) => (
     }
   />
 )
+
+const BeamerMenuBox = ({ setBox, handleClose }) => (
+  <TemplateMenuBox
+    name="Beamer"
+    items={
+      <>
+        <Typography variant="body1" display="inline">Numbered Section Title </Typography><br />
+        <Typography variant="body2" display="inline">(included in the table of contents)</Typography>
+        <Divider />
+        {Object.keys(beamer).map(key =>
+          <BoxItem
+            onClick={() => {
+              setBox(key);
+              handleClose(null);
+            }}
+            label={beamer[key].name}
+          />
+        )}
+        <Box mb={2} />
+        <Typography variant="body1" display="inline">Unnumbered Section Title</Typography><br />
+        <Typography variant="body2" display="inline">(excluded in the table of contents.)</Typography>
+        <Divider />
+        {Object.keys(beamer).map(key =>
+          <BoxItem
+            onClick={() => {
+              setBox(`${key}*`);
+              handleClose(null);
+            }}
+            label={beamer[key].name}
+          />
+        )}
+      </>
+    }
+  />
+)
+
 const equationTemplate = [
   {
     name: "Fraction",
@@ -196,15 +232,18 @@ const OtherMenuBox = ({ setBox, handleClose }) => (
   />
 )
 
-const AddMenu = ({ setBox, handleClose }) => {
+const AddMenu = ({ setBox, handleClose, documentclass }) => {
   const [open, setOpen] = useState('text')
   const theme = useTheme()
   const handleClick = (key) => {
     setOpen(key)
   }
   console.log(open)
+  console.log(documentclass)
+  
+  //control the add menu show what submenu
+  const menu = documentclass === "beamer" ? ['text', 'beamer', 'equation', 'table', 'command'] : ['text', 'equation', 'table', 'command']
 
-  const menu = ['text', 'equation', 'table', 'command']
   return (
     <>
       <Box display="table" style={{ height: '100%', minHeight: '70vh' }}>
@@ -224,6 +263,9 @@ const AddMenu = ({ setBox, handleClose }) => {
         <Box display="table-cell" style={{ verticalAlign: 'top', minWidth: '300px', padding: '7px' }}>
           <Box style={{ display: open === 'text' ? 'block' : 'none' }}>
             <TextMenuBox setBox={setBox} handleClose={handleClose} />
+          </Box>
+          <Box style={{ display: open === 'beamer' ? 'block' : 'none' }}>
+            <BeamerMenuBox setBox={setBox} handleClose={handleClose} />
           </Box>
           <Box style={{ display: open === 'equation' ? 'block' : 'none' }}>
             <EquationMenuBox setBox={setBox} handleClose={handleClose} />

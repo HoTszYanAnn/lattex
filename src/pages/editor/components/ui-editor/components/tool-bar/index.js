@@ -98,7 +98,7 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
                   handleOpenWindow={handleOpenWindow}
                   icon={<AddIcon style={{ color: currentOpenWindow === 'add-button' ? 'white' : 'orange', fontSize: 35 }} />}
                   children={
-                    <AddMenu setBox={setBox} handleClose={handleClose} />
+                    <AddMenu setBox={setBox} handleClose={handleClose} documentclass={doc.latex.documentclass}/>
                   }
                 />
               </Box>
