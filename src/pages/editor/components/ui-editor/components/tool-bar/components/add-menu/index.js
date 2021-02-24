@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { MathpixMarkdown, MathpixLoader } from 'mathpix-markdown-it';
 import { dict, htmlcode, beamer } from '../../../../../../dict'
+import ImageUploader from 'react-images-upload';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -232,17 +233,46 @@ const OtherMenuBox = ({ setBox, handleClose }) => (
   />
 )
 
+
+const ImageMenuBox = ({ setBox, handleClose, images }) => {
+  
+  const onDrop = (val) => {
+    //upload image to github
+
+    //rerender the image list
+  }
+
+  return (
+    <TemplateMenuBox
+      name="Images"
+      items={
+        <>
+          {/* upload new image */}
+          <ImageUploader
+            withIcon={true}
+            buttonText='Choose image'
+            onChange={() => { }}
+            imgExtension={['.jpg', '.gif', '.png', '.gif']}
+            maxFileSize={5242880}
+          />
+
+          {/* image list */}
+        </>
+      }
+    />
+  )
+}
+
 const AddMenu = ({ setBox, handleClose, documentclass }) => {
   const [open, setOpen] = useState('text')
   const theme = useTheme()
   const handleClick = (key) => {
     setOpen(key)
   }
-  console.log(open)
-  console.log(documentclass)
-  
-  //control the add menu show what submenu
-  const menu = documentclass === "beamer" ? ['text', 'beamer', 'equation', 'table', 'command'] : ['text', 'equation', 'table', 'command']
+
+  //control the add menu show what submenu 
+  const menu = ['text', 'equation', 'image', 'table', 'command']
+  documentclass === "beamer" && menu.splice(1, 0, "beamer");
 
   return (
     <>
@@ -269,6 +299,9 @@ const AddMenu = ({ setBox, handleClose, documentclass }) => {
           </Box>
           <Box style={{ display: open === 'equation' ? 'block' : 'none' }}>
             <EquationMenuBox setBox={setBox} handleClose={handleClose} />
+          </Box>
+          <Box style={{ display: open === 'image' ? 'block' : 'none' }}>
+            <ImageMenuBox setBox={setBox} handleClose={handleClose} />
           </Box>
           <Box style={{ display: open === 'command' ? 'block' : 'none' }}>
             <OtherMenuBox setBox={setBox} handleClose={handleClose} />
