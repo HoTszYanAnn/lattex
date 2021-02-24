@@ -16,11 +16,16 @@ const DefaultBlock = ({ text, label }) => (
 const DividerBlock = () => (
   <>
     <Divider style={{ position: 'absolute', top: '50%', width: 'calc(100% - 15px - 15px)', left: '15px' }} />
-    <DefaultBlock text="" label="Divider" />
+    <DefaultBlock text="" label="Divider Block" />
   </>
 )
 
-const TableOfContentsBlock = () => (<DefaultBlock text="Table of Content Block" />)
+const EndBlock = () => (
+  <>
+    <Divider style={{ position: 'absolute', top: '50%', width: 'calc(100% - 15px - 15px)', left: '15px', light: true, vairant: 'middle'}} />
+    <DefaultBlock text="" label="End Block" />
+  </>
+)
 
 const textblock = {
   'maketitle': 'Title Block',
@@ -36,7 +41,9 @@ const block = ({ text, id }) => {
           ? <DefaultBlock text={textblock[text].substring(0, textblock[text].length - 6)} label={textblock[text]} />
           : text === 'hrule'
             ? <DividerBlock />
-            : <DefaultBlock text={text} />
+            : text === 'end'
+              ? <EndBlock />
+              : <DefaultBlock text={text} />
         }
       </Box>
     </>

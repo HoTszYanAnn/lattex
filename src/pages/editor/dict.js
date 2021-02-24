@@ -54,19 +54,19 @@ exports.beamer = {
         "name": "Block",
         "left": "",
         "size": "1rem",
-        "weight": "bold"
+        "weight": ""
     },
     "begin{alertblock}": {
         "name": "AlertBlock",
         "left": "",
         "size": "1rem",
-        "weight": "bold"
+        "weight": ""
     },
     "begin{exampleblock}": {
         "name": "ExampleBlock",
         "left": "",
         "size": "1rem",
-        "weight": "bold"
+        "weight": ""
     },
 }
 

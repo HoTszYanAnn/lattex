@@ -39,7 +39,3 @@ export const toLatexCode = (packed_code) => {
     }
   }, '')
 }
-
-export const toLatexPartCode = (code) => {
-
-}

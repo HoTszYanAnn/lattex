@@ -101,6 +101,14 @@ const BeamerMenuBox = ({ setBox, handleClose }) => (
     name="Beamer"
     items={
       <>
+        <BoxItem
+          onClick={() => {
+            setBox('end');
+            handleClose(null);
+          }}
+          label="End"
+        />
+        <Divider />
         <Typography variant="body1" display="inline">Numbered Section Title </Typography><br />
         <Typography variant="body2" display="inline">(included in the table of contents)</Typography>
         <Divider />
