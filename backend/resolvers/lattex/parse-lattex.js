@@ -58,7 +58,6 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
   //const args = '-f latex -t html'
   const args = ['-f', 'latex', '-t', 'html']
 
-  console.log(content)
   let parseContentArray = []
   for (let i = 0; i < content.length; i++) {
     if (content[i] === '{') {
@@ -74,7 +73,6 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
       parseContentArray.push(content[i])
     }
   }
-  console.log(parseContentArray)
 
   let contentArrayObject = await parseContentArray
     .map(item => {
@@ -128,6 +126,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
   const oldObject = await this.parseLaTeXCodeToObject(parent)
   const updatedObject = { ...oldObject, ...input }
   let parseText = ""
+  console.log(updatedObject)
 
   //setting
   parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n`
@@ -143,29 +142,22 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
 
   //content
   const args = ['-f', 'html', '-t', 'latex']
-  let tmp =""
+  const tmp = []
 
   for (let i = 0; i < updatedObject.contents.length; i++) {
-    if (updatedObject.contents[i].code) {
-      console.log("hello: "+updatedObject.contents[i].code)
-      consle.log(1)
-      if ((updatedObject.contents[i].code).includes('begin')) {
-        consle.log(1.5)
-        consle.log(tmp)
-        tmp = updatedObject.contents[i].code.substring(5, key.length - 1)
-        console.log("tmp: "+tmp)
+    let code = updatedObject.contents[i].code
+    if (code) {
+      if (code.includes('begin')) {
+        tmp.push(code.substring(5, code.length))
+        console.log(tmp)
       }
-      consle.log(2)
-      if (updatedObject.contents[i].code === 'end') {
-        parseText = parseText + `\\end${tmp}\n`
-        consle.log(3)
+      if (code === 'end') {
+        parseText = parseText + `\\end${tmp.pop()}\n`
       } else {
         if (updatedObject.contents[i].text) {
-          consle.log(4)
-          parseText = parseText + `\\${updatedObject.contents[i].code}{${updatedObject.contents[i].text}}\n`
+          parseText = parseText + `\\${code}{${updatedObject.contents[i].text}}\n\n`
         } else {
-          consle.log(5)
-          parseText = parseText + `\\${updatedObject.contents[i].code}\n`
+          parseText = parseText + `\\${code}\n`
         }
       }
     } else {

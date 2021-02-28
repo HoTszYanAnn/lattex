@@ -109,26 +109,10 @@ const BeamerMenuBox = ({ setBox, handleClose }) => (
           label="End"
         />
         <Divider />
-        <Typography variant="body1" display="inline">Numbered Section Title </Typography><br />
-        <Typography variant="body2" display="inline">(included in the table of contents)</Typography>
-        <Divider />
         {Object.keys(beamer).map(key =>
           <BoxItem
             onClick={() => {
               setBox(key);
-              handleClose(null);
-            }}
-            label={beamer[key].name}
-          />
-        )}
-        <Box mb={2} />
-        <Typography variant="body1" display="inline">Unnumbered Section Title</Typography><br />
-        <Typography variant="body2" display="inline">(excluded in the table of contents.)</Typography>
-        <Divider />
-        {Object.keys(beamer).map(key =>
-          <BoxItem
-            onClick={() => {
-              setBox(`${key}*`);
               handleClose(null);
             }}
             label={beamer[key].name}
