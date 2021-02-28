@@ -22,6 +22,25 @@ exports.executeGitGraphql = async (parent, input, { gitUser }, info) => {
   }
 }
 
+exports.executeGitPutImage = async (parent, input, { gitUser, username }, info) => {
+  const { base64, repo_name, filename } = parent
+
+  try {
+    const rawData = (await gitUser.put(`/repos/${username}/${repo_name}/contents/images/${filename}`, {
+      message: `add image ${filename} `,
+      content: base64.split(',')[1]
+    })).data;
+
+    return {
+      url: `https://github.com/${username}/${repo_name}/blob/master/images/${filename}?raw=true`,
+      name: filename
+    }
+  } catch (e) {
+    console.log(e)
+    throw new Error(e)
+  }
+}
+
 exports.executeGitPutRepo = async (parent, input, { gitUser, username }, info) => {
   const { parseText, name, oid } = parent
   try {
@@ -51,7 +70,7 @@ exports.executeGitDeleteRepo = async (parent, { name }, { gitUser, username }, i
 }
 
 exports.executeCopyTemplateGraphql = async (parent, { path, input }, { gitUser, username }, info) => {
-  try{
+  try {
     const rawData = (await gitUser.get(`/repos/MHW2003/template/contents/${path}`, {
     })).data.content;
 
@@ -62,7 +81,7 @@ exports.executeCopyTemplateGraphql = async (parent, { path, input }, { gitUser, 
     })).data;
 
     return parent
-  }catch(e){
+  } catch (e) {
     console.log(e)
     throw new Error(e)
   }

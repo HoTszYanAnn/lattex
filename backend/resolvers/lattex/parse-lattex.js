@@ -2,7 +2,7 @@ const _ = require("lodash")
 const pandoc = require('node-pandoc-promise');
 const { v4: uuidv4 } = require('uuid');
 
-exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
+exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
   const { latex_code, image } = parent
   const textArray = latex_code.split(/\s*(\n)\s*/).filter(item => !['\n', ''].includes(item))
   const titleIndex = textArray.findIndex(item => item.includes('\\title'))
@@ -48,12 +48,17 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
     }, {})
 
   settingObject.documentclass = textArray.find(item => item.includes('\\documentclass')).substring(1).split(/{|}/, 2)[1]
-
   const imageObject =
     _(image)
       .mapValues((value, name) => _.merge({}, value, { name }))
       .values()
       .value()
+
+  if (!skip) {
+    imageObject.map((item, index) => {
+      item.url = `https://github.com/${context.username}/${input ? input.name ? input.name : parent.name : parent.name}/blob/master/images/${item.name}?raw=true`
+    })
+  }
 
   //const args = '-f latex -t html'
   const args = ['-f', 'latex', '-t', 'html']
@@ -70,6 +75,15 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
       }
       temp = temp + content[i]
       parseContentArray.push(temp)
+    } else if (content[i].startsWith('\\begin{figure}')) {
+      let temp = content[i]
+      i = i + 1
+      while (content[i] !== '\\end{figure}') {
+        temp = temp + content[i] + '\r\n'
+        i = i + 1
+      }
+      temp = temp + content[i]
+      parseContentArray.push(temp)
     } else {
       parseContentArray.push(content[i])
     }
@@ -78,23 +92,29 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
 
   let contentArrayObject = await parseContentArray
     .map(item => {
-      return (item.startsWith('{') ? [item, null] : item.endsWith('}') ? item.split(/{|}/) : [item, null]).filter(item => ![''].includes(item))
+      return (item.startsWith('{') ? [item, null] : item.endsWith('}') ? item.startsWith('\\begin{figure}') ? [item, null] : item.split(/{|}/) : [item, null]).filter(item => ![''].includes(item))
     })
     .reduce(async (acc, val) => {
       let newacc = await acc
       const [key, value, extra] = val
       if (key.startsWith('\\')) {
-        if (key.includes('begin')) {
+        if (key.startsWith('\\begin{figure}')) {
           newacc.push({
             id: uuidv4(),
-            code: key.substring(1, key.length)+"{"+value+"}",
+            code: 'figure',
+            text: key,
+          })
+        } else if (key.includes('begin')) {
+          newacc.push({
+            id: uuidv4(),
+            code: key.substring(1, key.length) + "{" + value + "}",
             text: extra,
           })
         } else {
           if (key.includes('end')) {
             newacc.push({
               id: uuidv4(),
-              code: key.substring(1, key.length)+" "+value,
+              code: key.substring(1, key.length) + " " + value,
               text: null,
             })
           } else {
@@ -130,14 +150,16 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
 }
 
 exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
-  const oldObject = await this.parseLaTeXCodeToObject(parent)
+  const oldObject = await this.parseLaTeXCodeToObject(parent, { input }, context, info, true)
   const updatedObject = { ...oldObject, ...input }
   let parseText = ""
 
   //setting
   parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n`
   parseText = parseText + '\\providecommand{\\tightlist}{\n\\setlength{\\itemsep}{0pt}\\setlength{\\parskip}{0pt}}\n'
-  if(updatedObject.documentclass=="beamer") parseText = parseText + '\\usetheme{Madrid}\n'
+  if (updatedObject.documentclass == "beamer") parseText = parseText + '\\usetheme{Madrid}\n'
+  parseText = parseText + `\\usepackage{graphicx}\n`
+  parseText = parseText + `\\graphicspath{ {./images/} }\n`
 
   parseText = parseText + `\\title{${updatedObject.titles.title}}\n`
   parseText = parseText + `\\author{${updatedObject.titles.author}}\n`
@@ -151,7 +173,9 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
 
   for (let i = 0; i < updatedObject.contents.length; i++) {
     if (updatedObject.contents[i].code) {
-      if (updatedObject.contents[i].text) {
+      if (updatedObject.contents[i].code === 'figure') {
+        parseText = parseText + updatedObject.contents[i].text + '\n'
+      } else if (updatedObject.contents[i].text) {
         parseText = parseText + `\\${updatedObject.contents[i].code}{${updatedObject.contents[i].text}}\n`
       } else {
         parseText = parseText + `\\${updatedObject.contents[i].code}\n`

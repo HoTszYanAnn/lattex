@@ -33,28 +33,27 @@ const DOCUMENT_FRAGMENT = gql`
     createdAt
     isPrivate
     url
-    latex{
+    latex {
       documentclass
-      titles{
+      titles {
         title
         author
         date
         always_today
       }
-      setting{
+      setting {
         fontSize
         lineHeight
         firstLineIndentation
       }
-      contents{
+      contents {
         id
         code
         text
       }
-      images{
-        name
-        oid
-        byteSize
+      images {
+        name 
+        url
       }
       latex_code
     }
@@ -96,6 +95,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'grey',
   },
 }));
+
+
+const UPLOAD_IMAGE_GQL = gql`
+    mutation($repo_name: String!, $name: String!, $file_type: String!, $base64: String!){
+      uploadImage(input: {repo_name: $repo_name, name: $name, file_type: $file_type, base64: $base64}){
+        url
+        name
+      }
+    }
+`
 
 const Editor = ({ width, match }) => {
   const classes = useStyles()
@@ -143,6 +152,28 @@ const Editor = ({ width, match }) => {
     setShowCompiler(!showCompiler)
   }
 
+  const onUploadImagesGqlCompleted = (val) => {
+    console.log(doc)
+    setDoc({
+      ...doc,
+      latex: {
+        ...doc.latex,
+        images: [...doc.latex.images, val.uploadImage]
+      }
+    })
+  }
+
+  const [uploadImages, { loading: addImageLoading }] = useMutation(UPLOAD_IMAGE_GQL, {
+    onCompleted: onUploadImagesGqlCompleted,
+    onError: onGqlError,
+    variables: {
+      repo_name: params.id,
+      name: uuidv4()
+    },
+    fetchPolicy: 'no-cache'
+  })
+
+
   const pushAndCompile = (input) => {
     //push to github
     console.log(input)
@@ -184,9 +215,9 @@ const Editor = ({ width, match }) => {
                 showCompiler={showCompiler}
                 changeShowCompiler={changeShowCompiler}
                 pushAndCompile={pushAndCompile}
-                doc={doc}
                 updateDocument={updateDocument}
                 width={width}
+                uploadImages={uploadImages}
               />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.compiler} style={{ display: showCompiler ? 'block' : 'none' }}>

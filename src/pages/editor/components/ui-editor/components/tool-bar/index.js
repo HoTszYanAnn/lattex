@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox, onSave }) => {
+const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox, onSave, uploadImages }) => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false);
   const [currentOpenWindow, setWindowOpen] = React.useState(null);
@@ -98,7 +98,7 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
                   handleOpenWindow={handleOpenWindow}
                   icon={<AddIcon style={{ color: currentOpenWindow === 'add-button' ? 'white' : 'orange', fontSize: 35 }} />}
                   children={
-                    <AddMenu setBox={setBox} handleClose={handleClose} documentclass={doc.latex.documentclass}/>
+                    <AddMenu setBox={setBox} handleClose={handleClose} documentclass={doc.latex.documentclass} images={doc.latex.images} uploadImages={uploadImages}/>
                   }
                 />
               </Box>

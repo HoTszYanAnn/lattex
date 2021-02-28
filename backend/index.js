@@ -3,6 +3,7 @@ const { executeGitGraphql } = require('./resolvers/executeQuery')
 const { getAuthToken } = require('./api/authenticate')
 var cors = require('cors')
 const express = require("express");
+const {json} = require("express");
 const { ApolloServer, gql } = require("apollo-server-express");
 const { importSchema } = require("graphql-import");
 const axios = require("axios");
@@ -61,6 +62,7 @@ const server = new ApolloServer({
 // Initialize the app
 const app = express();
 
+app.use(json({ limit: '2mb' }))
 server.applyMiddleware({ app, path: "/graphql" });
 app.use(cors())
 app.use('/authenticate', getAuthToken)

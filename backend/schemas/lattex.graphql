@@ -7,6 +7,7 @@ type Mutation {
   document(name: String!): Document!
   addDocument(input: DocumentCreateInput!, path: String!): Document!
   deleteDocument(name: String!): [Document!]
+  uploadImage(input: ImagesFileInput!): ImagesFile!
 }
 
 enum RepositoryVisibility {
@@ -25,26 +26,22 @@ type Document {
   url: URL!
 
   latex: LaTeXDoc
-  uploadImage: File!
   updateLaTeX(input: LaTeXDocUpdateInput!): Document
 }
 
 type LaTeXDoc {
-
   # latex_code convert to object
   documentclass: String!
   titles: Titles!
   setting: Setting
   contents: [Section!]
-  images: [URL!]
+  images: [ImagesFile!]
 
   # complete latex code
   latex_code: String!
-
-  # function to update latex document
 }
 
-type Setting{
+type Setting {
   fontSize: Float
   lineHeight: Float
   firstLineIndentation: Float
@@ -63,8 +60,14 @@ type Section {
   text: String
 }
 
-type File {
+input ImagesFileInput {
   name: String!
-  content_type: String!
+  base64: String!
   file_type: String!
+  repo_name: String!
+}
+
+type ImagesFile {
+  name: String!
+  url: URL!
 }

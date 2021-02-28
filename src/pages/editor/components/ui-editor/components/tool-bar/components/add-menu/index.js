@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   MenuItem,
   Box,
@@ -11,6 +11,7 @@ import {
 import { MathpixMarkdown, MathpixLoader } from 'mathpix-markdown-it';
 import { dict, htmlcode, beamer } from '../../../../../../dict'
 import ImageUploader from 'react-images-upload';
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -233,13 +234,36 @@ const OtherMenuBox = ({ setBox, handleClose }) => (
   />
 )
 
+const ImageMenuBox = ({ setBox, handleClose, uploadImages, images }) => {
 
-const ImageMenuBox = ({ setBox, handleClose, images }) => {
-  
+  const template = (name) => `\\begin{figure}[h]
+  \\caption{Example of a parametric plot}
+  \\centering
+  \\includegraphics[width=0.5\\textwidth]{${name}}
+  \\end{figure}`
+
+  function getBase64(file) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      uploadImages({
+        variables: {
+          file_type: 'jpg',
+          base64: reader.result,
+        }
+      })
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+ }
+ 
+  //!!!!! same name will bug
   const onDrop = (val) => {
     //upload image to github
-
-    //rerender the image list
+    if (val[0]){
+      getBase64(val[0])
+    }//rerender the image list
   }
 
   return (
@@ -248,24 +272,44 @@ const ImageMenuBox = ({ setBox, handleClose, images }) => {
       items={
         <>
           {/* upload new image */}
+          <Typography variant="body1" display="inline">Upload </Typography>
+          <Divider />
           <ImageUploader
             withIcon={true}
             buttonText='Choose image'
-            onChange={() => { }}
+            onChange={onDrop}
             imgExtension={['.jpg', '.gif', '.png', '.gif']}
             maxFileSize={5242880}
+            singleImage
           />
-
+          <Box mb={2} />
+          <Typography variant="body1" display="inline">Select </Typography>
+          <Divider />
           {/* image list */}
+          {images.map(image =>
+            <BoxItem
+              onClick={() => {
+                setBox('figure', template(image.name));
+                handleClose(null);
+              }}
+              label={(
+                <>
+                  <img src={image.url} alt={image.name} style={{ maxWidth: '250px' }}></img>
+                </>
+              )}
+            />
+          )}
+
         </>
       }
     />
   )
 }
 
-const AddMenu = ({ setBox, handleClose, documentclass }) => {
+const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) => {
   const [open, setOpen] = useState('text')
-  const theme = useTheme()
+  const [imageMenuKey, setImageMenuKey] = useState(uuidv4())
+
   const handleClick = (key) => {
     setOpen(key)
   }
@@ -273,6 +317,10 @@ const AddMenu = ({ setBox, handleClose, documentclass }) => {
   //control the add menu show what submenu 
   const menu = ['text', 'equation', 'image', 'table', 'command']
   documentclass === "beamer" && menu.splice(1, 0, "beamer");
+
+  useEffect(()=>{
+    setImageMenuKey(uuidv4())
+  }, [images])
 
   return (
     <>
@@ -300,8 +348,8 @@ const AddMenu = ({ setBox, handleClose, documentclass }) => {
           <Box style={{ display: open === 'equation' ? 'block' : 'none' }}>
             <EquationMenuBox setBox={setBox} handleClose={handleClose} />
           </Box>
-          <Box style={{ display: open === 'image' ? 'block' : 'none' }}>
-            <ImageMenuBox setBox={setBox} handleClose={handleClose} />
+          <Box style={{ display: open === 'image' ? 'block' : 'none' }} key={imageMenuKey}>
+            <ImageMenuBox setBox={setBox} handleClose={handleClose} images={images} uploadImages={uploadImages} />
           </Box>
           <Box style={{ display: open === 'command' ? 'block' : 'none' }}>
             <OtherMenuBox setBox={setBox} handleClose={handleClose} />

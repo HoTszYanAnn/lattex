@@ -5,6 +5,7 @@ const {
   getDocuments,
   getDocument,
   addDocument,
+  uploadImage,
 } = require("./lattex-impl");
 const {
   postprocessDocumentsData,
@@ -16,7 +17,8 @@ const {
 } = require("./parse-lattex")
 const { 
   executeGitGraphql, 
-  executeGitPutRepo, 
+  executeGitPutRepo,
+  executeGitPutImage,
   executeGitDeleteRepo,
   executeCopyTemplateGraphql,
 } = require("../executeQuery");
@@ -78,5 +80,9 @@ exports.Mutation = {
     getDocuments,
     executeGitGraphql,
     postprocessDocumentsData,
+  ),
+  uploadImage: pipeResolvers(
+    uploadImage,
+    executeGitPutImage,
   )
 }
