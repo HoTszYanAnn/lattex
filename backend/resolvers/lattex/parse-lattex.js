@@ -172,10 +172,11 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
       if (code.includes('begin')) {
         tmp.push(code.substring(5, code.length))
         console.log(tmp)
+      }
+      if (code === 'figure') {
+        parseText = parseText + updatedObject.contents[i].text + '\n'
       } else if (code === 'end') {
         parseText = parseText + `\\end${tmp.pop()}\n`
-      } else if (code === 'figure') {
-        parseText = parseText + updatedObject.contents[i].text + '\n'
       } else if (updatedObject.contents[i].text) {
         parseText = parseText + `\\${code}{${updatedObject.contents[i].text}}\n\n`
       } else {
