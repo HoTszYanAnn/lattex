@@ -20,8 +20,7 @@ import ContentBlock from './components/content-block'
 import EquationBlock from './components/equation-block'
 import ImageBlock from './components/image-block'
 
-import { difference } from '../../../../function'
-import { dict, htmlcode } from '../../dict'
+import { dict, htmlcode, beamer } from '../../dict'
 
 //equation https://www.npmjs.com/package/equation-editor-react
 //rte 
@@ -145,15 +144,19 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
                               <DeleteIcon />
                             </button>
                             {item.code
-                              ? dict[item.code]
-                                ? <TextTitle key={item.id + 'title'} info={dict[item.code]} text={item.text} setText={setText} id={id} />
-                                : dict[item.code.slice(0, -1)]
-                                  ? <TextTitle key={item.id + 'title'} info={dict[item.code.slice(0, -1)]} star text={item.text} setText={setText} id={id} />
-                                  : item.code.startsWith('[') && item.code.endsWith(']')
-                                    ? <EquationBlock key={item.id + 'equationBlk'} code={item.code.slice(1, -2)} setCode={setCode} id={id} />
-                                    : item.code === 'figure'
-                                      ? <ImageBlock key={item.id + 'image'} text={item.text} setText={setText} id={id} images={doc.latex.images} />
-                                      : <CommandBlock key={item.id + 'cmdBlk'} text={item.code} id={id} />
+                              ? beamer[item.code]
+                                ? <TextTitle key={item.id + 'title'} info={beamer[item.code]} text={item.text} setText={setText} id={id} />
+                                : beamer[item.code.slice(0, -1)]
+                                  ? <TextTitle key={item.id + 'title'} info={beamer[item.code.slice(0, -1)]} star text={item.text} setText={setText} id={id} />
+                                  : dict[item.code]
+                                    ? <TextTitle key={item.id + 'title'} info={dict[item.code]} text={item.text} setText={setText} id={id} />
+                                    : dict[item.code.slice(0, -1)] || beamer[item.code.slice(0, -1)]
+                                      ? <TextTitle key={item.id + 'title'} info={dict[item.code.slice(0, -1)]} star text={item.text} setText={setText} id={id} />
+                                      : item.code.startsWith('[') && item.code.endsWith(']')
+                                        ? <EquationBlock key={item.id + 'equationBlk'} code={item.code.slice(1, -2)} setCode={setCode} id={id} />
+                                        : item.code === 'figure'
+                                          ? <ImageBlock key={item.id + 'image'} text={item.text} setText={setText} id={id} images={doc.latex.images} />
+                                          : <CommandBlock key={item.id + 'cmdBlk'} text={item.code} id={id} />
                               : _.findKey(htmlcode, code => item.text.startsWith(code.codeStart))
                                 ? <ContentBlock key={item.id + 'content'} text={item.text} setText={setText} id={id} htmlcode={htmlcode[_.findKey(htmlcode, code => item.text.startsWith(code.codeStart))]} />
                                 : <ContentBlock key={item.id + 'content'} text={item.text} setText={setText} id={id} />

@@ -78,7 +78,7 @@ exports.addDocument = (parent, { input }, context, info) => ({
           name: "${input.name}"
           visibility: ${input.visibility}
           description: "${input.description}(made by lattex)"  
-        }
+        })
       {
         repository{
           createdAt

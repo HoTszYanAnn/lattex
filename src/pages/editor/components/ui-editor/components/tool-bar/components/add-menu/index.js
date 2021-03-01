@@ -103,26 +103,18 @@ const BeamerMenuBox = ({ setBox, handleClose }) => (
     name="Beamer"
     items={
       <>
-        <Typography variant="body1" display="inline">Numbered Section Title </Typography><br />
-        <Typography variant="body2" display="inline">(included in the table of contents)</Typography>
+        <BoxItem
+          onClick={() => {
+            setBox('end');
+            handleClose(null);
+          }}
+          label="End"
+        />
         <Divider />
         {Object.keys(beamer).map(key =>
           <BoxItem
             onClick={() => {
               setBox(key);
-              handleClose(null);
-            }}
-            label={beamer[key].name}
-          />
-        )}
-        <Box mb={2} />
-        <Typography variant="body1" display="inline">Unnumbered Section Title</Typography><br />
-        <Typography variant="body2" display="inline">(excluded in the table of contents.)</Typography>
-        <Divider />
-        {Object.keys(beamer).map(key =>
-          <BoxItem
-            onClick={() => {
-              setBox(`${key}*`);
               handleClose(null);
             }}
             label={beamer[key].name}
