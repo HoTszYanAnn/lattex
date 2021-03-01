@@ -93,3 +93,14 @@ exports.addDocument = (parent, { input }, context, info) => ({
     }
   `
 })
+
+exports.uploadImage = (parent, { input }, context, info) => {
+  const { base64, name: filename, repo_name, file_type } = input
+  
+  return {
+    ...parent,
+    base64,
+    filename: `${filename}.${file_type}`,
+    repo_name,
+  }
+}

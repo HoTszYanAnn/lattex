@@ -18,6 +18,7 @@ import TextTitle from './components/text-title'
 import CommandBlock from './components/command-block'
 import ContentBlock from './components/content-block'
 import EquationBlock from './components/equation-block'
+import ImageBlock from './components/image-block'
 
 import { dict, htmlcode, beamer } from '../../dict'
 
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 999,
   },
 }));
-const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument, width }) => {
+const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument, width, setDoc, uploadImages }) => {
   const classes = useStyles()
   const origContent = _(doc.latex).pick(['contents']).value().contents
   const [state, setState] = useState(origContent)
@@ -79,6 +80,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
           updateDocument={updateDocument}
           setBox={setBox}
           onSave={onSave}
+          uploadImages={uploadImages}
         />
       </Box>
       <Box
@@ -152,7 +154,9 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
                                       ? <TextTitle key={item.id + 'title'} info={dict[item.code.slice(0, -1)]} star text={item.text} setText={setText} id={id} />
                                       : item.code.startsWith('[') && item.code.endsWith(']')
                                         ? <EquationBlock key={item.id + 'equationBlk'} code={item.code.slice(1, -2)} setCode={setCode} id={id} />
-                                        : <CommandBlock key={item.id + 'cmdBlk'} text={item.code} id={id} />
+                                        : item.code === 'figure'
+                                          ? <ImageBlock key={item.id + 'image'} text={item.text} setText={setText} id={id} images={doc.latex.images} />
+                                          : <CommandBlock key={item.id + 'cmdBlk'} text={item.code} id={id} />
                               : _.findKey(htmlcode, code => item.text.startsWith(code.codeStart))
                                 ? <ContentBlock key={item.id + 'content'} text={item.text} setText={setText} id={id} htmlcode={htmlcode[_.findKey(htmlcode, code => item.text.startsWith(code.codeStart))]} />
                                 : <ContentBlock key={item.id + 'content'} text={item.text} setText={setText} id={id} />

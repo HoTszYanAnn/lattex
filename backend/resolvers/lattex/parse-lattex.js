@@ -2,7 +2,7 @@ const _ = require("lodash")
 const pandoc = require('node-pandoc-promise');
 const { v4: uuidv4 } = require('uuid');
 
-exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
+exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
   const { latex_code, image } = parent
   const textArray = latex_code.split(/\s*(\n)\s*/).filter(item => !['\n', ''].includes(item))
   const titleIndex = textArray.findIndex(item => item.includes('\\title'))
@@ -48,12 +48,17 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
     }, {})
 
   settingObject.documentclass = textArray.find(item => item.includes('\\documentclass')).substring(1).split(/{|}/, 2)[1]
-
   const imageObject =
     _(image)
       .mapValues((value, name) => _.merge({}, value, { name }))
       .values()
       .value()
+
+  if (!skip) {
+    imageObject.map((item, index) => {
+      item.url = `https://github.com/${context.username}/${input ? input.name ? input.name : parent.name : parent.name}/blob/master/images/${item.name}?raw=true`
+    })
+  }
 
   //const args = '-f latex -t html'
   const args = ['-f', 'latex', '-t', 'html']
@@ -69,6 +74,15 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
       }
       temp = temp + content[i]
       parseContentArray.push(temp)
+    } else if (content[i].startsWith('\\begin{figure}')) {
+      let temp = content[i]
+      i = i + 1
+      while (content[i] !== '\\end{figure}') {
+        temp = temp + content[i] + '\r\n'
+        i = i + 1
+      }
+      temp = temp + content[i]
+      parseContentArray.push(temp)
     } else {
       parseContentArray.push(content[i])
     }
@@ -76,27 +90,33 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
 
   let contentArrayObject = await parseContentArray
     .map(item => {
-      return (item.startsWith('{') ? [item, null] : item.endsWith('}') ? item.split(/{|}/) : [item, null]).filter(item => ![''].includes(item))
+      return (item.startsWith('{') ? [item, null] : item.endsWith('}') ? item.startsWith('\\begin{figure}') ? [item, null] : item.split(/{|}/) : [item, null]).filter(item => ![''].includes(item))
     })
     .reduce(async (acc, val) => {
       let newacc = await acc
       const [key, value, extra] = val
-      console.log("k: "+key)
-      console.log("v: "+value)
-      console.log("e: "+extra)
+      console.log("k: " + key)
+      console.log("v: " + value)
+      console.log("e: " + extra)
       if (key.startsWith('\\')) {
-        if (extra!=null) {
+        if (key.startsWith('\\begin{figure}')) {
           newacc.push({
             id: uuidv4(),
-            code: key.substring(1, key.length)+"{"+value+"}",
+            code: 'figure',
+            text: key,
+          })
+        } else if (extra != null) {
+          newacc.push({
+            id: uuidv4(),
+            code: key.substring(1, key.length) + "{" + value + "}",
             text: extra,
           })
         } else {
-            newacc.push({
-              id: uuidv4(),
-              code: key.substring(1, key.length),
-              text: value,
-            })
+          newacc.push({
+            id: uuidv4(),
+            code: key.substring(1, key.length),
+            text: value,
+          })
         }
       } else {
         console.log('!!!!!!!!!!! pandoc latex to html !!!!!!!!!!!')
@@ -123,7 +143,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info) => {
 }
 
 exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
-  const oldObject = await this.parseLaTeXCodeToObject(parent)
+  const oldObject = await this.parseLaTeXCodeToObject(parent, { input }, context, info, true)
   const updatedObject = { ...oldObject, ...input }
   let parseText = ""
   console.log(updatedObject)
@@ -131,7 +151,9 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
   //setting
   parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n`
   parseText = parseText + '\\providecommand{\\tightlist}{\n\\setlength{\\itemsep}{0pt}\\setlength{\\parskip}{0pt}}\n'
-  if(updatedObject.documentclass=="beamer") parseText = parseText + '\\usetheme{Madrid}\n'
+  if (updatedObject.documentclass == "beamer") parseText = parseText + '\\usetheme{Madrid}\n'
+  parseText = parseText + `\\usepackage{graphicx}\n`
+  parseText = parseText + `\\graphicspath{ {./images/} }\n`
 
   parseText = parseText + `\\title{${updatedObject.titles.title}}\n`
   parseText = parseText + `\\author{${updatedObject.titles.author}}\n`
@@ -150,15 +172,14 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
       if (code.includes('begin')) {
         tmp.push(code.substring(5, code.length))
         console.log(tmp)
-      }
-      if (code === 'end') {
+      } else if (code === 'end') {
         parseText = parseText + `\\end${tmp.pop()}\n`
+      } else if (code === 'figure') {
+        parseText = parseText + updatedObject.contents[i].text + '\n'
+      } else if (updatedObject.contents[i].text) {
+        parseText = parseText + `\\${code}{${updatedObject.contents[i].text}}\n\n`
       } else {
-        if (updatedObject.contents[i].text) {
-          parseText = parseText + `\\${code}{${updatedObject.contents[i].text}}\n\n`
-        } else {
-          parseText = parseText + `\\${code}\n`
-        }
+        parseText = parseText + `\\${code}\n`
       }
     } else {
       console.log('pandoc html - latex!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
