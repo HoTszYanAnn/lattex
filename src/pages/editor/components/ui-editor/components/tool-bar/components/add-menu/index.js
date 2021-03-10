@@ -298,6 +298,23 @@ const ImageMenuBox = ({ setBox, handleClose, uploadImages, images }) => {
   )
 }
 
+const TableMenuBox = ({ setBox, handleClose }) => (
+  <TemplateMenuBox
+    name="Table"
+    items={
+      <>
+        <BoxItem
+          onClick={() => {
+            setBox('table');
+            handleClose(null);
+          }}
+          label="Table"
+        />
+      </>
+    }
+  />
+)
+
 const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) => {
   const [open, setOpen] = useState('text')
   const [imageMenuKey, setImageMenuKey] = useState(uuidv4())
@@ -342,6 +359,9 @@ const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) =
           </Box>
           <Box style={{ display: open === 'image' ? 'block' : 'none' }} key={imageMenuKey}>
             <ImageMenuBox setBox={setBox} handleClose={handleClose} images={images} uploadImages={uploadImages} />
+          </Box>
+          <Box style={{ display: open === 'table' ? 'block' : 'none' }}>
+            <TableMenuBox setBox={setBox} handleClose={handleClose} />
           </Box>
           <Box style={{ display: open === 'command' ? 'block' : 'none' }}>
             <OtherMenuBox setBox={setBox} handleClose={handleClose} />

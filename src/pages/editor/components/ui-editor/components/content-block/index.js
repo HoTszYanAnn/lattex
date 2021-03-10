@@ -1,10 +1,10 @@
-import React, { PropTypes, useState } from 'react'
-import 'braft-editor/dist/index.css'
-import BraftEditor from 'braft-editor'
+import React, { useState} from 'react'
 import {
   Box
 } from '@material-ui/core'
 import DraftJS from "draft-js"
+import 'braft-editor/dist/index.css'
+import BraftEditor from 'braft-editor'
 
 //listul <ul><li>
 //listol <ol><li>
@@ -55,9 +55,6 @@ const ContentBlock = ({ id, text, setText, htmlcode = false }) => {
       <BraftEditor
         value={value}
         onChange={onChange}
-        //fontSizes={fontSize}
-        //lineHeight={lineHeights}
-        //fontFamilies={fontFamilies}
         controls={controls}
         language='en'
         className='editor'

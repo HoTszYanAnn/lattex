@@ -1,6 +1,7 @@
 const _ = require("lodash")
 const pandoc = require('node-pandoc-promise');
 const { v4: uuidv4 } = require('uuid');
+const { htmlcode } = require("../../../src/pages/editor/dict");
 
 exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
   const { latex_code, image } = parent
@@ -60,28 +61,55 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
     })
   }
 
+  parseTableToHTML = (key) => {
+    console.log("!!!!!!table to html!!!!!!")
+    const tmp = key.split(';')
+    //var arr = Array.from(Array(tmp[0]), () => new Array(tmp[1]));
+    //arr[0][0] = 'foo';
+    //console.info(arr);
+    tmp[2].split('&','\\\\')
+    console.log(tmp[2])
+    console.log(tmp[3])
+    return html;
+  }
+
   //const args = '-f latex -t html'
   const args = ['-f', 'latex', '-t', 'html']
 
   let parseContentArray = []
   for (let i = 0; i < content.length; i++) {
-    if (content[i] === '{') {
+    if (content[i] === '{' || content[i].startsWith('\\begin{figure}')) {
       let temp = content[i]
       i = i + 1
-      while (content[i] !== '}') {
+      while (content[i] !== '}' && content[i] !== '\\end{figure}') {
         temp = temp + content[i] + '\r\n'
         i = i + 1
       }
       temp = temp + content[i]
       parseContentArray.push(temp)
-    } else if (content[i].startsWith('\\begin{figure}')) {
-      let temp = content[i]
+    } else if (content[i].startsWith('\\begin{table}')) {
+      const j = i
+      let row = 0
+      let bt = 0
+      let col = 0
+      let temp = '<table><tbody><tr>;'
       i = i + 1
-      while (content[i] !== '\\end{figure}') {
-        temp = temp + content[i] + '\r\n'
+      while (content[i] !== '\\end{table}') {
+        if (content[i].startsWith('\\begin{tabular}')) {
+          col = (content[i].lastIndexOf('|') - 16)/2
+          bt = i
+        } else if (content[i].startsWith('\\end{tabular}')) {
+          row = i-bt-1
+          temp = row+";"+col+";"+temp+';</tbody></table>'
+        } else if (content[i].startsWith('\\caption')) {
+          const tmp = '<p>'+content[i].substring(9, content[i].length-1)+'</p>'
+          if (i-j== 1) temp = tmp + temp
+          else temp = temp + tmp
+        } else {
+          temp = temp + content[i] + '\r\n'
+        }
         i = i + 1
       }
-      temp = temp + content[i]
       parseContentArray.push(temp)
     } else {
       parseContentArray.push(content[i])
@@ -90,7 +118,13 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
 
   let contentArrayObject = await parseContentArray
     .map(item => {
-      return (item.startsWith('{') ? [item, null] : item.endsWith('}') ? item.startsWith('\\begin{figure}') ? [item, null] : item.split(/{|}/) : [item, null]).filter(item => ![''].includes(item))
+      return (item.startsWith('{') 
+      ? [item, null] 
+      : item.endsWith('}') 
+        ? item.startsWith('\\begin{figure}')
+          ? [item, null] 
+          : item.split(/{|}/) 
+        : [item, null]).filter(item => ![''].includes(item))
     })
     .reduce(async (acc, val) => {
       let newacc = await acc
@@ -105,7 +139,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
             code: 'figure',
             text: key,
           })
-        } else if (extra != null) {
+        }  else if (extra != null) {
           newacc.push({
             id: uuidv4(),
             code: key.substring(1, key.length) + "{" + value + "}",
@@ -118,6 +152,12 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
             text: value,
           })
         }
+      } else if (key.includes('<table>')) {
+        newacc.push({
+          id: uuidv4(),
+          code: 'table',
+          text: parseTableToHTML(key),
+        })
       } else {
         console.log('!!!!!!!!!!! pandoc latex to html !!!!!!!!!!!')
         let res = (await pandoc(key.substring(1, key.length - 1), args))
