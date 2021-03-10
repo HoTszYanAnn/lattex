@@ -64,21 +64,22 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
   var parseTableToHTML = (key) => {
     console.log("!!!!!!table to html!!!!!!")
     const tmp = key.split(';')
-    rows = tmp[1].split('\r\n')
+    rows = tmp[1].split('\r\n').filter(row => ![''].includes(row))
     let html = tmp[0]
     rows.map(row => {
-        console.log(row.split(/&|\\\\\\/))
+        //console.log(row.split(/&|\\\\\\/))
         row.split(/&|\\\\\\/).map(ele => {
           if (ele.includes("line")) {
             html = html+'</tr><tr>'
           } else {
-            const e = ele.split(/{|}/).filter(el => ![''].includes(el))
-            console.log(ele.split(/{|}/).filter(el => ![''].includes(el)))
-            if (e.length==7&&e[6]!=' ') {
-              html = html+'<td colspan="'+e[1]+'" rowspan="'+e[4]+'"><div>'+e[6]+'<br></div></td>'
+            const e = ele.split(/{|}/)
+            console.log(ele.split(/{|}/))
+            if (e.length==13&&e[10]!='') {
+              html = html+'<td colspan="'+e[1]+'" rowspan="'+e[6]+'"><div>'+e[10]+'<br></div></td>'
             }
-            if (e.length==4&&e[3]!=' ') {
-              html = html+'<td colspan="'+e[1]+'" rowspan="1"><div>'+e[3]+'<br></div></td>'
+            if (e.length==7&&e[5]!='') {
+              if (e[0].includes('col')) html = html+'<td colspan="'+e[1]+'" rowspan="1"><div>'+e[5]+'<br></div></td>'
+              else html = html+'<td colspan="1" rowspan="'+e[1]+'"><div>'+e[5]+'<br></div></td>'
             }
             if (e.length==1) {
               html = html+'<td><div>'+e[0]+'<br></div></td>'
@@ -195,11 +196,16 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
 }
 
 exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
+
   const oldObject = await this.parseLaTeXCodeToObject(parent, { input }, context, info, true)
   const updatedObject = { ...oldObject, ...input }
   let parseText = ""
   console.log(updatedObject)
 
+  var parseHTMLToTable = (html) => {
+
+    return table;
+  }
   //setting
   parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n`
   parseText = parseText + '\\providecommand{\\tightlist}{\n\\setlength{\\itemsep}{0pt}\\setlength{\\parskip}{0pt}}\n'
@@ -228,6 +234,8 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
       }
       if (code === 'figure') {
         parseText = parseText + updatedObject.contents[i].text + '\n'
+      } else if (code === 'table') {
+        parseText = parseText + parseHTMLToTable(updatedObject.contents[i].text) + '\n'
       } else if (code === 'end') {
         parseText = parseText + `\\end${tmp.pop()}\n`
       } else if (updatedObject.contents[i].text) {
