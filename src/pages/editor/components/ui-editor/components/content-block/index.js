@@ -12,7 +12,7 @@ import BraftEditor from 'braft-editor'
 //code <pre><code>
 const ContentBlock = ({ id, text, setText, htmlcode = false }) => {
 
-  const onChange = (val, b, c) => {
+  const onChange = (val) => {
     console.log(val.toHTML())
     if (!htmlcode || val.toHTML().startsWith(htmlcode.codeStart)) {
       setValue(val)

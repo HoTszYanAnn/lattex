@@ -61,15 +61,33 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
     })
   }
 
-  parseTableToHTML = (key) => {
+  var parseTableToHTML = (key) => {
     console.log("!!!!!!table to html!!!!!!")
     const tmp = key.split(';')
-    //var arr = Array.from(Array(tmp[0]), () => new Array(tmp[1]));
-    //arr[0][0] = 'foo';
-    //console.info(arr);
-    tmp[2].split('&','\\\\')
-    console.log(tmp[2])
-    console.log(tmp[3])
+    rows = tmp[1].split('\r\n')
+    let html = tmp[0]
+    rows.map(row => {
+        console.log(row.split(/&|\\\\\\/))
+        row.split(/&|\\\\\\/).map(ele => {
+          if (ele.includes("line")) {
+            html = html+'</tr><tr>'
+          } else {
+            const e = ele.split(/{|}/).filter(el => ![''].includes(el))
+            console.log(ele.split(/{|}/).filter(el => ![''].includes(el)))
+            if (e.length==7&&e[6]!=' ') {
+              html = html+'<td colspan="'+e[1]+'" rowspan="'+e[4]+'"><div>'+e[6]+'<br></div></td>'
+            }
+            if (e.length==4&&e[3]!=' ') {
+              html = html+'<td colspan="'+e[1]+'" rowspan="1"><div>'+e[3]+'<br></div></td>'
+            }
+            if (e.length==1) {
+              html = html+'<td><div>'+e[0]+'<br></div></td>'
+            }
+          }
+        })
+    })
+    console.log(html)
+    html = html.substring(0,html.length-4)+tmp[2]
     return html;
   }
 
@@ -89,18 +107,12 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
       parseContentArray.push(temp)
     } else if (content[i].startsWith('\\begin{table}')) {
       const j = i
-      let row = 0
-      let bt = 0
-      let col = 0
       let temp = '<table><tbody><tr>;'
       i = i + 1
       while (content[i] !== '\\end{table}') {
         if (content[i].startsWith('\\begin{tabular}')) {
-          col = (content[i].lastIndexOf('|') - 16)/2
-          bt = i
         } else if (content[i].startsWith('\\end{tabular}')) {
-          row = i-bt-1
-          temp = row+";"+col+";"+temp+';</tbody></table>'
+          temp = temp+';</tbody></table>'
         } else if (content[i].startsWith('\\caption')) {
           const tmp = '<p>'+content[i].substring(9, content[i].length-1)+'</p>'
           if (i-j== 1) temp = tmp + temp
@@ -192,6 +204,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
   parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n`
   parseText = parseText + '\\providecommand{\\tightlist}{\n\\setlength{\\itemsep}{0pt}\\setlength{\\parskip}{0pt}}\n'
   if (updatedObject.documentclass == "beamer") parseText = parseText + '\\usetheme{Madrid}\n'
+  parseText = parseText + `\\usepackage{multirow}\n`
   parseText = parseText + `\\usepackage{graphicx}\n`
   parseText = parseText + `\\graphicspath{ {./images/} }\n`
 
@@ -225,13 +238,8 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
     } else {
       console.log('pandoc html - latex!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
       const temp = updatedObject.contents[i].text.split('</p><p>').join('<br/>')
-      //const temp = updatedObject.contents[i].text
       console.log(temp)
       const res = (await pandoc(temp, args))
-      //.split(/}\n\n/).join('}'))
-      //.split(/\n\n\\/).join('\\'))
-      //.split(/\n\n/).join('\\\\'))
-      //.split(/\n/).join('')
       console.log(res)
       console.log({ test: res })
       parseText = parseText + `{\n${res}}\n\n`
