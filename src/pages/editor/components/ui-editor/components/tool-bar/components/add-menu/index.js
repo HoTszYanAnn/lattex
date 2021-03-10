@@ -248,12 +248,12 @@ const ImageMenuBox = ({ setBox, handleClose, uploadImages, images }) => {
     reader.onerror = function (error) {
       console.log('Error: ', error);
     };
- }
- 
+  }
+
   //!!!!! same name will bug
   const onDrop = (val) => {
     //upload image to github
-    if (val[0]){
+    if (val[0]) {
       getBase64(val[0])
     }//rerender the image list
   }
@@ -270,9 +270,10 @@ const ImageMenuBox = ({ setBox, handleClose, uploadImages, images }) => {
             withIcon={true}
             buttonText='Choose image'
             onChange={onDrop}
-            imgExtension={['.jpg', '.gif', '.png', '.gif']}
+            imgExtension={['.jpg', '.png', '.jpeg']}
             maxFileSize={5242880}
             singleImage
+            label={'Max file size: 2mb, accepted: jpg|jpeg|png'}
           />
           <Box mb={2} />
           <Typography variant="body1" display="inline">Select </Typography>
@@ -310,7 +311,7 @@ const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) =
   const menu = ['text', 'equation', 'image', 'table', 'command']
   documentclass === "beamer" && menu.splice(1, 0, "beamer");
 
-  useEffect(()=>{
+  useEffect(() => {
     setImageMenuKey(uuidv4())
   }, [images])
 

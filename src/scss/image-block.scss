@@ -38,6 +38,10 @@
   font-size: 14px;
 }
 
+.image-block-tool-bar .control-item.button:disabled {
+  background-color: #fcfcfc;
+}
+
 .image-block-tool-bar .control-item.button:hover {
   background-color: rgba(0,0,0,.05);
 }
