@@ -67,13 +67,12 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
     rows = tmp[1].split('\r\n').filter(row => ![''].includes(row))
     let html = tmp[0]
     rows.map(row => {
-        //console.log(row.split(/&|\\\\\\/))
         row.split(/&|\\\\\\/).map(ele => {
+          console.log(ele)
           if (ele.includes("line")) {
             html = html+'</tr><tr>'
           } else {
             const e = ele.split(/{|}/)
-            console.log(ele.split(/{|}/))
             if (e.length==13&&e[10]!='') {
               html = html+'<td colspan="'+e[1]+'" rowspan="'+e[6]+'"><div>'+e[10]+'<br></div></td>'
             }
@@ -115,9 +114,8 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
         } else if (content[i].startsWith('\\end{tabular}')) {
           temp = temp+';</tbody></table>'
         } else if (content[i].startsWith('\\caption')) {
-          const tmp = '<p>'+content[i].substring(9, content[i].length-1)+'</p>'
-          if (i-j== 1) temp = tmp + temp
-          else temp = temp + tmp
+          if (i-j== 1) temp = '<p>'+content[i].substring(9, content[i].length-1)+'<br></p>' + temp
+          else temp = temp + '<p>'+content[i].substring(9, content[i].length-1)+'</p>'
         } else {
           temp = temp + content[i] + '\r\n'
         }
@@ -203,8 +201,42 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
   console.log(updatedObject)
 
   var parseHTMLToTable = (html) => {
+    console.log("!!!!!!html to table!!!!!!")
+    console.log(html)
+    rows = html.split(/<tr>|<\/tr>/).filter(row => ![''].includes(row))
+    nr = rows.length - 2
+    let table = "\\begin{table}\r\n"
+    if (rows[0].includes("<p>")) {
+      const caption = rows[0].split(/<p>|<br>/)
+      table = table + "\\caption{"+caption[1]+"}\r\n"
+    } 
+    console.log(rows[1])
+    let nc = rows[1].split(/<\/td>/).length-1
+    const temp = rows[1].split(/"/)
+    for (var k=1; k<temp.length; k=k+4) {
+      nc = nc-1+parseInt(temp[k])
+    }
+    let tc ="|"
+    for (var k=0; k<nc; k++) {
+      tc = "|l"+tc
+    }
+    table = table + "\\begin{tabular}{"+tc+"}\\hline\r\n"
+    //var arr = Array.from(Array(nr),() => new Array(nc))
 
-    return table;
+    table = table + "\\end{tabular}\r\n"
+    if (rows[nr+1].includes("<p>")&&(!rows[nr+1].includes("<br>"))) {
+      const caption = rows[nr+1].split(/<p>|<\/p>/)
+      table = table+ "\\caption{"+caption[1]+"}\r\n"
+    }
+    table = table + "\\end{table}\r\n"
+    console.log(table)
+    const tmp = "\\begin{table}\r\n\\caption{top}\r\n\\begin{tabular}{|l|l|l|l|}\\hline\r\n"+ 
+    "\\multicolumn{2}{|l|}{\\multirow{2}{*}{z}}&&\\\\\\cline{3-3}\\cline{4-4}\r\n"+
+    "\\multicolumn{2}{|l|}{}&\\multicolumn{2}{|l|}{d}\\\\\\hline\r\n"+
+    "&&\\multirow{2}{*}{c}&\\\\\\cline{1-2}\\cline{4-4}\r\n"+ 
+    "\\multicolumn{2}{|l|}{b}&\\multirow{2}{*}{}&\\\\\\hline\r\n"+
+    "\\end{tabular}\r\n\\caption{bottom}\r\n\\end{table}\r\n"
+    return tmp;
   }
   //setting
   parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n`
