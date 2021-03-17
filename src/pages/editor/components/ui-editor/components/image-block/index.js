@@ -7,9 +7,6 @@ const Block = ({ images, id, code, text, setText }) => {
   const [caption, setCaption] = useState('')
   const [menu, setMenu] = useState(null)
 
-  console.log(images)
-  console.log(text)
-
   const arr = text.split('\\').filter(function (el) { return el.length != 0 });
   const need_rmv = arr.findIndex((item) => item.startsWith('textwidth]{'))
   if (need_rmv !== -1) {
@@ -22,19 +19,27 @@ const Block = ({ images, id, code, text, setText }) => {
       arr[index] = '\\' + item
     })
   }
-  console.log(arr)
 
   const graphicIndex = arr.findIndex((item) => item.startsWith('\\includegraphics'))
   const alignIndex = arr.findIndex((item) => item.startsWith('\\centering') || item.startsWith('\\raggedright') || item.startsWith('\\raggedleft'))
-
+  const lineWidth = arr[graphicIndex].split('width=')[1].substring(0, 3).startsWith('1') ? 1 : arr[graphicIndex].split('width=')[1].substring(0, 3)
   const captionIndex = arr.findIndex((item) => item.startsWith('\\caption{'))
-  console.log(graphicIndex)
-  console.log(captionIndex)
   const captionTop = graphicIndex > captionIndex
-  console.log(captionTop)
 
   const updateCaption = (val) => {
     arr[captionIndex] = `\\caption{${val.target.value}}`
+    setText(id, arr.join('\r\n'))
+  }
+
+  const updateLineWidth = () => {
+    console.log(arr)
+    console.log(lineWidth)
+    let val = parseFloat(lineWidth) + 0.1
+    if (val > 1) {
+      val = 0.1
+    }
+    val = Math.round(val * 10) / 10
+    arr[graphicIndex] = arr[graphicIndex].replace(lineWidth, val)
     setText(id, arr.join('\r\n'))
   }
 
@@ -63,7 +68,6 @@ const Block = ({ images, id, code, text, setText }) => {
 
   const changeCaptionPosition = () => {
     if (captionIndex !== -1) {
-      console.log(arr)
       const element = arr[captionIndex];
       arr.splice(captionIndex, 1);
       if (captionTop) {
@@ -71,7 +75,6 @@ const Block = ({ images, id, code, text, setText }) => {
       } else {
         arr.splice(1, 0, element);
       }
-      console.log(arr)
       setText(id, arr.join('\r\n'))
     }
   }
@@ -82,7 +85,6 @@ const Block = ({ images, id, code, text, setText }) => {
     }
   }, [text])
 
-  console.log(arr)
   const setOpenMenu = (val) => {
     setMenu(val)
   }
@@ -91,7 +93,6 @@ const Block = ({ images, id, code, text, setText }) => {
     setMenu(null)
   }
 
-  console.log(menu)
   return (
     <>
       <Box className="image-block" py={2}>
@@ -107,15 +108,16 @@ const Block = ({ images, id, code, text, setText }) => {
           <input
             className="image-block-input"
             readonly
-            style={{ 
-              textAlign: 'center', 
-              caretColor: 'transparent', 
-              cursor: 'context-menu', 
-              background: `url(${curr_image.url}) no-repeat top`, 
+            style={{
+              textAlign: 'center',
+              caretColor: 'transparent',
+              cursor: 'context-menu',
+              background: `url(${curr_image.url}) no-repeat top`,
               backgroundSize: 'contain',
               backgroundPosition: `${arr[alignIndex].startsWith('\\raggedright') ? 'left' : arr[alignIndex].startsWith('\\centering') ? 'center' : 'right'}`,
               width: 'calc(100% - 5px)',
-              height: '200px' }}
+              paddingBottom: `${(lineWidth) * 100 * 0.8}%`
+            }}
           />
           <input
             className="image-block-input"
@@ -157,6 +159,11 @@ const Block = ({ images, id, code, text, setText }) => {
                   <img src="https://img.icons8.com/fluent-systems-regular/20/6a6f7b/align-right.png" style={{ maxWidth: '100%', maxHeight: '100%', marginLeft: '2px', marginTop: '8px' }} />
                 </Box>
               </Button>
+            </Box>
+          </Button>
+          <Button className="equation-block-tool-bar-button-box control-item button" disableRipple={true} data-title={`Line Width ${lineWidth}`} onClick={() => updateLineWidth()}>
+            <Box className="latex-image-display-button">
+              <img src="https://img.icons8.com/material-outlined/20/6a6f7b/resize.png" style={{ maxWidth: '100%', maxHeight: '100%', marginLeft: '2px', marginTop: '8px' }} />
             </Box>
           </Button>
         </Box>
