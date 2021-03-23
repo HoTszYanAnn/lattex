@@ -19,6 +19,7 @@ import CommandBlock from './components/command-block'
 import ContentBlock from './components/content-block'
 import EquationBlock from './components/equation-block'
 import ImageBlock from './components/image-block'
+import MultiColsBlock from './components/multi-cols-block'
 
 import { dict, htmlcode, beamer } from '../../dict'
 
@@ -156,7 +157,9 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
                                         ? <EquationBlock key={item.id + 'equationBlk'} code={item.code.slice(1, -2)} setCode={setCode} id={id} />
                                         : item.code === 'figure'
                                           ? <ImageBlock key={item.id + 'image'} text={item.text} setText={setText} id={id} images={doc.latex.images} />
-                                          : <CommandBlock key={item.id + 'cmdBlk'} text={item.code} id={id} />
+                                          : item.code.startsWith('multicols')
+                                            ? <MultiColsBlock key={item.id + 'multiColsBlk'} text={item.text} id={id} setText={setText} code={item.code} setCode={setCode} />
+                                            : <CommandBlock key={item.id + 'cmdBlk'} text={item.code} id={id} />
                               : _.findKey(htmlcode, code => item.text.startsWith(code.codeStart))
                                 ? <ContentBlock key={item.id + 'content'} text={item.text} setText={setText} id={id} htmlcode={htmlcode[_.findKey(htmlcode, code => item.text.startsWith(code.codeStart))]} />
                                 : <ContentBlock key={item.id + 'content'} text={item.text} setText={setText} id={id} />
