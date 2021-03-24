@@ -1,7 +1,6 @@
 const _ = require("lodash")
 const pandoc = require('node-pandoc-promise');
 const { v4: uuidv4 } = require('uuid');
-const { htmlcode } = require("../../../src/pages/editor/dict");
 
 exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
   const { latex_code, image } = parent
@@ -133,8 +132,14 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
 
   let contentArrayObject = await parseContentArray
     .map(item => {
-      return (item.startsWith('{') ? [item, null] : item.endsWith('}') ? item.startsWith('\\begin{figure}') || item.startsWith('\\begin{multicols}') ? [item, null] : item.split(/{|}/) : [item, null]).filter(item => ![''].includes(item))
-    .reduce(async (acc, val) => {
+      return (item.startsWith('{') 
+      ? [item, null] 
+      : item.endsWith('}') 
+        ? item.startsWith('\\begin{figure}') || item.startsWith('\\begin{multicols}') 
+          ? [item, null] 
+          : item.split(/{|}/) 
+        : [item, null]).filter(item => ![''].includes(item))
+    }).reduce(async (acc, val) => {
       let newacc = await acc
       const [key, value, extra] = val
       console.log("k: " + key)
