@@ -68,20 +68,20 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
     let html = tmp[0]
     rows.map(row => {
         row.split(/&|\\\\\\/).map(ele => {
-          console.log(ele)
           if (ele.includes("line")) {
             html = html+'</tr><tr>'
           } else {
-            const e = ele.split(/{|}/)
-            if (e.length==13&&e[10]!='') {
-              html = html+'<td colspan="'+e[1]+'" rowspan="'+e[6]+'"><div>'+e[10]+'<br></div></td>'
+            const e = ele.split(/{|}/).filter(el => ![''].includes(el))
+            //console.log(e)
+            if (e.length==7) {
+              html = html+'<td colspan="'+e[1]+'" rowspan="'+e[4]+'"><div>'+e[6]+'<br></div></td>'
             }
-            if (e.length==7&&e[5]!='') {
-              if (e[0].includes('col')) html = html+'<td colspan="'+e[1]+'" rowspan="1"><div>'+e[5]+'<br></div></td>'
-              else html = html+'<td colspan="1" rowspan="'+e[1]+'"><div>'+e[5]+'<br></div></td>'
+            if (e.length==4) {
+              if (e[0].includes('col')) html = html+'<td colspan="'+e[1]+'" rowspan="1"><div>'+e[3]+'<br></div></td>'
+              else html = html+'<td colspan="1" rowspan="'+e[1]+'"><div>'+e[3]+'<br></div></td>'
             }
-            if (e.length==1) {
-              html = html+'<td><div>'+e[0]+'<br></div></td>'
+            if (e.length<=1) {
+              html = html+'<td><div>'+e+'<br></div></td>'
             }
           }
         })
@@ -210,19 +210,106 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
       const caption = rows[0].split(/<p>|<br>/)
       table = table + "\\caption{"+caption[1]+"}\r\n"
     } 
-    console.log(rows[1])
     let nc = rows[1].split(/<\/td>/).length-1
     const temp = rows[1].split(/"/)
     for (var k=1; k<temp.length; k=k+4) {
       nc = nc-1+parseInt(temp[k])
     }
-    let tc ="|"
+    let cl ="|"
     for (var k=0; k<nc; k++) {
-      tc = "|l"+tc
+      cl = "|l"+cl
     }
-    table = table + "\\begin{tabular}{"+tc+"}\\hline\r\n"
-    //var arr = Array.from(Array(nr),() => new Array(nc))
-
+    table = table + "\\begin{tabular}{"+cl+"}\\hline\r\n"
+    var arr = Array.from(Array(nr),() => new Array(nc))
+    for (var i=0; i<nr; i++) {
+      const el = rows[i+1].split(/<\/td>/).filter(e => ![''].includes(e))
+      var j = 0
+      for(var k=0; k<nc; k++) {
+        if(arr[i][k]===undefined) {
+          j = k
+          break
+        } else {
+          if(arr[i][k][2]) {
+            for(var m=k+1; m<k+arr[i][k][2]; m++) {
+              arr[i][m] = new Array()
+              if(arr[i][k][1].includes("\\cline")) {
+                arr[i][m][1] = "\\cline{"+(m+1)+"-"+(m+1)+"}"
+              }
+            }
+            k = k+arr[i][k][2]-1
+          }
+        }
+      }
+      for(var k=0; k<el.length; k++) {
+        const e = el[k].split(/"|<div>|<br>/)
+        let te = ""
+        if(j!=0) te =  te + "&"
+        if(e.length==7) {
+          const tc = parseInt(e[1])
+          const tr = parseInt(e[3])
+          console.log(tc+","+tr)
+          let cf = 0
+          let rf = 0
+          if(tc>1) {
+            te = te+"\\multicolumn{"+e[1]+"}{|l|}{"
+            for(var m=j+1; m<j+tc; m++) {
+              arr[i][m] = new Array()
+              if(tr==1) {
+                arr[i][m][1] = "\\cline{"+(m+1)+"-"+(m+1)+"}"
+              }
+            }
+            cf = 1
+          }
+          if(tr>1) {
+            let tmpR = ""
+            if(cf==1) {
+              tmpR = te +"}"
+            } else { 
+              tmpR = "\\multirow{"+e[3]+"}{*}{}"
+              if(j!=0) tmpR = "&"+tmpR
+            }
+            for(var m=i+1; m<i+tr; m++) {
+              arr[m][j] = new Array()
+              if(m==(i+tr-1)) {
+                arr[m][j][0] = tmpR
+                arr[m][j][1] = "\\cline{"+(j+1)+"-"+(j+1)+"}"
+                if(cf==1) arr[m][j][2] = tc
+              } else {
+                arr[m][j][0] = tmpR
+                if(cf==1) arr[m][j][2] = tc
+              }
+            }
+            te = te+"\\multirow{"+e[3]+"}{*}{"
+            rf = 1
+          }
+          te = te +e[5]+"}"
+          if(cf+rf>1) te = te + "}"
+          arr[i][j] = new Array()
+          arr[i][j][0] = te
+          if(tr==1) arr[i][j][1] = "\\cline{"+(j+1)+"-"+(j+1)+"}"
+          j = j+tc
+        }
+        if(e.length==3) {
+          arr[i][j] = new Array()
+          arr[i][j][0] = te + e[1]
+          arr[i][j][1] = "\\cline{"+(j+1)+"-"+(j+1)+"}"
+          j++
+        }
+        while(arr[i][j]){
+          j++
+          if(j==nc) break
+        }
+      }
+    }
+    console.log(arr)
+    for(var i=0; i<nr; i++) {
+      let line = ""
+      for(var j=0; j<nc; j++){
+        if(arr[i][j][0]) table = table + arr[i][j][0]
+        if(arr[i][j][1]) line = line + arr[i][j][1]
+      }
+      table = table + "\\\\" + line + "\r\n"
+    }
     table = table + "\\end{tabular}\r\n"
     if (rows[nr+1].includes("<p>")&&(!rows[nr+1].includes("<br>"))) {
       const caption = rows[nr+1].split(/<p>|<\/p>/)
@@ -230,13 +317,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
     }
     table = table + "\\end{table}\r\n"
     console.log(table)
-    const tmp = "\\begin{table}\r\n\\caption{top}\r\n\\begin{tabular}{|l|l|l|l|}\\hline\r\n"+ 
-    "\\multicolumn{2}{|l|}{\\multirow{2}{*}{z}}&&\\\\\\cline{3-3}\\cline{4-4}\r\n"+
-    "\\multicolumn{2}{|l|}{}&\\multicolumn{2}{|l|}{d}\\\\\\hline\r\n"+
-    "&&\\multirow{2}{*}{c}&\\\\\\cline{1-2}\\cline{4-4}\r\n"+ 
-    "\\multicolumn{2}{|l|}{b}&\\multirow{2}{*}{}&\\\\\\hline\r\n"+
-    "\\end{tabular}\r\n\\caption{bottom}\r\n\\end{table}\r\n"
-    return tmp;
+    return table;
   }
   //setting
   parseText = parseText + `\\documentclass{${updatedObject.documentclass}}\n`
