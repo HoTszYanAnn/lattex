@@ -122,6 +122,14 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
         i = i + 1
       }
       parseContentArray.push(temp)
+    } else if (content[i].startsWith('\\begin{multicols}')) {
+      let temp = content[i] + '\r\n'
+      i = i + 1
+      while (content[i] !== '\\end{multicols}') {
+        temp = temp + content[i] + '\r\n'
+        i = i + 1
+      }
+      parseContentArray.push(temp)
     } else {
       parseContentArray.push(content[i])
     }
@@ -150,7 +158,23 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
             code: 'figure',
             text: key,
           })
-        }  else if (extra != null) {
+        } else if (key.startsWith('\\begin{multicols}')) {
+          const temp = key.split('\r\n')
+          const num = temp[0].split(/{|}/).filter(item => ![''].includes(item))[2]
+          temp.shift();
+          console.log('!!!!!!!!!!! pandoc latex to html !!!!!!!!!!!')
+          let res = (await pandoc(temp.join('\r\n'), args))
+          if (!res.startsWith('<pre><code>')) {
+            res = res.split('\r\n').join('').split('\n').join('')
+          }
+          console.log({ from: key, to: res })
+          console.log(num)
+          newacc.push({
+            id: uuidv4(),
+            code: `multicols-${num}`,
+            text: res,
+          })
+        } else if (extra != null) {
           newacc.push({
             id: uuidv4(),
             code: key.substring(1, key.length) + "{" + value + "}",
@@ -325,6 +349,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
   if (updatedObject.documentclass == "beamer") parseText = parseText + '\\usetheme{Madrid}\n'
   parseText = parseText + `\\usepackage{multirow}\n`
   parseText = parseText + `\\usepackage{graphicx}\n`
+  parseText = parseText + `\\usepackage{multicol}\n`
   parseText = parseText + `\\graphicspath{ {./images/} }\n`
 
   parseText = parseText + `\\title{${updatedObject.titles.title}}\n`
@@ -349,6 +374,12 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
         parseText = parseText + updatedObject.contents[i].text + '\n'
       } else if (code === 'table') {
         parseText = parseText + parseHTMLToTable(updatedObject.contents[i].text) + '\n'
+      } else if (code.startsWith('multicols')) {
+        console.log('pandoc html - latex!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        const temp = updatedObject.contents[i].text.split('</p><p>').join('<br/>')
+        console.log(temp)
+        const res = (await pandoc(temp, args))
+        parseText = parseText + `\\begin{multicols}{${code.split('-')[1]}}\n` + res + '\n' + `\\end{multicols}\n`
       } else if (code === 'end') {
         parseText = parseText + `\\end${tmp.pop()}\n`
       } else if (updatedObject.contents[i].text) {

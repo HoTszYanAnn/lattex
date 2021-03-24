@@ -10,7 +10,7 @@ import BraftEditor from 'braft-editor'
 //listol <ol><li>
 //quote <blockquote>
 //code <pre><code>
-const ContentBlock = ({ id, text, setText, htmlcode = false }) => {
+const ContentBlock = ({ id, text, setText, htmlcode = false, multiCols = false, setCode, colsNum }) => {
 
   const onChange = (val) => {
     console.log(val.toHTML())
@@ -50,6 +50,20 @@ const ContentBlock = ({ id, text, setText, htmlcode = false }) => {
       family: '"Courier New", Courier, monospace'
     },
   ]
+
+  const extendControls = [
+    'separator',
+    {
+      key: 'multi-cols-num-btn', 
+      type: 'button',
+      title: 'Number of columns', // 指定鼠标悬停提示文案
+      text: `${colsNum}`, 
+      onClick: () => {
+        setCode(id, `multicols-${colsNum === 5 ? 2 : colsNum + 1}`)
+      },
+    }
+  ]
+
   return (
     <Box>
       <BraftEditor
@@ -60,6 +74,7 @@ const ContentBlock = ({ id, text, setText, htmlcode = false }) => {
         className='editor'
         placeholder={htmlcode ? '' : "Write Here..."}
         onBlur={onBlur}
+        extendControls={multiCols ? extendControls : []}
       />
     </Box>
   );
