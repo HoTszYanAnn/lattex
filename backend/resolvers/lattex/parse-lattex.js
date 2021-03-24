@@ -96,10 +96,14 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
 
   let parseContentArray = []
   for (let i = 0; i < content.length; i++) {
-    if (content[i] === '{' || content[i].startsWith('\\begin{figure}')) {
+    if (content[i] === '{' 
+    || content[i].startsWith('\\begin{figure}') 
+    || content[i].startsWith('\\begin{multicols}')) {
       let temp = content[i]
       i = i + 1
-      while (content[i] !== '}' && content[i] !== '\\end{figure}') {
+      while (content[i] !== '}' 
+      && content[i] !== '\\end{figure}'
+      && content[i] !== '\\end{multicols}') {
         temp = temp + content[i] + '\r\n'
         i = i + 1
       }
@@ -122,14 +126,6 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
         i = i + 1
       }
       parseContentArray.push(temp)
-    } else if (content[i].startsWith('\\begin{multicols}')) {
-      let temp = content[i] + '\r\n'
-      i = i + 1
-      while (content[i] !== '\\end{multicols}') {
-        temp = temp + content[i] + '\r\n'
-        i = i + 1
-      }
-      parseContentArray.push(temp)
     } else {
       parseContentArray.push(content[i])
     }
@@ -137,14 +133,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
 
   let contentArrayObject = await parseContentArray
     .map(item => {
-      return (item.startsWith('{') 
-      ? [item, null] 
-      : item.endsWith('}') 
-        ? item.startsWith('\\begin{figure}')
-          ? [item, null] 
-          : item.split(/{|}/) 
-        : [item, null]).filter(item => ![''].includes(item))
-    })
+      return (item.startsWith('{') ? [item, null] : item.endsWith('}') ? item.startsWith('\\begin{figure}') || item.startsWith('\\begin{multicols}') ? [item, null] : item.split(/{|}/) : [item, null]).filter(item => ![''].includes(item))
     .reduce(async (acc, val) => {
       let newacc = await acc
       const [key, value, extra] = val
