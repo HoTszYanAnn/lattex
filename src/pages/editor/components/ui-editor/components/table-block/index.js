@@ -1,4 +1,4 @@
-import React, { useRef, useState} from 'react'
+import React, { useEffect, useRef, useState} from 'react'
 import {
   Box
 } from '@material-ui/core'
@@ -6,6 +6,12 @@ import SunEditor from 'suneditor-react'
 import 'suneditor/dist/css/suneditor.min.css'
 
 const TableBlock = ({ id, text, setText}) => {
+  const ref1 = useRef(text);
+  useEffect(() => {
+      // Get underlining core object here
+      // Notice that useEffect is been used because you have to make sure the editor is rendered.
+      console.log(ref1)
+  }, []);
   const onChange = (val) => {
     console.log(val)
     setValue(val)
@@ -41,16 +47,16 @@ const TableBlock = ({ id, text, setText}) => {
   return (
     <Box>
       <SunEditor
+        height = 'auto'
         setContents={value}
         onChange={onChange}
+        ref={ref1}
         language='en'
         className='editor'
-        placeholder="Write Here..."
+        //placeholder="Write Here..."
         onBlur={onBlur}
         setOptions={{
-          mode:"inline",
-          resizingBar: true,
-          showPathLabel: false,
+          mode:"balloon-always",
           buttonList: [['undo','redo','table']]
         }}
       />
