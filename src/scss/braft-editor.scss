@@ -21,6 +21,7 @@
   //border: 1px solid #F8B21C;
   //border-radius: 5px;
   box-shadow: 0 0 1000px rgba(0, 0, 0, 1);
+  z-index: 999
 }
 
 .bf-controlbar {
@@ -51,4 +52,23 @@
 
 .bf-container .public-DraftEditor-content > div {
   padding: 0;
+}
+
+.sun-editor {
+  border: none
+}
+
+.sun-editor:focus-within {    
+  box-shadow: 0 0 1000px rgba(0, 0, 0, 1);
+}
+
+.sun-editor{
+  z-index: 0;
+  .sun-container{
+    z-index:-1;
+  }
+  
+  .se-wrapper{
+    z-index: 0
+  }
 }
