@@ -1,0 +1,72 @@
+<svg width="640" height="220" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+    <style>
+@font-face{font-family:"Inika";src:url(data:application/font-woff;charset=utf-8;base64,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) format("woff"); font-weight:normal;font-style:normal;}
+  </style>
+  <style type="text/css">
+   <![CDATA[
+      .st0 {
+        fill: #000000;
+      }
+      .st1 {
+        fill: #000000;
+      }
+
+      @keyframes open {
+        0% {
+          ry: 50;
+        }
+        95% {
+          ry: 50;
+        }
+        100% {
+          ry: 0;
+        }
+      }
+
+      @keyframes open-small {
+        0% {
+          ry: 20;
+        }
+        95% {
+          ry: 20;
+        }
+        100% {
+          ry: 0;
+        }
+      }
+
+      .left-eye,
+      .right-eye {
+        animation-name: open;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+      }
+
+      .left-small-eye,
+      .right-small-eye {
+        animation-name: open-small;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+      }
+      .text{
+        text-shadow: 2px 0px 0px #F8B21C;
+      }
+    ]]>
+  </style>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="222" width="642" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <text class="text" font-family="Inika" transform="matrix(0.9725184440612792,0,0,0.9429824352264404,0.8519282341003418,0.19736886024475098) " stroke="null" id="svg_6" font-size="200px" fill="black" y="188.75814" x="1.11303">LatTeX</text>
+  <g transform="translate(9,132) scale(0.20000000298023224) " id="icon">
+   <g id="svg_1">
+    <ellipse id="svg_2" ry="50" rx="50" cy="-395.4" cx="693.4" class="st1 left-eye"/>
+    <ellipse id="svg_4" ry="50" rx="50" cy="-395.4" cx="864.8" class="st1 right-eye"/>
+   </g>
+  </g>
+ </g>
+</svg>
