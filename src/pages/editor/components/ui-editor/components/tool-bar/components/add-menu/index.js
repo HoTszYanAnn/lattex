@@ -341,6 +341,17 @@ const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) =
   //control the add menu show what submenu 
   const menu = ['text', 'equation', 'image',/* 'table',*/ 'command']
   documentclass === "beamer" && menu.splice(1, 0, "beamer");
+  if(documentclass === "report"||documentclass === "book"){
+    dict["chapter"] = {
+      "name": "Chapter",
+      "left": "",
+      "size": "1.45rem",
+      "weight": "bold"
+    };
+  } 
+  if(documentclass === "article"){
+    delete dict.chapter
+  }
 
   useEffect(() => {
     setImageMenuKey(uuidv4())

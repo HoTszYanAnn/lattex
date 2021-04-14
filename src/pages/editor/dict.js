@@ -5,12 +5,6 @@ exports.dict = {
         "size": "2.2rem",
         "weight": "bold"
     },
-    "chapter": {
-        "name": "Chapter",
-        "left": "",
-        "size": "1.45rem",
-        "weight": "bold"
-    },
     "section": {
         "name": "Section",
         "left": "",

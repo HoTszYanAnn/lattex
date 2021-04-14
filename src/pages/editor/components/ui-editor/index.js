@@ -12,6 +12,7 @@ import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { store as notifStore } from "react-notifications-component";
 import { v4 as uuidv4 } from 'uuid';
+import { difference } from '../../../../function';
 import _ from 'lodash'
 
 import ToolBar from './components/tool-bar'
@@ -38,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
 const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument, width, setDoc, uploadImages }) => {
   const classes = useStyles()
   const origContent = _(doc.latex).pick(['contents']).value().contents
+  const origSetting = _(doc.latex).pick(['haveTitle', 'haveContentPage', 'titles', 'documentclass']).value()
+
+  const [setting, setSetting] = useState(origSetting)
   const [state, setState] = useState(origContent)
 
   const setText = (id, val) => {
@@ -77,15 +81,19 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
     return false
   }
 
-  const checkCorrect = (val) => {
+  const checkCorrect = (dc, val) => {
     console.log("checking...")
     console.log(val)
-    switch (doc.latex.documentclass) {
+    switch (dc) {
       case "article":
+        for (var i = 0; i < val.length; i++) {
+          if (val[i].code === "chapter") 
+            return errorNotice("Chapter Used In Article")
+        }
         return true
       case "report":
         return true
-      case "chapter":
+      case "book":
         return true
       case "beamer":
         var endblockCount = 0;
@@ -106,8 +114,11 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
   }
 
   const onSave = () => {
-    if (checkCorrect(state)) {
-      pushAndCompile({ contents: state })
+    if (checkCorrect(setting.documentclass,state)) {
+      const diff = difference(setting, origSetting)
+      if(!_.isEmpty(diff)) {
+        pushAndCompile({...diff, contents: state})
+      } else pushAndCompile({ contents: state })
     }
   }
 
@@ -127,6 +138,8 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
           doc={doc}
           updateDocument={updateDocument}
           setBox={setBox}
+          setting={setting}
+          setSetting={setSetting}
           onSave={onSave}
           uploadImages={uploadImages}
         />

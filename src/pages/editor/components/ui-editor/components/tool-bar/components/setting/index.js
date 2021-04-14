@@ -13,7 +13,7 @@ import {
   InputLabel,
   Typography,
 } from '@material-ui/core'
-import SaveIcon from '@material-ui/icons/Save';
+import CloseIcon from '@material-ui/icons/Close';
 import { difference } from '../../../../../../../../function'
 import _ from 'lodash'
 
@@ -23,11 +23,12 @@ const classList = ['article', 'report', 'book']
 const titleList = ['title', 'date', 'author', 'always_today']
 const commentBoolLineList = ['haveTitle', 'haveContentPage']
 
-const Setting = ({ doc, pushAndCompile }) => {
+const Setting = ({ doc, pushAndCompile, setting, setSetting }) => {
   const [open, setOpen] = useState(false)
-  const origSetting = _(doc.latex).pick(['haveTitle', 'haveContentPage', 'titles', 'documentclass']).value()
 
-  const [setting, setSetting] = useState(origSetting)
+  const handleChange = (val) => {
+    setOpen(val)
+  }
 
   const onSettingChange = (key, val) => {
     if (titleList.includes(key)) {
@@ -41,24 +42,13 @@ const Setting = ({ doc, pushAndCompile }) => {
     }
   }
 
-  const handleChange = (val) => {
-    setOpen(val)
-  }
-
-  const onSave = () => {
-    const diff = difference(setting, origSetting)
-
-    pushAndCompile(diff)
-    setOpen(false)
-  }
-
   return (
     <>
-      <Box display='flex' style={{ width: '30vw' }}>
+      <Box display='flex' style={{ width: '30vw'}}>
         <Box flexGrow={1} />
-        <Tooltip title="Save" placement="top">
-          <IconButton onClick={onSave}>
-            <SaveIcon />
+        <Tooltip title="Close" placement="top">
+          <IconButton onClick={()=>setOpen(false)}>
+            <CloseIcon />
           </IconButton>
         </Tooltip>
       </Box>

@@ -353,7 +353,8 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
   parseText = parseText + `\\usepackage{multirow}\n`
   parseText = parseText + `\\usepackage{graphicx}\n`
   parseText = parseText + `\\usepackage{multicol}\n`
-  parseText = parseText + `\\hypersetup{colorlinks=true,linkcolor=cyan,}\n`
+  parseText = parseText + `\\usepackage{hyperref}\n`
+  parseText = parseText + `\\hypersetup{colorlinks=true,linkcolor=black,urlcolor=cyan}\n`
   parseText = parseText + `\\graphicspath{ {./images/} }\n`
 
   parseText = parseText + `\\title{${updatedObject.titles.title}}\n`
