@@ -10,20 +10,9 @@ const axios = require("axios");
 const typeDefs = importSchema("./schemas/index.graphql");
 const resolvers = require("./resolvers").getResolvers();
 
-const corsOptions = {
-  origin: 'https://hotszyanann.github.io',
-  credentials: true
-}
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  cors: cors(corsOptions),
-  formatResponse: (response, requestContext) => {
-    if (requestContext.response && requestContext.response.http) {
-      requestContext.response.http.headers.set('Access-Control-Allow-Origin', 'https://hotszyanann.github.io');
-    }
-    return response;
-  },
   context: async ({ req }) => {
     try {
       const token = req.headers.authorization
@@ -72,8 +61,13 @@ const server = new ApolloServer({
 // Initialize the app
 const app = express();
 app.use(json({ limit: '2mb' }))
-app.use(cors(corsOptions));
-server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
+
+const corsOptions = {
+  origin: 'https://hotszyanann.github.io',
+  credentials: true
+}
+
+server.applyMiddleware({ app, cors: corsOptions });
 app.use('/authenticate', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://hotszyanann.github.io');
   getAuthToken(req, res)
