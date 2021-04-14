@@ -65,7 +65,8 @@ const corsOptions = {
   credentials: true
 }
 app.use(json({ limit: '2mb' }))
-server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
+app.use(cors(corsOptions));
+server.applyMiddleware({ app, path: "/graphql", cors: false });
 app.use('/authenticate', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://hotszyanann.github.io');
   getAuthToken(req,res)
