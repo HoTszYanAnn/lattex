@@ -63,10 +63,9 @@ const server = new ApolloServer({
 const app = express();
 
 app.use(json({ limit: '2mb' }))
-app.use(cors({
-  origin: "https://hotszyanann.github.io/lattex"
-}))
+app.use(cors())
 server.applyMiddleware({ app, path: "/graphql" });
+app.use(cors())
 app.use('/authenticate', getAuthToken)
 
 app.listen({ port: 3001 }, () => {
