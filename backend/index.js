@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { executeGitGraphql } = require('./resolvers/executeQuery')
 const { getAuthToken } = require('./api/authenticate')
 var cors = require('cors')
@@ -62,15 +63,10 @@ const server = new ApolloServer({
 const app = express();
 
 app.use(json({ limit: '2mb' }))
+app.use(cors())
 server.applyMiddleware({ app, path: "/graphql" });
-//app.use(cors())
 app.use('/authenticate', getAuthToken)
-app.use(cors({
-   "origin": ["http://localhost:3001", "https://hotszyanann.github.io/lattex"],
-  //"origin": "http://localhost:3000",
-  "credentials": true
-}));
 
-app.listen({ port: process.env.PORT || 3001 }, () => {
+app.listen({ port: 3001 }, () => {
   console.log("Apollo Server on http://localhost:3001/graphql");
 });
