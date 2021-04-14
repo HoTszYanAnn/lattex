@@ -62,12 +62,14 @@ const server = new ApolloServer({
 const app = express();
 app.use(json({ limit: '2mb' }))
 
-const corsOptions = {
-  origin: 'https://hotszyanann.github.io',
-  credentials: true
-}
 
-server.applyMiddleware({ app, cors: corsOptions });
+server.applyMiddleware({ app, cors: {
+  origin: "*",
+  methods: ["get", "post"],
+  credentials: true,
+  maxAge: 3600,
+}});
+
 app.use('/authenticate', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://hotszyanann.github.io');
   getAuthToken(req, res)
