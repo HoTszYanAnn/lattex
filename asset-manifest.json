@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/lattex/static/css/main.52f3b1a2.chunk.css",
-    "main.js": "/lattex/static/js/main.5e7a19df.chunk.js",
-    "main.js.map": "/lattex/static/js/main.5e7a19df.chunk.js.map",
+    "main.js": "/lattex/static/js/main.582b5e95.chunk.js",
+    "main.js.map": "/lattex/static/js/main.582b5e95.chunk.js.map",
     "runtime-main.js": "/lattex/static/js/runtime-main.6d7d8a6c.js",
     "runtime-main.js.map": "/lattex/static/js/runtime-main.6d7d8a6c.js.map",
     "static/css/2.3f4d762f.chunk.css": "/lattex/static/css/2.3f4d762f.chunk.css",
@@ -15,7 +15,7 @@
     "static/js/5.c6b1f865.chunk.js": "/lattex/static/js/5.c6b1f865.chunk.js",
     "static/js/5.c6b1f865.chunk.js.map": "/lattex/static/js/5.c6b1f865.chunk.js.map",
     "index.html": "/lattex/index.html",
-    "precache-manifest.c38a1a8a2982786279cdbd7ddd83ce9a.js": "/lattex/precache-manifest.c38a1a8a2982786279cdbd7ddd83ce9a.js",
+    "precache-manifest.697a40a7ae065cb52ae93ffc174bf0af.js": "/lattex/precache-manifest.697a40a7ae065cb52ae93ffc174bf0af.js",
     "service-worker.js": "/lattex/service-worker.js",
     "static/css/2.3f4d762f.chunk.css.map": "/lattex/static/css/2.3f4d762f.chunk.css.map",
     "static/css/main.52f3b1a2.chunk.css.map": "/lattex/static/css/main.52f3b1a2.chunk.css.map",
@@ -23,7 +23,7 @@
     "static/js/3.4e69a6b6.chunk.js.LICENSE.txt": "/lattex/static/js/3.4e69a6b6.chunk.js.LICENSE.txt",
     "static/js/4.bf559813.chunk.js.LICENSE.txt": "/lattex/static/js/4.bf559813.chunk.js.LICENSE.txt",
     "static/js/5.c6b1f865.chunk.js.LICENSE.txt": "/lattex/static/js/5.c6b1f865.chunk.js.LICENSE.txt",
-    "static/js/main.5e7a19df.chunk.js.LICENSE.txt": "/lattex/static/js/main.5e7a19df.chunk.js.LICENSE.txt",
+    "static/js/main.582b5e95.chunk.js.LICENSE.txt": "/lattex/static/js/main.582b5e95.chunk.js.LICENSE.txt",
     "static/media/mathquill.css": "/lattex/static/media/Symbola.e4ae9ff7.eot",
     "static/media/UploadIcon.svg": "/lattex/static/media/UploadIcon.1cedb6e9.svg",
     "static/media/article-1.jpg": "/lattex/static/media/article-1.11ca0cfa.jpg",
@@ -43,6 +43,6 @@
     "static/css/2.3f4d762f.chunk.css",
     "static/js/2.2f189769.chunk.js",
     "static/css/main.52f3b1a2.chunk.css",
-    "static/js/main.5e7a19df.chunk.js"
+    "static/js/main.582b5e95.chunk.js"
   ]
 }
