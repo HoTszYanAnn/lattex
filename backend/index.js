@@ -2,7 +2,7 @@ const { executeGitGraphql } = require('./resolvers/executeQuery')
 const { getAuthToken } = require('./api/authenticate')
 var cors = require('cors')
 const express = require("express");
-const {json} = require("express");
+const { json } = require("express");
 const { ApolloServer, gql } = require("apollo-server-express");
 const { importSchema } = require("graphql-import");
 const axios = require("axios");
@@ -18,8 +18,9 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   cors: cors(corsOptions),
-  context: async ({ req }) => {
+  context: async ({ req, res }) => {
     try {
+      res.setHeader('Access-Control-Allow-Origin', 'https://hotszyanann.github.io');
       const token = req.headers.authorization
         ? req.headers.authorization.split(" ")[1]
         : ''
@@ -70,9 +71,9 @@ app.use(cors(corsOptions));
 server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
 app.use('/authenticate', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://hotszyanann.github.io');
-  getAuthToken(req,res)
+  getAuthToken(req, res)
 })
 
-app.listen({ port: process.env.PORT ||  3001 }, () => {
+app.listen({ port: process.env.PORT || 3001 }, () => {
   console.log("Apollo Server on http://localhost:3001/graphql");
 });
