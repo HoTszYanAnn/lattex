@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
+import {  HashRouter, Route, Switch, withRouter } from "react-router-dom";
 import { Redirect } from "react-router";
 import { connect } from "react-redux";
 
@@ -44,7 +44,7 @@ const withLayout = (Layout) => (Component) => (props) => (
 
 const Router = ({ AUTHORIZED, USER_PROFILE }) => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       {console.log(AUTHORIZED)}
       <Switch>
         <Route
@@ -67,7 +67,7 @@ const Router = ({ AUTHORIZED, USER_PROFILE }) => {
           path={APP_PATHS.EDITOR}
         />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
