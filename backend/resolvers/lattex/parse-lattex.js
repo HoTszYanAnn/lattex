@@ -225,7 +225,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
     rows = html.split(/<tr>|<\/tr>/).filter(row => ![''].includes(row))
     nr = rows.length - 2
     let table = "\\begin{table}\r\n"
-    if (rows[0].includes("<p>")) {
+    if (rows[0].includes("<p>")&&(!rows[0].includes("<br>"))) {
       const caption = rows[0].split(/<p>|<br>/)
       table = table + "\\caption{"+caption[1]+"}\r\n"
     } 
@@ -260,10 +260,10 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
         }
       }
       for(var k=0; k<el.length; k++) {
-        const e = el[k].split(/"|<div>|<br>/)
+        const e = el[k].split(/"|<div>|<br>|<\/div>/).filter(e => ![''].includes(e))
         let te = ""
         if(j!=0) te =  te + "&"
-        if(e.length==7) {
+        if(e.length>4) {
           const tc = parseInt(e[1])
           const tr = parseInt(e[3])
           console.log(tc+","+tr)
@@ -301,16 +301,24 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
             te = te+"\\multirow{"+e[3]+"}{*}{"
             rf = 1
           }
-          te = te +e[5]+"}"
+          if(e.length==5){
+            te = te +"}"
+          } else {
+            te = te +e[5]+"}"
+          }
           if(cf+rf>1) te = te + "}"
           arr[i][j] = new Array()
           arr[i][j][0] = te
           if(tr==1) arr[i][j][1] = "\\cline{"+(j+1)+"-"+(j+1)+"}"
           j = j+tc
         }
-        if(e.length==3) {
+        if(e.length<4) {
           arr[i][j] = new Array()
-          arr[i][j][0] = te + e[1]
+          if(e.length==2) {
+            arr[i][j][0] = te + e[1]
+          } else {
+            arr[i][j][0] = te
+          }
           arr[i][j][1] = "\\cline{"+(j+1)+"-"+(j+1)+"}"
           j++
         }
