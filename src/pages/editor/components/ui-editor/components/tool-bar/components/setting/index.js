@@ -23,11 +23,11 @@ const classList = ['article', 'report', 'book']
 const titleList = ['title', 'date', 'author', 'always_today']
 const commentBoolLineList = ['haveTitle', 'haveContentPage']
 
-const Setting = ({ doc, pushAndCompile }) => {
+const Setting = ({ doc, pushAndCompile, setting, setSetting }) => {
   const [open, setOpen] = useState(false)
-  const origSetting = _(doc.latex).pick(['haveTitle', 'haveContentPage', 'titles', 'documentclass']).value()
+  //const origSetting = _(doc.latex).pick(['haveTitle', 'haveContentPage', 'titles', 'documentclass']).value()
 
-  const [setting, setSetting] = useState(origSetting)
+  //const [setting, setSetting] = useState(origSetting)
 
   const onSettingChange = (key, val) => {
     if (titleList.includes(key)) {
@@ -46,9 +46,8 @@ const Setting = ({ doc, pushAndCompile }) => {
   }
 
   const onSave = () => {
-    const diff = difference(setting, origSetting)
-
-    pushAndCompile(diff)
+    //const diff = difference(setting, origSetting)
+    //pushAndCompile(diff)
     setOpen(false)
   }
 
