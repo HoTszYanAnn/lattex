@@ -18,9 +18,14 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   cors: cors(corsOptions),
-  context: async ({ req, res }) => {
+  formatResponse: (response, requestContext) => {
+    if (requestContext.response && requestContext.response.http) {
+      requestContext.response.http.headers.set('Access-Control-Allow-Origin', 'https://hotszyanann.github.io');
+    }
+    return response;
+  },
+  context: async ({ req }) => {
     try {
-      res.setHeader('Access-Control-Allow-Origin', 'https://hotszyanann.github.io');
       const token = req.headers.authorization
         ? req.headers.authorization.split(" ")[1]
         : ''
