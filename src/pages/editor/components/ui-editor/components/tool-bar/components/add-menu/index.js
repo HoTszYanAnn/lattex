@@ -65,6 +65,13 @@ const TextMenuBox = ({ setBox, handleClose }) => (
           }}
           label="Multi-column Block"
         />
+        <BoxItem
+          onClick={() => {
+            setBox('table');
+            handleClose(null);
+          }}
+          label="Table"
+        />
         {Object.keys(htmlcode).map(key =>
           <BoxItem
             onClick={() => {
@@ -332,7 +339,7 @@ const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) =
   }
 
   //control the add menu show what submenu 
-  const menu = ['text', 'equation', 'image', 'table', 'command']
+  const menu = ['text', 'equation', 'image',/* 'table',*/ 'command']
   documentclass === "beamer" && menu.splice(1, 0, "beamer");
 
   useEffect(() => {
