@@ -58,6 +58,13 @@ const TextMenuBox = ({ setBox, handleClose }) => (
           }}
           label="Paragraph Block"
         />
+        <BoxItem
+          onClick={() => {
+            setBox('multicols-2', null);
+            handleClose(null);
+          }}
+          label="Multi-column Block"
+        />
         {Object.keys(htmlcode).map(key =>
           <BoxItem
             onClick={() => {

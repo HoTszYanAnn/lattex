@@ -156,6 +156,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
           const temp = key.split('\r\n')
           const num = temp[0].split(/{|}/).filter(item => ![''].includes(item))[2]
           temp.shift();
+          temp.pop();
           console.log('!!!!!!!!!!! pandoc latex to html !!!!!!!!!!!')
           let res = (await pandoc(temp.join('\r\n'), args))
           if (!res.startsWith('<pre><code>')) {
