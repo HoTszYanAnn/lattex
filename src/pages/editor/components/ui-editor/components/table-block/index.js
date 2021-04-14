@@ -7,6 +7,7 @@ import 'suneditor/dist/css/suneditor.min.css'
 
 const TableBlock = ({ id, text, setText}) => {
   const ref1 = useRef(text);
+  const [value, setValue] = useState(text)
   useEffect(() => {
       // Get underlining core object here
       // Notice that useEffect is been used because you have to make sure the editor is rendered.
@@ -16,10 +17,9 @@ const TableBlock = ({ id, text, setText}) => {
     console.log(val)
     setValue(val)
   }
-  const onBlur = () => {
-    setText(id, value)
+  const onBlur = (val) => {
+    setText(id, '<table>'+val.target.children[0].innerHTML+'</table>')
   }
-  const [value, setValue] = useState(text)
   const buttonList = [[
     'undo',
     'redo',
