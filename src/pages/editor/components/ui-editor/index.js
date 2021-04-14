@@ -10,6 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { store as notifStore } from "react-notifications-component";
 import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash'
 
@@ -61,8 +62,53 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
     setState(newArr)
   };
 
+  const errorNotice = (e) => {
+    notifStore.addNotification({
+      message: e,
+      type: "danger",
+      insert: "top",
+      container: "top-center",
+      animationIn: ["animated", "fadeIn"],
+      animationOut: ["animated", "fadeOut"],
+      dismiss: {
+        duration: 5000,
+      },
+    });
+    return false
+  }
+
+  const checkCorrect = (val) => {
+    console.log("checking...")
+    console.log(val)
+    switch (doc.latex.documentclass) {
+      case "article":
+        return true
+      case "report":
+        return true
+      case "chapter":
+        return true
+      case "beamer":
+        var endblockCount = 0;
+        var needEndBlockCode = ["begin{frame}", "begin{block}", "begin{alertblock}", "begin{exampleblock}"]
+        for (var i = 0; i < val.length; i++) {
+          if (needEndBlockCode.includes(val[i].code)) {
+            endblockCount++
+          }
+          if (val[i].code === "end") {
+            endblockCount--
+            if (endblockCount < 0) return errorNotice("End Block Put Wrong Places")
+          }
+        }
+        if (endblockCount != 0) return errorNotice("End Block Missed")
+        return true
+    }
+    return errorNotice("UnExpected")
+  }
+
   const onSave = () => {
-    pushAndCompile({ contents: state })
+    if (checkCorrect(state)) {
+      pushAndCompile({ contents: state })
+    }
   }
 
   const removeItemBlock = (id) => {
@@ -159,7 +205,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
                                         : item.code === 'figure'
                                           ? <ImageBlock key={item.id + 'image'} text={item.text} setText={setText} id={id} images={doc.latex.images} />
                                           : item.code === 'table'
-                                            ? <TableBlock key={item.id + 'table'} text={item.text} setText={setText} id={id}/>
+                                            ? <TableBlock key={item.id + 'table'} text={item.text} setText={setText} id={id} />
                                             : item.code.startsWith('multicols')
                                               ? <MultiColsBlock key={item.id + 'multiColsBlk'} text={item.text} id={id} setText={setText} code={item.code} setCode={setCode} />
                                               : <CommandBlock key={item.id + 'cmdBlk'} text={item.code} id={id} />
