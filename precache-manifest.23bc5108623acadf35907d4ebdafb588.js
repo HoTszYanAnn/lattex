@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9f8f23cd0f1bd91d54de75450ad56668",
+    "revision": "8e5dfbf42332e15abe05ad5d043a8c02",
     "url": "/lattex/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lattex/static/css/2.3f4d762f.chunk.css"
   },
   {
-    "revision": "883c257d956f8d2a65dc",
+    "revision": "c1e7c1b18bafad8a0bb6",
     "url": "/lattex/static/css/main.52f3b1a2.chunk.css"
   },
   {
@@ -44,12 +44,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lattex/static/js/5.c6b1f865.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "883c257d956f8d2a65dc",
-    "url": "/lattex/static/js/main.8734bc4d.chunk.js"
+    "revision": "c1e7c1b18bafad8a0bb6",
+    "url": "/lattex/static/js/main.8a3d4a8d.chunk.js"
   },
   {
     "revision": "12ff75c63d7b5e9e965632d236e74c75",
-    "url": "/lattex/static/js/main.8734bc4d.chunk.js.LICENSE.txt"
+    "url": "/lattex/static/js/main.8a3d4a8d.chunk.js.LICENSE.txt"
   },
   {
     "revision": "94405d9538868cc2852e",
