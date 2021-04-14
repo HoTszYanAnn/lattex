@@ -349,6 +349,9 @@ const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) =
       "weight": "bold"
     };
   } 
+  if(documentclass === "article"){
+    delete dict.chapter
+  }
 
   useEffect(() => {
     setImageMenuKey(uuidv4())
