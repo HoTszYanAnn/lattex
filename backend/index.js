@@ -71,6 +71,6 @@ app.use('/authenticate', (req, res) => {
   getAuthToken(req,res)
 })
 
-app.listen({ port: 3001 }, () => {
+app.listen({ port: process.env.PORT ||  3001 }, () => {
   console.log("Apollo Server on http://localhost:3001/graphql");
 });
