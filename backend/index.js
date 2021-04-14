@@ -61,12 +61,16 @@ const server = new ApolloServer({
 
 // Initialize the app
 const app = express();
-
+const corsOptions = {
+  origin: 'https://hotszyanann.github.io/lattex',
+  credentials: true
+}
 app.use(json({ limit: '2mb' }))
-app.use(cors())
-server.applyMiddleware({ app, path: "/graphql" });
-app.use(cors())
-app.use('/authenticate', getAuthToken)
+server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
+app.use('/authenticate', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://hotszyanann.github.io/lattex');
+  getAuthToken(req,res)
+})
 
 app.listen({ port: 3001 }, () => {
   console.log("Apollo Server on http://localhost:3001/graphql");
