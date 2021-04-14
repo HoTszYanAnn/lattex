@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { executeGitGraphql } = require('./resolvers/executeQuery')
 const { getAuthToken } = require('./api/authenticate')
 var cors = require('cors')
