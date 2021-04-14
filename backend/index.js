@@ -61,13 +61,13 @@ const server = new ApolloServer({
 // Initialize the app
 const app = express();
 const corsOptions = {
-  origin: 'https://hotszyanann.github.io/lattex',
+  origin: 'https://hotszyanann.github.io',
   credentials: true
 }
 app.use(json({ limit: '2mb' }))
 server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
 app.use('/authenticate', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://hotszyanann.github.io/lattex');
+  res.setHeader('Access-Control-Allow-Origin', 'https://hotszyanann.github.io');
   getAuthToken(req,res)
 })
 
