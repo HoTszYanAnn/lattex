@@ -38,7 +38,7 @@ const BoxItem = ({ label, onClick }) => (
 const TableNum = ({ value, onChange }) => (
   <>
     <InputNumber 
-      style={{ width: '50px' }}
+      style={{ width: '50px', marginTop: '3px' }}
       value={value}
       onChange={onChange}
       defaultValue={3}
@@ -103,7 +103,7 @@ const TextMenuBox = ({ setBox, handleClose, ntable, setNtable }) => (
               setBox('table', table);
               handleClose(null);
             }}
-            style={{width: '150px'}}
+            style={{width: '145px'}}
           >
             Table
           </MenuItem>
@@ -112,7 +112,7 @@ const TextMenuBox = ({ setBox, handleClose, ntable, setNtable }) => (
             onChange={(val) => {
               setNtable({nrow:val,ncol:ntable.ncol})
             }}/>
-          <ClearIcon fontSize='small' style={{paddingTop: '5px'}}/>
+          <ClearIcon fontSize='small' style={{paddingTop: '6px'}}/>
           <TableNum
             value={ntable.ncol} 
             onChange={(val) => {
@@ -204,7 +204,7 @@ const equationTemplate = [
     equation: "\\int_{a}^{b} x^2 \\,dx",
   },
   {
-    name: "Differentials",
+    name: "Differential",
     equation: "\\frac{dx}{dy} 2x ",
   },
   {
@@ -212,11 +212,11 @@ const equationTemplate = [
     equation: "\\sum_{i=a}^{b} f(i)",
   },
   {
-    name: "Products",
+    name: "Product",
     equation: "\\prod_{i=a}^{b} f(i)",
   },
   {
-    name: "Limits",
+    name: "Limit",
     equation: "\\lim_{x\\to\\infty} f(x)",
   }
 ]
