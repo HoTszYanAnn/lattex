@@ -116,7 +116,7 @@ const Routing = ({ dispatch, AUTHORIZED, TOKEN, USER_PROFILE, history, location 
       .then(
         (result) => {
           onTokenGqlCompleted(result?.access_token)
-          history.push(APP_PATHS.EDITORS)
+          history.push(window.location.pathname)
         },
         (error) => {
           localStorage.removeItem("lattex-token");
