@@ -3,7 +3,7 @@ import ProjectListTable from './components/project-list-table'
 import { useQuery, useMutation } from "react-apollo";
 import { onGqlError } from "../../function"
 import gql from 'graphql-tag'
-import { Fab, makeStyles } from "@material-ui/core";
+import { Fab, makeStyles, Button } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from 'react-router-dom';
 import { APP_ROUTES } from "../../config";
@@ -48,12 +48,22 @@ const DELETE_DOCUMENT_GQL = gql`
 const useStyles = makeStyles((theme) => ({
   fab: {
     position: 'absolute',
-    top: '100px',
+    top: '150px',
     left: '112.5px',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)',
+    width: '180px',
   },
   extendedIcon: {
-    marginRight: theme.spacing(2),
+    fontSize: '32px !important',
+    marginBottom: theme.spacing.unit
+  },
+  button: {
+    height: 115, // setting height/width is optional
+  },
+  label: {
+    // Aligns the content of the button vertically.
+    flexDirection: 'column',
+    color: "#555555"
   },
 }))
 
@@ -127,9 +137,15 @@ const ProjectList = () => {
         createDocumentGqlLoading={createDocumentGqlLoading}
         filename={filename}
       />
-      <Fab className={classes.fab} variant="extended" size="medium" onClick={() => setCreateModalOpen(true)}>
-        <AddIcon className={classes.extendedIcon} />
-          Add New
+      <Fab 
+        className={classes.fab} 
+        variant="extended" 
+        size="large" 
+        onClick={() => setCreateModalOpen(true)} 
+        classes={{ root: classes.button, label: classes.label }}
+      >
+        <img src="https://img.icons8.com/fluent-systems-regular/36/555555/--add-document.png" className={classes.extendedIcon}/>
+        Add New Document
       </Fab>
     </>
   )

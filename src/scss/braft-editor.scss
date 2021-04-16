@@ -52,3 +52,34 @@
 .bf-container .public-DraftEditor-content > div {
   padding: 0;
 }
+
+.sun-editor {
+  border: none
+}
+
+.sun-editor:focus-within {    
+  box-shadow: 0 0 1000px rgba(0, 0, 0, 1);
+}
+
+.sun-editor{
+  z-index: 0;
+  .sun-container{
+    z-index:-1;
+  }
+  
+  .se-wrapper{
+    z-index: 0
+  }
+
+  ._se_table_header{
+    display: none! important;
+  }
+
+  ._se_table_fixed_column{
+    display: none! important;
+  }
+
+  ._se_table_resize{
+    display: none! important;
+  }
+}

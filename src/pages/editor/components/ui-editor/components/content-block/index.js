@@ -1,10 +1,10 @@
-import React, { PropTypes, useState } from 'react'
-import 'braft-editor/dist/index.css'
-import BraftEditor from 'braft-editor'
+import React, { useState} from 'react'
 import {
   Box
 } from '@material-ui/core'
 import DraftJS from "draft-js"
+import 'braft-editor/dist/index.css'
+import BraftEditor from 'braft-editor'
 
 //listul <ul><li>
 //listol <ol><li>
@@ -12,7 +12,7 @@ import DraftJS from "draft-js"
 //code <pre><code>
 const ContentBlock = ({ id, text, setText, htmlcode = false, multiCols = false, setCode, colsNum }) => {
 
-  const onChange = (val, b, c) => {
+  const onChange = (val) => {
     console.log(val.toHTML())
     if (!htmlcode || val.toHTML().startsWith(htmlcode.codeStart)) {
       setValue(val)
@@ -29,8 +29,9 @@ const ContentBlock = ({ id, text, setText, htmlcode = false, multiCols = false, 
     'remove-styles', 'clear',
     'bold', 'italic', 'underline',
     'superscript', 'subscript',
+    'link'
     //'list-ul', 'list-ol', 'blockquote', 'code',
-    //'link',  'hr', 
+    //'hr', 
     // 'separator', 'font-family','font-size', 'line-height', 'text-color', 
     // 'strike-through',  
     // 'text-indent', 'text-align',
@@ -69,9 +70,6 @@ const ContentBlock = ({ id, text, setText, htmlcode = false, multiCols = false, 
       <BraftEditor
         value={value}
         onChange={onChange}
-        //fontSizes={fontSize}
-        //lineHeight={lineHeights}
-        //fontFamilies={fontFamilies}
         controls={controls}
         language='en'
         className='editor'
