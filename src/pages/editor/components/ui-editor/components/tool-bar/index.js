@@ -59,6 +59,9 @@ const ToolBar = ({ showCompiler, changeShowCompiler, pushAndCompile, doc, setBox
        */
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
+          if (document.getElementsByClassName("MuiMenu-list") && document.getElementsByClassName("MuiMenu-list")[1]?.contains(event.target)){
+            return
+          }
           console.log('toolbar outsided!!!!!')
           handleClose()
         }

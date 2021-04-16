@@ -52,7 +52,7 @@ const TableBlock = ({ id, text, setText}) => {
         onBlur={onBlur}
         setOptions={{
           mode:"balloon-always",
-          buttonList: [['undo','redo','table']],
+          buttonList: [['undo','redo']],
           placeholder: "Please Insert Table..."
         }}
       />

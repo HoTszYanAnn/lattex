@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import {
   MenuItem,
   Box,
-  useTheme,
   Button,
   Typography,
   Divider,
@@ -11,6 +10,9 @@ import {
 import { MathpixMarkdown, MathpixLoader } from 'mathpix-markdown-it';
 import { dict, htmlcode, beamer } from '../../../../../../dict'
 import ImageUploader from 'react-images-upload';
+import InputNumber from 'rc-input-number';
+import 'rc-input-number/assets/index.css';
+import ClearIcon from '@material-ui/icons/Clear';
 import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +35,34 @@ const BoxItem = ({ label, onClick }) => (
   </>
 )
 
+const TableNum = ({ value, onChange }) => (
+  <>
+    <InputNumber 
+      style={{ width: '50px', marginTop: '3px' }}
+      value={value}
+      onChange={onChange}
+      defaultValue={3}
+      required={true}
+      max={10}
+      min={1}
+      step={1}
+    /> 
+  </>
+)
+
+const TableGenerator = (ntable) => {
+  let table = '<p>(Optional) Caption<table><tbody>'
+  for(var i=0; i < ntable.nrow; i++) {
+    table = table + '<tr>'
+    for(var j=0; j < ntable.ncol; j++) {
+      table = table + '<td><div></div></td>'
+    }
+    table = table + '</tr>'
+  }
+  table = table + '</tbody></table><p>(Optional) Caption</p>'
+  return table
+}
+
 const TemplateMenuBox = ({ name, items }) => (
   <>
     <Box style={{ padding: '8px' }}>
@@ -46,7 +76,7 @@ const TemplateMenuBox = ({ name, items }) => (
   </>
 )
 
-const TextMenuBox = ({ setBox, handleClose }) => (
+const TextMenuBox = ({ setBox, handleClose, ntable, setNtable }) => (
   <TemplateMenuBox
     name="Text"
     items={
@@ -65,13 +95,30 @@ const TextMenuBox = ({ setBox, handleClose }) => (
           }}
           label="Multi-column Block"
         />
-        <BoxItem
-          onClick={() => {
-            setBox('table');
-            handleClose(null);
-          }}
-          label="Table"
-        />
+        <Box display='flex'>
+          <MenuItem
+            button
+            onClick={() => {
+              const table = TableGenerator(ntable)
+              setBox('table', table);
+              handleClose(null);
+            }}
+            style={{width: '145px'}}
+          >
+            Table
+          </MenuItem>
+          <TableNum
+            value={ntable.nrow}
+            onChange={(val) => {
+              setNtable({nrow:val,ncol:ntable.ncol})
+            }}/>
+          <ClearIcon fontSize='small' style={{paddingTop: '6px'}}/>
+          <TableNum
+            value={ntable.ncol} 
+            onChange={(val) => {
+              setNtable({nrow:ntable.nrow,ncol:val})
+            }}/>
+        </Box>
         {Object.keys(htmlcode).map(key =>
           <BoxItem
             onClick={() => {
@@ -157,7 +204,7 @@ const equationTemplate = [
     equation: "\\int_{a}^{b} x^2 \\,dx",
   },
   {
-    name: "Differentials",
+    name: "Differential",
     equation: "\\frac{dx}{dy} 2x ",
   },
   {
@@ -165,11 +212,11 @@ const equationTemplate = [
     equation: "\\sum_{i=a}^{b} f(i)",
   },
   {
-    name: "Products",
+    name: "Product",
     equation: "\\prod_{i=a}^{b} f(i)",
   },
   {
-    name: "Limits",
+    name: "Limit",
     equation: "\\lim_{x\\to\\infty} f(x)",
   }
 ]
@@ -313,26 +360,11 @@ const ImageMenuBox = ({ setBox, handleClose, uploadImages, images }) => {
   )
 }
 
-const TableMenuBox = ({ setBox, handleClose }) => (
-  <TemplateMenuBox
-    name="Table"
-    items={
-      <>
-        <BoxItem
-          onClick={() => {
-            setBox('table');
-            handleClose(null);
-          }}
-          label="Table"
-        />
-      </>
-    }
-  />
-)
-
 const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) => {
   const [open, setOpen] = useState('text')
   const [imageMenuKey, setImageMenuKey] = useState(uuidv4())
+  const [ntable,setNtable] = useState({nrow: 3, ncol:3})
+
 
   const handleClick = (key) => {
     setOpen(key)
@@ -375,7 +407,7 @@ const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) =
         </Box>
         <Box display="table-cell" style={{ verticalAlign: 'top', minWidth: '300px', padding: '7px' }}>
           <Box style={{ display: open === 'text' ? 'block' : 'none' }}>
-            <TextMenuBox setBox={setBox} handleClose={handleClose} />
+            <TextMenuBox setBox={setBox} handleClose={handleClose} ntable={ntable} setNtable={setNtable}/>
           </Box>
           <Box style={{ display: open === 'beamer' ? 'block' : 'none' }}>
             <BeamerMenuBox setBox={setBox} handleClose={handleClose} />
@@ -385,9 +417,6 @@ const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) =
           </Box>
           <Box style={{ display: open === 'image' ? 'block' : 'none' }} key={imageMenuKey}>
             <ImageMenuBox setBox={setBox} handleClose={handleClose} images={images} uploadImages={uploadImages} />
-          </Box>
-          <Box style={{ display: open === 'table' ? 'block' : 'none' }}>
-            <TableMenuBox setBox={setBox} handleClose={handleClose} />
           </Box>
           <Box style={{ display: open === 'command' ? 'block' : 'none' }}>
             <OtherMenuBox setBox={setBox} handleClose={handleClose} />

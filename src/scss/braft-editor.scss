@@ -70,4 +70,16 @@
   .se-wrapper{
     z-index: 0
   }
+
+  ._se_table_header{
+    display: none! important;
+  }
+
+  ._se_table_fixed_column{
+    display: none! important;
+  }
+
+  ._se_table_resize{
+    display: none! important;
+  }
 }
