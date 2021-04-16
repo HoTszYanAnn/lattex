@@ -84,20 +84,34 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
   const checkCorrect = (dc, val) => {
     console.log("checking...")
     console.log(val)
+    var beamerOnly = ["begin{frame}", "begin{block}", "begin{alertblock}", "begin{exampleblock}"]
     switch (dc) {
       case "article":
         for (var i = 0; i < val.length; i++) {
           if (val[i].code === "chapter") 
             return errorNotice("Chapter Used In Article")
+          if (beamerOnly.includes(val[i].code)){
+            return errorNotice("Beamer Frame Used In Article, Please Remove It")
+          }
         }
         return true
       case "report":
+        for (var i = 0; i < val.length; i++) {
+          if (beamerOnly.includes(val[i].code)){
+            return errorNotice("Beamer Frame Used In Report, Please Remove It")
+          }
+        }
         return true
       case "book":
+        for (var i = 0; i < val.length; i++) {
+          if (beamerOnly.includes(val[i].code)){
+            return errorNotice("Beamer Frame Used In Book, Please Remove It")
+          }
+        }
         return true
       case "beamer":
         var endblockCount = 0;
-        var needEndBlockCode = ["begin{frame}", "begin{block}", "begin{alertblock}", "begin{exampleblock}"]
+        var needEndBlockCode = beamerOnly
         for (var i = 0; i < val.length; i++) {
           if (needEndBlockCode.includes(val[i].code)) {
             endblockCount++
