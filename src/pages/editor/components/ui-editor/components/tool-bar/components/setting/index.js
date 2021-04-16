@@ -19,7 +19,7 @@ import _ from 'lodash'
 
 // change document type, title, have content, etc... 
 // (edit the latexcode before /begin)
-const classList = ['article', 'report', 'book']
+const classList = ['article', 'report', 'book', 'beamer']
 const titleList = ['title', 'date', 'author', 'always_today']
 const commentBoolLineList = ['haveTitle', 'haveContentPage']
 
@@ -59,6 +59,10 @@ const Setting = ({ doc, pushAndCompile, setting, setSetting }) => {
             <FormControl fullWidth>
               <InputLabel >Document Type</InputLabel>
               <Select
+                id="setting-select-box"
+                MenuProps={{
+                  id:"setting-select-box"
+                }}
                 value={setting.documentclass}
                 onChange={(e) =>
                   onSettingChange('documentclass', e.target.value)

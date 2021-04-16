@@ -38,14 +38,16 @@ const Nav = () => {
 
   return (
     <>
-      <Box my={5} /> {/*add button hard code */}
+      <Box my={18} /> {/*add button hard code */}
+      
+      {/* 
       <Box display="flex" justifyContent="center">
         <Fab variant="extended" size="medium">
           <PublishIcon className={classes.extendedIcon} />
           &nbsp;&nbsp;&nbsp;&nbsp;Import
         </Fab>
       </Box>
-      <Box my={3} />
+      */}
       <Divider variant="middle" classes={{ root: classes.divider }} />
       <Box>
         <List component="nav" aria-label="secondary mailbox folders">
@@ -54,6 +56,7 @@ const Nav = () => {
           </ListItem>
         </List>
         <Divider variant="middle" classes={{ root: classes.divider }} />
+        {/* 
         <List component="nav" aria-label="main mailbox folders">
           <ListItem button className={classes.item}>
             <ListItemText primary="Template" />
@@ -65,6 +68,7 @@ const Nav = () => {
             <ListItemText primary="Bookmarked" />
           </ListItem>
         </List>
+        */}
       </Box>
     </>
   )
