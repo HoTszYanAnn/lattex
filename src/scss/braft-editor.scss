@@ -82,4 +82,12 @@
   ._se_table_resize{
     display: none! important;
   }
+
+  button[data-command="table"] {
+    display: none! important;
+  }
+
+  button[data-command="remove"] {
+    display: none! important;
+  }
 }

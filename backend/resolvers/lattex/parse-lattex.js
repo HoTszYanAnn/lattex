@@ -71,16 +71,22 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
             html = html+'</tr><tr>'
           } else {
             const e = ele.split(/{|}/).filter(el => ![''].includes(el))
-            //console.log(e)
+            console.log(e)
             if (e.length==7) {
-              html = html+'<td colspan="'+e[1]+'" rowspan="'+e[4]+'"><div>'+e[6]+'<br></div></td>'
+              html = html+'<td colspan="'+e[1]+'" rowspan="'+e[4]+'"><div>'+e[6]+'</div></td>'
             }
             if (e.length==4) {
-              if (e[0].includes('col')) html = html+'<td colspan="'+e[1]+'" rowspan="1"><div>'+e[3]+'<br></div></td>'
-              else html = html+'<td colspan="1" rowspan="'+e[1]+'"><div>'+e[3]+'<br></div></td>'
+              if(e[3]!=" "){
+                if (e[0].includes('col')) html = html+'<td colspan="'+e[1]+'" rowspan="1"><div>'+e[3]+'</div></td>'
+                else html = html+'<td colspan="1" rowspan="'+e[1]+'"><div>'+e[3]+'</div></td>'
+              }
+            }
+            if (e.length==3) {
+              if (e[0].includes('col')) html = html+'<td colspan="'+e[1]+'" rowspan="1"><div></div></td>'
+              else html = html+'<td colspan="1" rowspan="'+e[1]+'"><div></div></td>'
             }
             if (e.length<=1) {
-              html = html+'<td><div>'+e+'<br></div></td>'
+              html = html+'<td><div>'+e+'</div></td>'
             }
           }
         })
@@ -223,10 +229,11 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
     console.log("!!!!!!html to table!!!!!!")
     console.log(html)
     rows = html.split(/<tr>|<\/tr>/).filter(row => ![''].includes(row))
+    
     nr = rows.length - 2
     let table = "\\begin{table}\r\n"
     if (rows[0].includes("<p>")) {
-      const caption = rows[0].split(/<p>|<br>/)
+      const caption = rows[0].split(/<p>|<br>|<\/p>/)
       table = table + "\\caption{"+caption[1]+"}\r\n"
     } 
     let nc = rows[1].split(/<\/td>/).length-1
@@ -261,6 +268,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
       }
       for(var k=0; k<el.length; k++) {
         const e = el[k].split(/"|<div>|<br>|<\/div>/).filter(e => ![''].includes(e))
+        console.log(e)
         let te = ""
         if(j!=0) te =  te + "&"
         if(e.length>4) {
@@ -282,9 +290,9 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
           if(tr>1) {
             let tmpR = ""
             if(cf==1) {
-              tmpR = te +"}"
+              tmpR = te +" }"
             } else { 
-              tmpR = "\\multirow{"+e[3]+"}{*}{}"
+              tmpR = "\\multirow{"+e[3]+"}{*}{ }"
               if(j!=0) tmpR = "&"+tmpR
             }
             for(var m=i+1; m<i+tr; m++) {
@@ -354,7 +362,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
   parseText = parseText + `\\usepackage{graphicx}\n`
   parseText = parseText + `\\usepackage{multicol}\n`
   parseText = parseText + `\\usepackage{hyperref}\n`
-  parseText = parseText + `\\hypersetup{colorlinks=true,linkcolor=black,urlcolor=cyan}\n`
+  parseText = parseText + `\\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue}\n`
   parseText = parseText + `\\graphicspath{ {./images/} }\n`
 
   parseText = parseText + `\\title{${updatedObject.titles.title}}\n`
