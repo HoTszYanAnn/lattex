@@ -5,7 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const templateList = [
   {
-    pdf: `${process.env.REACT_APP_REACT_URL}/pdf/default.pdf`,
+    pdf: `${process.env.REACT_APP_REACT_URL}/pdf/beamer.pdf`,
+    image: img3,
+    name: 'beamer',
+    path: 'beamer.tex',
+    description: 'default beamer(Madrid)',
+    key: uuidv4(),
+  },
+  {
+    pdf: `${process.env.REACT_APP_REACT_URL}/pdf/article.pdf`,
     image: img1,
     name: 'article',
     path: 'default.tex',
@@ -21,11 +29,11 @@ export const templateList = [
     key: uuidv4(),
   },
   {
-    pdf: `${process.env.REACT_APP_REACT_URL}/pdf/beamer.pdf`,
-    image: img3,
-    name: 'beamer',
-    path: 'beamer.tex',
-    description: 'default beamer(Madrid)',
+    pdf: `${process.env.REACT_APP_REACT_URL}/pdf/book.pdf`,
+    image: img2,
+    name: 'book',
+    path: 'book.tex',
+    description: 'default book',
     key: uuidv4(),
   }
 ]
