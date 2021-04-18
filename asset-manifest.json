@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/lattex/static/css/main.b45b500d.chunk.css",
+    "main.css": "/lattex/static/css/main.9350dc76.chunk.css",
     "main.js": "/lattex/static/js/main.a2679417.chunk.js",
     "main.js.map": "/lattex/static/js/main.a2679417.chunk.js.map",
     "runtime-main.js": "/lattex/static/js/runtime-main.d0816a99.js",
@@ -15,10 +15,10 @@
     "static/js/5.bb017575.chunk.js": "/lattex/static/js/5.bb017575.chunk.js",
     "static/js/5.bb017575.chunk.js.map": "/lattex/static/js/5.bb017575.chunk.js.map",
     "index.html": "/lattex/index.html",
-    "precache-manifest.cb77567beba33c969ef922a63c244496.js": "/lattex/precache-manifest.cb77567beba33c969ef922a63c244496.js",
+    "precache-manifest.90ffa36cba70319ff4df048445155344.js": "/lattex/precache-manifest.90ffa36cba70319ff4df048445155344.js",
     "service-worker.js": "/lattex/service-worker.js",
     "static/css/2.30bba18c.chunk.css.map": "/lattex/static/css/2.30bba18c.chunk.css.map",
-    "static/css/main.b45b500d.chunk.css.map": "/lattex/static/css/main.b45b500d.chunk.css.map",
+    "static/css/main.9350dc76.chunk.css.map": "/lattex/static/css/main.9350dc76.chunk.css.map",
     "static/js/2.37a413d3.chunk.js.LICENSE.txt": "/lattex/static/js/2.37a413d3.chunk.js.LICENSE.txt",
     "static/js/3.875e08af.chunk.js.LICENSE.txt": "/lattex/static/js/3.875e08af.chunk.js.LICENSE.txt",
     "static/js/4.162c39ee.chunk.js.LICENSE.txt": "/lattex/static/js/4.162c39ee.chunk.js.LICENSE.txt",
@@ -42,7 +42,7 @@
     "static/js/runtime-main.d0816a99.js",
     "static/css/2.30bba18c.chunk.css",
     "static/js/2.37a413d3.chunk.js",
-    "static/css/main.b45b500d.chunk.css",
+    "static/css/main.9350dc76.chunk.css",
     "static/js/main.a2679417.chunk.js"
   ]
 }
