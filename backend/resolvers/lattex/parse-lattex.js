@@ -104,7 +104,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
     if (content[i] === '{' 
     || content[i].startsWith('\\begin{figure}') 
     || content[i].startsWith('\\begin{multicols}')) {
-      let temp = content[i]
+      let temp = content[i] + '\r\n'
       i = i + 1
       while (content[i] !== '}' 
       && content[i] !== '\\end{figure}'
@@ -163,6 +163,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
           const num = temp[0].split(/{|}/).filter(item => ![''].includes(item))[2]
           temp.shift();
           temp.pop();
+          console.log(temp);
           console.log('!!!!!!!!!!! pandoc latex to html !!!!!!!!!!!')
           let res = (await pandoc(temp.join('\r\n'), args))
           if (!res.startsWith('<pre><code>')) {
