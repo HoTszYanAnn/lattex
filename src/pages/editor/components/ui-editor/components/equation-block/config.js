@@ -585,15 +585,15 @@ const LimitAndLog = {
     },
     {
       title: '',
-      code: '\\sup_{x \\in \\mathbb{R}}f(x)',
+      code: '\\sup_{x \\in R}f(x)',
     },
     {
       title: '',
-      code: '\\max_{x \\in \\mathbb{R}}f(x)',
+      code: '\\max_{x \\in R}f(x)',
     },
     {
       title: '',
-      code: '\\min_{x \\in \\mathbb{R}}f(x)',
+      code: '\\min_{x \\in R}f(x)',
     },
     {
       title: '',

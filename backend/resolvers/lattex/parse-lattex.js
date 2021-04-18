@@ -1,3 +1,4 @@
+const { parse } = require("graphql");
 const _ = require("lodash")
 const pandoc = require('node-pandoc-promise');
 const { v4: uuidv4 } = require('uuid');
@@ -230,8 +231,8 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
     console.log("!!!!!!html to table!!!!!!")
     console.log(html)
     rows = html.split(/<tr>|<\/tr>/).filter(row => ![''].includes(row))
-    
     nr = rows.length - 2
+
     let table = "\\begin{table}\r\n"
     if (rows[0].includes("<p>")) {
       const caption = rows[0].split(/<p>|<br>|<\/p>/)
@@ -239,8 +240,10 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
     } 
     let nc = rows[1].split(/<\/td>/).length-1
     const temp = rows[1].split(/"/)
-    for (var k=1; k<temp.length; k=k+4) {
-      nc = nc-1+parseInt(temp[k])
+    for (var k=1; k<temp.length; k=k+2) {
+      if(temp[k-1].includes("col")) {
+        nc = nc-1+parseInt(temp[k])
+      }
     }
     let cl ="|"
     for (var k=0; k<nc; k++) {
@@ -272,14 +275,38 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
         console.log(e)
         let te = ""
         if(j!=0) te =  te + "&"
-        if(e.length>4) {
-          const tc = parseInt(e[1])
-          const tr = parseInt(e[3])
+        if(e.length>2) {
+          let tc = 0
+          let tr = 0
+          let box = ""
+          if (e.length<5) {
+            if(e[0].includes('col')) {
+              tc = parseInt(e[1])
+              tr = 1
+            } else {
+              tc = 1
+              tr = parseInt(e[1])
+            }
+            if(e.length==4) box = e[3]
+            else box = ""
+          } else {
+            tc = parseInt(e[1])
+            tr = parseInt(e[3])
+            if(e.length==6) box = e[5]
+            else box = ""
+          }
+          if(tc==1 && tr==1) {
+            arr[i][j] = new Array()
+            arr[i][j][0] = te + box
+            arr[i][j][1] = "\\cline{"+(j+1)+"-"+(j+1)+"}"
+            j++
+            continue
+          }
           console.log(tc+","+tr)
           let cf = 0
           let rf = 0
           if(tc>1) {
-            te = te+"\\multicolumn{"+e[1]+"}{|l|}{"
+            te = te+"\\multicolumn{"+tc+"}{|l|}{"
             for(var m=j+1; m<j+tc; m++) {
               arr[i][m] = new Array()
               if(tr==1) {
@@ -293,7 +320,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
             if(cf==1) {
               tmpR = te +" }"
             } else { 
-              tmpR = "\\multirow{"+e[3]+"}{*}{ }"
+              tmpR = "\\multirow{"+tr+"}{*}{ }"
               if(j!=0) tmpR = "&"+tmpR
             }
             for(var m=i+1; m<i+tr; m++) {
@@ -307,21 +334,17 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
                 if(cf==1) arr[m][j][2] = tc
               }
             }
-            te = te+"\\multirow{"+e[3]+"}{*}{"
+            te = te+"\\multirow{"+tr+"}{*}{"
             rf = 1
           }
-          if(e.length==5){
-            te = te +"}"
-          } else {
-            te = te +e[5]+"}"
-          }
+          te = te +box+"}"
           if(cf+rf>1) te = te + "}"
           arr[i][j] = new Array()
           arr[i][j][0] = te
           if(tr==1) arr[i][j][1] = "\\cline{"+(j+1)+"-"+(j+1)+"}"
           j = j+tc
         }
-        if(e.length<4) {
+        if(e.length<3) {
           arr[i][j] = new Array()
           if(e.length==2) {
             arr[i][j][0] = te + e[1]
