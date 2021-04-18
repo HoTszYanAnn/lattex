@@ -46,6 +46,7 @@ const TableBlock = ({ id, text, setText}) => {
         height = 'auto'
         setContents={value}
         onChange={onChange}
+        autoFocus={false}
         language='en'
         className='editor'
         //placeholder="Write Here..."
