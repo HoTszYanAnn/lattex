@@ -18,7 +18,7 @@ const ConfirmCreateDocument = ({ docInfo, template }) => {
             <Typography align="right" >{docInfo.decription ? docInfo.description : 'N/A'}</Typography>
           </Grid>
         </Grid>
-        <Grid item xs={6} style={{ height: '60vh' }}>
+        <Grid item xs={5} style={{ height: '60vh' }}>
           <Typography variant="h5" align="center" gutterBottom>Chosen Template: {template.name}</Typography>
           <Box style={{ width: '100%', height: '90%', backgroundColor: 'rgb(82, 86, 89)' }}>
             <iframe
