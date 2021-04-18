@@ -93,3 +93,15 @@
     display: none! important;
   }
 }
+
+.bf-container{
+  blockquote{
+    background-color: white;
+    border-left: none;   
+  }
+  pre{
+    background-color: white;
+    font-family: monospace !important;
+    font-weight: 600;
+  }
+}
