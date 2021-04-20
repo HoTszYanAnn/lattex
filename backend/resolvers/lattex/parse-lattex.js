@@ -233,7 +233,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
     rows = html.split(/<tr>|<\/tr>/).filter(row => ![''].includes(row))
     nr = rows.length - 2
 
-    let table = "\\begin{table}\r\n"
+    let table = "\\begin{table}[h]\\centering\r\n"
     if (rows[0].includes("<p>")) {
       const caption = rows[0].split(/<p>|<br>|<\/p>/)
       table = table + "\\caption{"+caption[1]+"}\r\n"
