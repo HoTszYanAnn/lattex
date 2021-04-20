@@ -46,14 +46,14 @@ const TableBlock = ({ id, text, setText}) => {
         height = 'auto'
         setContents={value}
         onChange={onChange}
+        autoFocus={false}
         language='en'
         className='editor'
         //placeholder="Write Here..."
         onBlur={onBlur}
         setOptions={{
           mode:"balloon-always",
-          buttonList: [['undo','redo']],
-          placeholder: "Please Insert Table..."
+          buttonList: [['undo','redo','table']],
         }}
       />
     </Box>

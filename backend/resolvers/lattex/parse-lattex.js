@@ -1,3 +1,4 @@
+const { parse } = require("graphql");
 const _ = require("lodash")
 const pandoc = require('node-pandoc-promise');
 const { v4: uuidv4 } = require('uuid');
@@ -71,16 +72,22 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
             html = html+'</tr><tr>'
           } else {
             const e = ele.split(/{|}/).filter(el => ![''].includes(el))
-            //console.log(e)
+            console.log(e)
             if (e.length==7) {
-              html = html+'<td colspan="'+e[1]+'" rowspan="'+e[4]+'"><div>'+e[6]+'<br></div></td>'
+              html = html+'<td colspan="'+e[1]+'" rowspan="'+e[4]+'"><div>'+e[6]+'</div></td>'
             }
             if (e.length==4) {
-              if (e[0].includes('col')) html = html+'<td colspan="'+e[1]+'" rowspan="1"><div>'+e[3]+'<br></div></td>'
-              else html = html+'<td colspan="1" rowspan="'+e[1]+'"><div>'+e[3]+'<br></div></td>'
+              if(e[3]!=" "){
+                if (e[0].includes('col')) html = html+'<td colspan="'+e[1]+'" rowspan="1"><div>'+e[3]+'</div></td>'
+                else html = html+'<td colspan="1" rowspan="'+e[1]+'"><div>'+e[3]+'</div></td>'
+              }
+            }
+            if (e.length==3) {
+              if (e[0].includes('col')) html = html+'<td colspan="'+e[1]+'" rowspan="1"><div></div></td>'
+              else html = html+'<td colspan="1" rowspan="'+e[1]+'"><div></div></td>'
             }
             if (e.length<=1) {
-              html = html+'<td><div>'+e+'<br></div></td>'
+              html = html+'<td><div>'+e+'</div></td>'
             }
           }
         })
@@ -98,7 +105,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
     if (content[i] === '{' 
     || content[i].startsWith('\\begin{figure}') 
     || content[i].startsWith('\\begin{multicols}')) {
-      let temp = content[i]
+      let temp = content[i] + '\r\n'
       i = i + 1
       while (content[i] !== '}' 
       && content[i] !== '\\end{figure}'
@@ -157,6 +164,7 @@ exports.parseLaTeXCodeToObject = async (parent, input, context, info, skip) => {
           const num = temp[0].split(/{|}/).filter(item => ![''].includes(item))[2]
           temp.shift();
           temp.pop();
+          console.log(temp);
           console.log('!!!!!!!!!!! pandoc latex to html !!!!!!!!!!!')
           let res = (await pandoc(temp.join('\r\n'), args))
           if (!res.startsWith('<pre><code>')) {
@@ -224,15 +232,18 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
     console.log(html)
     rows = html.split(/<tr>|<\/tr>/).filter(row => ![''].includes(row))
     nr = rows.length - 2
-    let table = "\\begin{table}\r\n"
+
+    let table = "\\begin{table}[h]\\centering\r\n"
     if (rows[0].includes("<p>")) {
-      const caption = rows[0].split(/<p>|<br>/)
+      const caption = rows[0].split(/<p>|<br>|<\/p>/)
       table = table + "\\caption{"+caption[1]+"}\r\n"
     } 
     let nc = rows[1].split(/<\/td>/).length-1
     const temp = rows[1].split(/"/)
-    for (var k=1; k<temp.length; k=k+4) {
-      nc = nc-1+parseInt(temp[k])
+    for (var k=1; k<temp.length; k=k+2) {
+      if(temp[k-1].includes("col")) {
+        nc = nc-1+parseInt(temp[k])
+      }
     }
     let cl ="|"
     for (var k=0; k<nc; k++) {
@@ -261,16 +272,41 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
       }
       for(var k=0; k<el.length; k++) {
         const e = el[k].split(/"|<div>|<br>|<\/div>/).filter(e => ![''].includes(e))
+        console.log(e)
         let te = ""
         if(j!=0) te =  te + "&"
-        if(e.length>4) {
-          const tc = parseInt(e[1])
-          const tr = parseInt(e[3])
+        if(e.length>2) {
+          let tc = 0
+          let tr = 0
+          let box = ""
+          if (e.length<5) {
+            if(e[0].includes('col')) {
+              tc = parseInt(e[1])
+              tr = 1
+            } else {
+              tc = 1
+              tr = parseInt(e[1])
+            }
+            if(e.length==4) box = e[3]
+            else box = ""
+          } else {
+            tc = parseInt(e[1])
+            tr = parseInt(e[3])
+            if(e.length==6) box = e[5]
+            else box = ""
+          }
+          if(tc==1 && tr==1) {
+            arr[i][j] = new Array()
+            arr[i][j][0] = te + box
+            arr[i][j][1] = "\\cline{"+(j+1)+"-"+(j+1)+"}"
+            j++
+            continue
+          }
           console.log(tc+","+tr)
           let cf = 0
           let rf = 0
           if(tc>1) {
-            te = te+"\\multicolumn{"+e[1]+"}{|l|}{"
+            te = te+"\\multicolumn{"+tc+"}{|l|}{"
             for(var m=j+1; m<j+tc; m++) {
               arr[i][m] = new Array()
               if(tr==1) {
@@ -282,9 +318,9 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
           if(tr>1) {
             let tmpR = ""
             if(cf==1) {
-              tmpR = te +"}"
+              tmpR = te +" }"
             } else { 
-              tmpR = "\\multirow{"+e[3]+"}{*}{}"
+              tmpR = "\\multirow{"+tr+"}{*}{ }"
               if(j!=0) tmpR = "&"+tmpR
             }
             for(var m=i+1; m<i+tr; m++) {
@@ -298,21 +334,17 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
                 if(cf==1) arr[m][j][2] = tc
               }
             }
-            te = te+"\\multirow{"+e[3]+"}{*}{"
+            te = te+"\\multirow{"+tr+"}{*}{"
             rf = 1
           }
-          if(e.length==5){
-            te = te +"}"
-          } else {
-            te = te +e[5]+"}"
-          }
+          te = te +box+"}"
           if(cf+rf>1) te = te + "}"
           arr[i][j] = new Array()
           arr[i][j][0] = te
           if(tr==1) arr[i][j][1] = "\\cline{"+(j+1)+"-"+(j+1)+"}"
           j = j+tc
         }
-        if(e.length<4) {
+        if(e.length<3) {
           arr[i][j] = new Array()
           if(e.length==2) {
             arr[i][j][0] = te + e[1]
@@ -354,7 +386,7 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
   parseText = parseText + `\\usepackage{graphicx}\n`
   parseText = parseText + `\\usepackage{multicol}\n`
   parseText = parseText + `\\usepackage{hyperref}\n`
-  parseText = parseText + `\\hypersetup{colorlinks=true,linkcolor=black,urlcolor=cyan}\n`
+  parseText = parseText + `\\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue}\n`
   parseText = parseText + `\\graphicspath{ {./images/} }\n`
 
   parseText = parseText + `\\title{${updatedObject.titles.title}}\n`

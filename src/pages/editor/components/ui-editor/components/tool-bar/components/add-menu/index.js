@@ -201,7 +201,7 @@ const equationTemplate = [
   },
   {
     name: "Integral",
-    equation: "\\int_{a}^{b} x^2 \\,dx",
+    equation: "\\int_{a}^{b}{x^2}dx",
   },
   {
     name: "Differential",
@@ -290,7 +290,7 @@ const OtherMenuBox = ({ setBox, handleClose }) => (
 const ImageMenuBox = ({ setBox, handleClose, uploadImages, images }) => {
 
   const template = (name) => `\\begin{figure}[h]
-  \\caption{Example of a parametric plot}
+  \\caption{}
   \\centering
   \\includegraphics[width=0.5\\textwidth]{${name}}
   \\end{figure}`

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Divider, Button, FormControl, FormGroup, Switch, FormControlLabel } from '@material-ui/core'
-import { range } from 'lodash';
+import { Box, Button } from '@material-ui/core'
 
 const Block = ({ images, id, code, text, setText }) => {
   const curr_image = images.find((item) => text.includes(item.name));
