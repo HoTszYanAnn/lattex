@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 999,
   },
 }));
-const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument, width, setDoc, uploadImages }) => {
+const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updateDocument, width, setDoc, uploadImages, loading }) => {
   const classes = useStyles()
   const origContent = _(doc.latex).pick(['contents']).value().contents
   const origSetting = _(doc.latex).pick(['haveTitle', 'haveContentPage', 'titles', 'documentclass']).value()
@@ -156,6 +156,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
           setSetting={setSetting}
           onSave={onSave}
           uploadImages={uploadImages}
+          loading={loading}
         />
       </Box>
       <Box
