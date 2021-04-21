@@ -337,9 +337,9 @@ const ImageMenuBox = ({ setBox, handleClose, uploadImages, images, loading }) =>
             buttonText='Choose image'
             onChange={onDrop}
             imgExtension={['.jpg', '.png', '.jpeg']}
-            maxFileSize={2097152}
+            maxFileSize={1048576}
             singleImage
-            label={'Max file size: 2mb, accepted: jpg|jpeg|png'}
+            label={'Max file size: 1mb, accepted: jpg|jpeg|png'}
           />
           {loading && <LinearProgress />}
           <Box mb={2} />
