@@ -218,6 +218,7 @@ const Editor = ({ width, match }) => {
                 updateDocument={updateDocument}
                 width={width}
                 uploadImages={uploadImages}
+                loading={addImageLoading}
               />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.compiler} style={{ display: showCompiler ? 'block' : 'none' }}>

@@ -5,7 +5,8 @@ import {
   Button,
   Typography,
   Divider,
-  makeStyles
+  makeStyles,
+  LinearProgress
 } from '@material-ui/core';
 import { MathpixMarkdown, MathpixLoader } from 'mathpix-markdown-it';
 import { dict, htmlcode, beamer } from '../../../../../../dict'
@@ -287,7 +288,7 @@ const OtherMenuBox = ({ setBox, handleClose }) => (
   />
 )
 
-const ImageMenuBox = ({ setBox, handleClose, uploadImages, images }) => {
+const ImageMenuBox = ({ setBox, handleClose, uploadImages, images, loading }) => {
 
   const template = (name) => `\\begin{figure}[h]
   \\caption{}
@@ -314,9 +315,13 @@ const ImageMenuBox = ({ setBox, handleClose, uploadImages, images }) => {
   //!!!!! same name will bug
   const onDrop = (val) => {
     //upload image to github
-    if (val[0]) {
-      getBase64(val[0])
-    }//rerender the image list
+    try{
+      if (val.length != 0 || !loading) {
+        getBase64(val[0])
+      }
+    }catch(e){
+    }
+    //rerender the image list
   }
 
   return (
@@ -332,10 +337,11 @@ const ImageMenuBox = ({ setBox, handleClose, uploadImages, images }) => {
             buttonText='Choose image'
             onChange={onDrop}
             imgExtension={['.jpg', '.png', '.jpeg']}
-            maxFileSize={5242880}
+            maxFileSize={2097152}
             singleImage
             label={'Max file size: 2mb, accepted: jpg|jpeg|png'}
           />
+          {loading && <LinearProgress />}
           <Box mb={2} />
           <Typography variant="body1" display="inline">Select </Typography>
           <Divider />
@@ -360,7 +366,7 @@ const ImageMenuBox = ({ setBox, handleClose, uploadImages, images }) => {
   )
 }
 
-const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) => {
+const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages, loading }) => {
   const [open, setOpen] = useState('text')
   const [imageMenuKey, setImageMenuKey] = useState(uuidv4())
   const [ntable,setNtable] = useState({nrow: 3, ncol:3})
@@ -416,7 +422,7 @@ const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages }) =
             <EquationMenuBox setBox={setBox} handleClose={handleClose} />
           </Box>
           <Box style={{ display: open === 'image' ? 'block' : 'none' }} key={imageMenuKey}>
-            <ImageMenuBox setBox={setBox} handleClose={handleClose} images={images} uploadImages={uploadImages} />
+            <ImageMenuBox setBox={setBox} handleClose={handleClose} images={images} uploadImages={uploadImages} loading={loading} />
           </Box>
           <Box style={{ display: open === 'command' ? 'block' : 'none' }}>
             <OtherMenuBox setBox={setBox} handleClose={handleClose} />
