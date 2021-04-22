@@ -76,5 +76,5 @@ app.use('/authenticate', (req, res) => {
 })
 
 app.listen({ port: process.env.PORT || 3001 }, () => {
-  console.log("Apollo Server startin...");
+  console.log("Apollo Server starting...");
 });
