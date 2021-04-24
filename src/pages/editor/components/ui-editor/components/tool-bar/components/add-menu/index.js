@@ -94,7 +94,7 @@ const TextMenuBox = ({ setBox, handleClose, ntable, setNtable }) => (
             setBox('multicols-2', null);
             handleClose(null);
           }}
-          label="Multi-column Block"
+          label="Multicolumn Block"
         />
         <Box display='flex'>
           <MenuItem
@@ -377,7 +377,7 @@ const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages, loa
   }
 
   //control the add menu show what submenu 
-  const menu = ['text', 'equation', 'image',/* 'table',*/ 'command']
+  const menu = ['text','image','equation','command']
   documentclass === "beamer" && menu.splice(1, 0, "beamer");
   if(documentclass === "report"||documentclass === "book"){
     dict["chapter"] = {
@@ -387,7 +387,7 @@ const AddMenu = ({ setBox, handleClose, documentclass, images, uploadImages, loa
       "weight": "bold"
     };
   } 
-  if(documentclass === "article"){
+  if(documentclass === "article" || documentclass === "beamer"){
     delete dict.chapter
   }
 

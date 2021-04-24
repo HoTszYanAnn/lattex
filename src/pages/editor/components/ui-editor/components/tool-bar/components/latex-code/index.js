@@ -21,7 +21,7 @@ const LatexCode = ({ code }) => {
 
   return (
     <>
-      <Box style={{ maxWidth: '30vw', marginLeft: '15px', backgroundColor: 'rgb(43, 43, 43)', maxHeight: '50vh' }} className="latex-code-menu">
+      <Box style={{ maxWidth: '40vw', marginLeft: '15px', backgroundColor: 'rgb(43, 43, 43)', maxHeight: '90vh' }} className="latex-code-menu">
         <Box display='flex' style={{ position: 'sticky', top: 0 }}>
           <Tooltip title="Export as Tex" placement="top">
             <IconButton onClick={exportTexFile}>
@@ -29,7 +29,7 @@ const LatexCode = ({ code }) => {
             </IconButton>
           </Tooltip>
         </Box>
-        <Box style={{ margin: 0, maxHeight: 'calc(50vh - 48px)', overflowY: "auto" }}>
+        <Box style={{ margin: 0, maxHeight: 'calc(80vh - 48px)', overflowY: "auto" }}>
           <SyntaxHighlighter language="latex" showLineNumbers wrapLines style={a11yDark}>
             {code}
           </SyntaxHighlighter>

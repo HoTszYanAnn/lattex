@@ -49,12 +49,13 @@ const TableBlock = ({ id, text, setText}) => {
         autoFocus={false}
         language='en'
         className='editor'
-        //placeholder="Write Here..."
         onBlur={onBlur}
         setOptions={{
           mode:"balloon-always",
           buttonList: [['undo','redo','table']],
+
         }}
+        setDefaultStyle="font-size: 1rem;"
       />
     </Box>
   );

@@ -363,10 +363,15 @@ exports.parseObjectToLatexCode = async (parent, { input }, context, info) => {
     console.log(arr)
     for(var i=0; i<nr; i++) {
       let line = ""
+      var l = 0
       for(var j=0; j<nc; j++){
         if(arr[i][j][0]) table = table + arr[i][j][0]
-        if(arr[i][j][1]) line = line + arr[i][j][1]
+        if(arr[i][j][1]) {
+          line = line + arr[i][j][1]
+          l++
+        }
       }
+      if(l==nc) line = "\\hline"
       table = table + "\\\\" + line + "\r\n"
     }
     table = table + "\\end{tabular}\r\n"
