@@ -160,7 +160,7 @@ const Block = ({ images, id, code, text, setText }) => {
               </Button>
             </Box>
           </Button>
-          <Button className="equation-block-tool-bar-button-box control-item button" disableRipple={true} data-title={`Line Width ${lineWidth}`} onClick={() => updateLineWidth()}>
+          <Button className="equation-block-tool-bar-button-box control-item button" disableRipple={true} data-title={`Width ${lineWidth}`} onClick={() => updateLineWidth()}>
             <Box className="latex-image-display-button">
               <img src="https://img.icons8.com/material-outlined/20/6a6f7b/resize.png" style={{ maxWidth: '100%', maxHeight: '100%', marginLeft: '2px', marginTop: '8px' }} />
             </Box>

@@ -127,7 +127,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
           }
           if (val[i].code === "end") {
             endblockCount--
-            if (endblockCount < 0) return errorNotice("End Block Put Wrong Places")
+            if (endblockCount < 0) return errorNotice("End Block Put Wrong Place")
           }
         }
         if (endblockCount != 0) return errorNotice("End Block Missed")
