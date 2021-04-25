@@ -138,7 +138,7 @@ const Block = ({ images, id, code, text, setText }) => {
             changeCaptionPosition={changeCaptionPosition}
             captionTop={captionTop}
           />
-          <Button className="equation-block-tool-bar-button-box control-item button" disableRipple={true} data-title={'Image Align'} onMouseEnter={() => setOpenMenu("imageAlign")} onMouseLeave={setCloseMenu} >
+          <Button className="equation-block-tool-bar-button-box control-item button" disableRipple={true} data-title={'Align'} onMouseEnter={() => setOpenMenu("imageAlign")} onMouseLeave={setCloseMenu} >
             <Box className="latex-image-display-button">
               <img src="https://img.icons8.com/fluent-systems-regular/20/6a6f7b/align-left.png" style={{ maxWidth: '100%', maxHeight: '100%', marginLeft: '2px', marginTop: '8px' }} />
             </Box>

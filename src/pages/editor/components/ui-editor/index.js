@@ -77,6 +77,7 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
       dismiss: {
         duration: 5000,
       },
+      width: 400
     });
     return false
   }
@@ -89,23 +90,29 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
       case "article":
         for (var i = 0; i < val.length; i++) {
           if (val[i].code === "chapter") 
-            return errorNotice("Chapter Used In Article")
+            return errorNotice("Chapter Used In Article. Please Remove It")
           if (beamerOnly.includes(val[i].code)){
-            return errorNotice("Beamer Frame Used In Article, Please Remove It")
+            if (val[i].code === "begin{frame}")
+              return errorNotice("Beamer Frame Used In Article. Please Remove It")
+            else return errorNotice("Beamer Block Used In Article. Please Remove It")
           }
         }
         return true
       case "report":
         for (var i = 0; i < val.length; i++) {
           if (beamerOnly.includes(val[i].code)){
-            return errorNotice("Beamer Frame Used In Report, Please Remove It")
+            if (val[i].code === "begin{frame}")
+              return errorNotice("Beamer Frame Used In Report. Please Remove It")
+            else return errorNotice("Beamer Block Used In Report. Please Remove It")
           }
         }
         return true
       case "book":
         for (var i = 0; i < val.length; i++) {
           if (beamerOnly.includes(val[i].code)){
-            return errorNotice("Beamer Frame Used In Book, Please Remove It")
+            if (val[i].code === "begin{frame}")
+              return errorNotice("Beamer Frame Used In Book. Please Remove It")
+            else return errorNotice("Beamer Block Used In Book. Please Remove It")
           }
         }
         return true
@@ -113,6 +120,8 @@ const UIEditor = ({ doc, showCompiler, changeShowCompiler, pushAndCompile, updat
         var endblockCount = 0;
         var needEndBlockCode = beamerOnly
         for (var i = 0; i < val.length; i++) {
+          if (val[i].code === "chapter") 
+            return errorNotice("Chapter Used In Beamer. Please Remove It")
           if (needEndBlockCode.includes(val[i].code)) {
             endblockCount++
           }
